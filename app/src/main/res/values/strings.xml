@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">YouMe</string>
+    <string name="avatar_image">Avatar</string>
+    <string name="you_button">YOU</string>
+    <string name="me_button">ME</string>
 </resources>
