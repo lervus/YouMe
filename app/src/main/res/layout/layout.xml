@@ -31,21 +31,21 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/you_button"
             android:text="@string/you_button"
-            android:textSize="48sp"
-            android:contentDescription="@string/you_button"/>
+            android:textSize="48sp" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="279dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/me_button"
             android:text="@string/me_button"
-            android:textSize="48sp"
-            android:contentDescription="@string/me_button"/>
+            android:textSize="48sp" />
     </LinearLayout>
 
 </LinearLayout>
