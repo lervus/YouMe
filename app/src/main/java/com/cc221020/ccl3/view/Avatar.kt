@@ -1,5 +1,7 @@
 package com.cc221020.ccl3.view
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.R
 import com.cc221020.ccl3.data.Goal
+
+
+class LayoutView : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_layout_view)
+    }
+}
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
