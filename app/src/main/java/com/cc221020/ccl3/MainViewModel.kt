@@ -22,6 +22,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
         viewModelScope.launch {
             goalDao.insertGoal(goal)
         }
+        closeAddWindow()
         getGoals()
     }
 
@@ -31,6 +32,18 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
                 _mainViewState.update { it.copy(goals = allGoals) }
             }
         }
+    }
+
+    fun addGoal(){
+        viewModelScope.launch {
+            _mainViewState.update { it.copy(addGoal = true) }
+        }
+    }
+
+    fun closeAddWindow(){
+
+        _mainViewState.update { it.copy(addGoal = false) }
+
     }
 
 
