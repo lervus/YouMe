@@ -12,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.data.Goal
 
 @Composable
-fun Avatar(navController: NavController){
+fun Avatar(navController: NavController, mainViewModel: MainViewModel){
     Column(
         modifier = Modifier
             .fillMaxSize()

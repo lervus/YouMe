@@ -8,10 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cc221020.ccl3.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView(){
+fun MainView(mainViewModel: MainViewModel){
 
     val navController = rememberNavController()
     Scaffold(){
@@ -22,7 +23,7 @@ fun MainView(){
         ){
             composable("me"){ MeView(navController) }
             composable("you"){ YouView(navController) }
-            composable( "avatar"){ Avatar(navController) }
+            composable( "avatar"){ Avatar(navController, mainViewModel) }
             composable( "enter"){ Enter(navController) }
         }
     }
