@@ -46,6 +46,13 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
 
     }
 
+    fun deleteItem(goal: Goal){
+        viewModelScope.launch {
+            goalDao.deleteGoal(goal = goal)
+        }
+        getGoals()
+    }
+
 
     /*
     fun getSpecificItems(itemType: String){

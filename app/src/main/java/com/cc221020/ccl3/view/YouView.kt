@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,9 +18,11 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.ui.components.AddWindow
 import com.cc221020.ccl3.ui.components.BackButton
+import com.cc221020.ccl3.ui.components.GoalList
 
 @Composable
 fun YouView(navController: NavController, mainViewModel: MainViewModel){
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,13 +33,12 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
         BackButton(navController = navController)
         Text(text = "Goals")
         Box(modifier = Modifier.
-            background(Color.Gray)){
+        background(Color.Gray)){
             Button(onClick = { mainViewModel.addGoal() }){
                 Text(text = "Add Goal")
             }
         }
     }
-    Column {
         AddWindow(mainViewModel = mainViewModel)
-    }
+        GoalList(navController = navController, mainViewModel = mainViewModel)
 }
