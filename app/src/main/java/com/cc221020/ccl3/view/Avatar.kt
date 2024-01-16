@@ -18,14 +18,6 @@ import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
 import com.cc221020.ccl3.data.Goal
 
-
-class LayoutView : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_layout_view)
-    }
-}
-
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
     Column(
