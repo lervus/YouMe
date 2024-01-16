@@ -10,10 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.room.Room
+import com.cc221020.ccl3.data.Goal
+import com.cc221020.ccl3.data.YouDatabase
 import com.cc221020.ccl3.ui.theme.YouMeTheme
 import com.cc221020.ccl3.view.MainView
 
 class MainActivity : ComponentActivity() {
+    private val db by lazy {
+        Room.databaseBuilder(this, YouDatabase::class.java, "You.db")
+            .build()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
