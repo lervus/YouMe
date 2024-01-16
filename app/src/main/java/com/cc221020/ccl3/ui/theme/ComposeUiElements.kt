@@ -10,7 +10,7 @@ sealed class Screen(val route: String){
     object First: Screen("You")
     object Second: Screen("Me")
 }
-
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainView(mainViewModel: MainViewModel){
@@ -37,3 +37,4 @@ fun MainView(mainViewModel: MainViewModel){
         }
     }
 }
+*/
