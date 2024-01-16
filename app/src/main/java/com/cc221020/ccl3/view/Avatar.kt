@@ -33,7 +33,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 Text(text = "You")
             }
         }
-        Button(onClick = { mainViewModel.saveGoal(Goal(0, "test", false)) }) {
+        Button(onClick = { mainViewModel.saveGoal(Goal(title = "yeyeyeyeyyeyeyeyeyyeyeyeyey", completed = false)) }) {
             Text(text = "Test")
         }
     }

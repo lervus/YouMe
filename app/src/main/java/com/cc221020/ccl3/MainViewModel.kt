@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) : ViewModel() {
-    private val _goalState = MutableStateFlow(Goal(0, "", false))
+    private val _goalState = MutableStateFlow(Goal(title = "", completed =  false))
     val goalState: StateFlow<Goal> = _goalState.asStateFlow()
     private val _mainViewState = MutableStateFlow(MainViewState())
     val mainViewState: StateFlow<MainViewState> = _mainViewState.asStateFlow()
