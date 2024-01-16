@@ -22,7 +22,7 @@ fun MainView(mainViewModel: MainViewModel){
             startDestination = "enter"
         ){
             composable("me"){ MeView(navController) }
-            composable("you"){ YouView(navController) }
+            composable("you"){ YouView(navController, mainViewModel) }
             composable( "avatar"){ Avatar(navController, mainViewModel) }
             composable( "enter"){ Enter(navController) }
         }
