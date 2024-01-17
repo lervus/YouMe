@@ -55,7 +55,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = "This is the Avatar Page")
+        Text(text = "@string/avatar_title")
         Image(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +77,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     .height(buttonHeight),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)
             ) {
-                Text(text = "Me")
+                Text(text = stringResource(id = R.string.me_button))
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(onClick = { navController.navigate("you") },
@@ -86,11 +86,11 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     .height(buttonHeight),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)
             ) {
-                Text(text = "You")
+                Text(text = stringResource(id = R.string.you_button))
             }
         }
-        Button(onClick = { mainViewModel.saveGoal(Goal(title = "yeyeyeyeyyeyeyeyeyyeyeyeyey", completed = false)) }) {
-            Text(text = "Test")
+        Button(onClick = { mainViewModel.saveGoal(Goal(title = "GOALS", completed = false)) }) {
+            Text(text = stringResource(id = R.string.goals_button))
         }
     }
 }
