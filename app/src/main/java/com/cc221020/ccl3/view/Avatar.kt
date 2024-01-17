@@ -22,7 +22,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -93,9 +96,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
         }
         Button(onClick = { mainViewModel.saveGoal(Goal(title = "GOALS", completed = false)) },
             modifier = Modifier
-                .size(100.dp),
+                .size(75.dp),
             shape = CircleShape) {
-            Text(text = stringResource(id = R.string.goals_button))
+            Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            // Text(text = stringResource(id = R.string.goals_button))
         }
     }
 }
