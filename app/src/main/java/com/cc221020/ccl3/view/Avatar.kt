@@ -2,6 +2,7 @@ package com.cc221020.ccl3.view
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +42,8 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
 import com.cc221020.ccl3.data.Goal
+import com.cc221020.ccl3.ui.theme.Primary80
+import com.cc221020.ccl3.ui.theme.Secondary80
 import com.cc221020.ccl3.ui.theme.YouMeTheme
 
 @Composable
@@ -48,10 +52,18 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
     val buttonHeight = 150.dp
 
     val buttonColorMe = YouMeTheme {
-        MaterialTheme.colorScheme.primary
+        ButtonDefaults.buttonColors(
+            containerColor = Primary80,
+            contentColor = Color.White
+        )
+        //MaterialTheme.colorScheme.primary
     }
     val buttonColorYou = YouMeTheme {
-        MaterialTheme.colorScheme.secondary
+        ButtonDefaults.buttonColors(
+            containerColor = Secondary80,
+            contentColor = Color.White
+        )
+        //MaterialTheme.colorScheme.secondary
     }
     Column(
         modifier = Modifier
@@ -80,7 +92,15 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 modifier = Modifier
                     .width(buttonWidth)
                     .height(buttonHeight),
-                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)
+                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 10.dp,
+                    pressedElevation = 5.dp
+                ),
+                colors = ButtonDefaults.buttonColors(
+                  //  containerColor = buttonColorMe,
+                    contentColor = Color.White
+                )
             ) {
                 Text(text = stringResource(id = R.string.me_button))
             }
@@ -89,6 +109,14 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 modifier = Modifier
                     .width(buttonWidth)
                     .height(buttonHeight),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 10.dp,
+                    pressedElevation = 5.dp
+                ),
+                colors = ButtonDefaults.buttonColors(
+                 //   containerColor = buttonColorYou,
+                    contentColor = Color.White
+                ),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)
             ) {
                 Text(text = stringResource(id = R.string.you_button))
@@ -97,6 +125,13 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
         Button(onClick = { mainViewModel.saveGoal(Goal(title = "GOALS", completed = false)) },
             modifier = Modifier
                 .size(75.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 5.dp,
+                pressedElevation = 1.dp
+            ),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.White
+            ),
             shape = CircleShape) {
             Icon(imageVector = Icons.Filled.Add, contentDescription = null)
             // Text(text = stringResource(id = R.string.goals_button))
