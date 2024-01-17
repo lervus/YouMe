@@ -16,15 +16,15 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Main80,
+    secondary = Bonus80,
+    tertiary = Secondary60
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Primary80,
+    secondary = Secondary80,
+    tertiary = Complementary80
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
