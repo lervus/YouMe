@@ -19,8 +19,8 @@ interface TodoDao {
     @Delete
     suspend fun deleteTodoItem(item: TodoItem)
 
-    @Query("SELECT * FROM TodoItems")
-    fun getTodoItem(): Flow<List<TodoItem>>
+    @Query("SELECT * FROM TodoItems WHERE goalId = :goalId")
+    fun getTodoItem(goalId: Int): Flow<List<TodoItem>>
 
     @Query("DELETE FROM TodoItems")
     suspend fun deleteAll()
