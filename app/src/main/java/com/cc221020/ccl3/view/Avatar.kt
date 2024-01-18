@@ -194,12 +194,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
             ) {
                 Text(text = stringResource(id = R.string.you_button))
             }
-            Button(onClick = { navController.navigate("you") }) {
-                Text(text = "You")
-            }
-        }
-        Button(onClick = { mainViewModel.saveGoal(Goal(title = "yeyeyeyeyyeyeyeyeyyeyeyeyey", completed = false)) }) {
-            Text(text = "Test")
         }
     }
 }
