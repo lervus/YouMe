@@ -31,7 +31,6 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        BackButton(navController = navController)
         Text(text = "Goals")
         Box(modifier = Modifier.
         background(Color.Gray)){

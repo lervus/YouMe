@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,11 +37,17 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
 
         item{ Text(text = "Your Todos:" ) }
         items(state.value.todos){
-            Column {
+            Row {
                 Text(text = it.title)
-            }
-            IconButton(onClick = { mainViewModel.deleteTodo(it) }) {
-                Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                IconButton(onClick = { mainViewModel.deleteTodo(it) }) {
+                    Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                }
+                IconButton(onClick = { mainViewModel.completeTodo(it)}) {
+                    Icon(Icons.Default.CheckCircle, "Complete")
+                }
+                if(it.completed){
+                    Icon(imageVector = Icons.Default.Done, contentDescription =" Done" )
+                }
             }
         }
     }
