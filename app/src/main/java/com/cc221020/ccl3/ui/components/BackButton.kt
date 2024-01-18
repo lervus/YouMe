@@ -4,10 +4,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BackButton(navController: NavController){
-    Button(onClick = {navController.navigate("avatar")}) {
+
+    var page = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    Button(onClick = {
+        if(page != "goalView/{goalId}"){
+            navController.navigate("avatar")
+        }
+        else{
+            navController.navigate("you")
+        }
+    }) {
         Text(text = "Back to Avatar")
     }
 }

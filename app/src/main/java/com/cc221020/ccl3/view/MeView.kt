@@ -22,6 +22,5 @@ fun MeView(navController: NavController){
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(text = "This is the Me Page")
-        BackButton(navController = navController)
     }
 }

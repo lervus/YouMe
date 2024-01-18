@@ -38,6 +38,11 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Text(text = "Goals")
+        Box(modifier = Modifier.
+        background(Color.Gray)){
+            Button(onClick = { mainViewModel.addGoal() }){
+                Text(text = "Add Todo")
         BackButton(navController = navController)
         Text(text = "To-Do´s")
         Box(modifier = Modifier

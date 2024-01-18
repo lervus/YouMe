@@ -77,6 +77,19 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
         getTodos(todoItem.goalId)
     }
 
+    fun completeGoal(goal: Goal){
+        viewModelScope.launch {
+            goalDao.updateGoal(Goal(id = goal.id,title = goal.title, completed = !goal.completed))
+        }
+        getGoals()
+    }
+
+    fun completeTodo(todoItem: TodoItem){
+        viewModelScope.launch {
+            todoDao.updateTodoItem(TodoItem(todoItem.id, todoItem.title, !todoItem.completed, todoItem.goalId))
+        }
+        getTodos(todoItem.goalId)
+    }
     /*
     fun getSpecificItems(itemType: String){
         viewModelScope.launch{

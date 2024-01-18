@@ -34,10 +34,8 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        BackButton(navController = navController)
         Text(text = "Goals")
         Box(modifier = Modifier
         ){
