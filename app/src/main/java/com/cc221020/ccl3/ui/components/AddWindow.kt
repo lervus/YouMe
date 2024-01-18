@@ -18,13 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
+import com.cc221020.ccl3.data.TodoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddWindow(mainViewModel: MainViewModel){
+fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
 
     val state = mainViewModel.mainViewState.collectAsState()
     var title: String by rememberSaveable { mutableStateOf(" ") }
+    title = ""
 
     if(state.value.addGoal){
 

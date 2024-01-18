@@ -39,6 +39,6 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
             }
         }
     }
-        AddWindow(mainViewModel = mainViewModel)
+        AddWindow(mainViewModel = mainViewModel, null)
         GoalList(navController = navController, mainViewModel = mainViewModel)
 }

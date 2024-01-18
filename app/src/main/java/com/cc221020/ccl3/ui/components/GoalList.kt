@@ -1,5 +1,6 @@
 package com.cc221020.ccl3.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.view.GoalView
 
 @Composable
 fun GoalList(navController: NavController ,mainViewModel: MainViewModel){
@@ -34,9 +36,9 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel){
         item{ Text(text = "Your Goals:" ) }
         items(state.value.goals){
             Column {
-                Text(text = it.title)
+                Text(text = it.title, modifier = Modifier.clickable(onClick = {navController.navigate("GoalView/${it.id}")}))
             }
-            IconButton(onClick = { mainViewModel.deleteItem(it) }) {
+            IconButton(onClick = { mainViewModel.deleteGoal(it) }) {
                 Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
             }
         }
