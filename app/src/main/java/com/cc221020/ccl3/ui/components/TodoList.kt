@@ -32,10 +32,14 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
 
     LazyColumn(
         modifier = Modifier
-            .padding(top = 50.dp)
+            .padding(top = 25.dp)
     ){
 
-        item{ Text(text = "Your Todos:" ) }
+        item{ Text(text = "Your To-Do´s:",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+        )}
         items(state.value.todos){
             Row {
                 Text(text = it.title)
@@ -47,6 +51,20 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
                 }
                 if(it.completed){
                     Icon(imageVector = Icons.Default.Done, contentDescription =" Done" )
+                }
+            Column {
+                Row {
+                    Text(
+                        text = it.title,
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(16.dp)
+                    )
+                    IconButton(
+                        modifier = Modifier
+                        ,onClick = { mainViewModel.deleteTodo(it) }) {
+                        Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                    }
                 }
             }
         }

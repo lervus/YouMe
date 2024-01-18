@@ -195,9 +195,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 Text(text = stringResource(id = R.string.you_button))
             }
         }
+
     }
-}
-
-fun DropdownMenuItem(onClick: () -> Unit, interactionSource: () -> Unit) {
-
 }
