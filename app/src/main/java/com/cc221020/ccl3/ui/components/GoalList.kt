@@ -52,6 +52,12 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
                                 .padding(16.dp)
                                 .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
                         )
+                        IconButton(onClick = { mainViewModel.completeGoal(it)}) {
+                            Icon(Icons.Default.CheckCircle, "Complete")
+                        }
+                        if(it.completed){
+                            Icon(imageVector = Icons.Default.Done, contentDescription =" Done" )
+                        }
                         IconButton(
                             modifier = Modifier, onClick = { mainViewModel.deleteGoal(it) }) {
                             Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))

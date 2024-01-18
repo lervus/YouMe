@@ -77,6 +77,10 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
         getTodos(todoItem.goalId)
     }
 
+    fun completeGoal(it: Goal) {
+
+    }
+
     /*
     fun getSpecificItems(itemType: String){
         viewModelScope.launch{

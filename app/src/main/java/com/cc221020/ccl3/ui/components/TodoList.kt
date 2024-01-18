@@ -58,6 +58,12 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
                                 .width(200.dp)
                                 .padding(16.dp)
                         )
+                        IconButton(onClick = { mainViewModel.completeTodos(it)}) {
+                            Icon(Icons.Default.CheckCircle, "Complete")
+                        }
+                        if(it.completed){
+                            Icon(imageVector = Icons.Default.Done, contentDescription =" Done" )
+                        }
                         IconButton(
                             modifier = Modifier, onClick = { mainViewModel.deleteTodo(it) }) {
                             Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
