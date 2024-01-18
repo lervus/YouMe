@@ -43,7 +43,13 @@ fun AddWindow(mainViewModel: MainViewModel){
         }
             },
             confirmButton = {
-                Button( onClick = { mainViewModel.saveGoal(Goal(title = title, completed = false)) }) {
+                Button(onClick = {
+                    if (goalId != null) {
+                        mainViewModel.saveTodo(TodoItem(title = title, completed = false, goalId = goalId))
+                    } else {
+                        mainViewModel.saveGoal(Goal(title = title, completed = false))
+                    }
+                }) {
                     Text("Save")
                 }
             }

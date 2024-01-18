@@ -34,6 +34,22 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
         }
     }
 
+    fun getTodos(goalId: Int){
+        viewModelScope.launch {
+            todoDao.getTodoItem(goalId).collect(){ allTodos ->
+                _mainViewState.update { it.copy(todos = allTodos) }
+            }
+        }
+    }
+
+    fun saveTodo(todoItem: TodoItem){
+        viewModelScope.launch {
+            todoDao.insertTodoItem(todoItem)
+        }
+        closeAddWindow()
+        getTodos(todoItem.goalId)
+    }
+
     fun addGoal(){
         viewModelScope.launch {
             _mainViewState.update { it.copy(addGoal = true) }
