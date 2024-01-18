@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +17,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,7 +34,6 @@ import com.cc221020.ccl3.ui.components.TodoList
 
 @Composable
 fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: Goal){
-    Text(text = goal.title)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,27 +41,35 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        BackButton(navController = navController)
-        Text(text = "To-Do´s")
-        Box(modifier = Modifier
+        Text(text = goal.title)
+        Box(
+            Modifier
+                .height(500.dp)
+                .width(300.dp)
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(16.dp),
+            contentAlignment = Alignment.TopCenter
         ){
-            Button(onClick = { mainViewModel.addGoal() },
-                modifier = Modifier
-                    .size(75.dp),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 5.dp,
-                    pressedElevation = 1.dp
-                ),
-                colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White
-                ),
-                shape = CircleShape
-            ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-                // Text(text = stringResource(id = R.string.goals_button))
-            }
+            TodoList(navController = navController, mainViewModel = mainViewModel, goalId = goal.id)
         }
+        Button(onClick = { mainViewModel.addGoal() },
+            modifier = Modifier
+                .padding(16.dp)
+                .size(75.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 5.dp,
+                pressedElevation = 1.dp
+            ),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.White
+            ),
+            shape = CircleShape
+        ) {
+            Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            // Text(text = stringResource(id = R.string.goals_button))
+        }
+        BackButton(navController = navController)
     }
     AddWindow(mainViewModel = mainViewModel, goalId = goal.id)
-    TodoList(navController, mainViewModel, goal.id)
+
 }

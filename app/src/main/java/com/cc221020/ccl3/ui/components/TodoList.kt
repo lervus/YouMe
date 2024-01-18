@@ -3,8 +3,11 @@ package com.cc221020.ccl3.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -30,16 +33,29 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
 
     LazyColumn(
         modifier = Modifier
-            .padding(top = 50.dp)
+            .padding(top = 25.dp)
     ){
 
-        item{ Text(text = "Your Todos:" ) }
+        item{ Text(text = "Your To-Do´s:",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+        )}
         items(state.value.todos){
             Column {
-                Text(text = it.title)
-            }
-            IconButton(onClick = { mainViewModel.deleteTodo(it) }) {
-                Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                Row {
+                    Text(
+                        text = it.title,
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(16.dp)
+                    )
+                    IconButton(
+                        modifier = Modifier
+                        ,onClick = { mainViewModel.deleteTodo(it) }) {
+                        Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                    }
+                }
             }
         }
     }
