@@ -49,6 +49,8 @@ import com.cc221020.ccl3.ui.theme.Primary80
 import com.cc221020.ccl3.ui.theme.Secondary80
 import com.cc221020.ccl3.ui.theme.YouMeTheme
 import java.io.File
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
@@ -58,9 +60,12 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
 
 
     val predefinedImageIds = listOf(
-        R.drawable.ic_action_name
-        // R.drawable.ic_action_name2
+        R.drawable.ic_action_avatar_1,
+        R.drawable.ic_action_avatar_2,
+        R.drawable.ic_action_avatar_3
     )
+
+    var dropdownMenuVisible = remember { mutableStateOf(false) }
     var selectedImageIndex = remember { mutableStateOf(0) }
     var isAvatarCreated = remember { mutableStateOf(false) }
 
@@ -108,8 +113,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
         if (!isAvatarCreated.value) {
             Button(
                 onClick = {
-                    isAvatarCreated.value = true
-                },
+                    dropdownMenuVisible.value = true
+                          },
                 modifier = Modifier,
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
                 elevation = ButtonDefaults.buttonElevation(
@@ -122,6 +127,26 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 )
             ) {
                 Text(text = stringResource(id = R.string.create_avatar_button))
+            }
+            DropdownMenu(
+                expanded = dropdownMenuVisible.value,
+                onDismissRequest = { dropdownMenuVisible.value = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                predefinedImageIds.forEachIndexed { index, imageId ->
+                    DropdownMenuItem(
+                        onClick = {
+                            selectedImageIndex.value = index
+                            isAvatarCreated.value = true
+                            dropdownMenuVisible.value = false
+                        },
+                        text = {
+                            Text("Avatar $index")
+                        }
+                    )
+                }
             }
         } else {
             Image(
@@ -189,6 +214,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
         }
 
     }
+}
+
+fun DropdownMenuItem(onClick: () -> Unit, interactionSource: () -> Unit) {
+
 }
 
 /*
