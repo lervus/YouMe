@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,30 +35,35 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
 
     LazyColumn(
         modifier = Modifier
-            .padding(top = 25.dp)
+            .fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally)
+            .padding(25.dp)
     ){
 
-        item{ Text(text = "Your To-Do´s:",
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
-        )}
-        items(state.value.todos){
-            Column {
-                Row {
-                    Text(
-                        text = it.title,
-                        modifier = Modifier
-                            .width(200.dp)
-                            .padding(16.dp)
-                    )
-                    IconButton(
-                        modifier = Modifier
-                        ,onClick = { mainViewModel.deleteTodo(it) }) {
-                        Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+        item {
+            Text(
+                text = "Your To-Do´s:",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            )
+        }
+        items(state.value.todos) {
+
+                Column {
+                    Row {
+                        Text(
+                            text = it.title,
+                            modifier = Modifier
+                                .width(200.dp)
+                                .padding(16.dp)
+                        )
+                        IconButton(
+                            modifier = Modifier, onClick = { mainViewModel.deleteTodo(it) }) {
+                            Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                        }
                     }
                 }
             }
         }
     }
-}

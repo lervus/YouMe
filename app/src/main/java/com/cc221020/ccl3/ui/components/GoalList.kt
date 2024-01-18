@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,36 +28,36 @@ import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.view.GoalView
 
 @Composable
-fun GoalList(navController: NavController ,mainViewModel: MainViewModel){
+fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
 
     mainViewModel.getGoals();
     val state = mainViewModel.mainViewState.collectAsState()
 
     LazyColumn(
         modifier = Modifier
-            .padding(top = 25.dp)
+            .fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally)
+            .padding(25.dp)
     ){
 
-        item{ Text(text = "Your Goals:" ) }
-        items(state.value.goals){
-            Column {
-                Row {
-                    Text(
-                        text = it.title,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.CenterHorizontally)
-                            .width(200.dp)
-                            .padding(16.dp)
-                            .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
-                    )
-                    IconButton(
-                        modifier = Modifier
-                        ,onClick = { mainViewModel.deleteGoal(it) }) {
-                        Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+        item { Text(text = "Your Goals:") }
+        items(state.value.goals) {
+
+                Column {
+                    Row {
+                        Text(
+                            text = it.title,
+                            modifier = Modifier
+                                .width(200.dp)
+                                .padding(16.dp)
+                                .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
+                        )
+                        IconButton(
+                            modifier = Modifier, onClick = { mainViewModel.deleteGoal(it) }) {
+                            Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                        }
                     }
                 }
             }
         }
     }
-}
