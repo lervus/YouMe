@@ -48,19 +48,53 @@ import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.ui.theme.Primary80
 import com.cc221020.ccl3.ui.theme.Secondary80
 import com.cc221020.ccl3.ui.theme.YouMeTheme
+import java.io.File
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
+
+    val buttonWidth = 150.dp
+    val buttonHeight = 150.dp
+
 
     val predefinedImageIds = listOf(
         R.drawable.ic_action_name
         // R.drawable.ic_action_name2
     )
-
     var selectedImageIndex = remember { mutableStateOf(0) }
     var isAvatarCreated = remember { mutableStateOf(false) }
-    val buttonWidth = 150.dp
-    val buttonHeight = 150.dp
+
+    /*
+        val avatarStateFile = "avatar_state.json"
+        val predefinedImageIdsFile = "predefined_image_ids.json"
+
+        fun loadAvatarState(): Boolean {
+            val jsonString = File(context.filesDir, avatarStateFile).readText()
+            return Gson().fromJson(jsonString, Boolean::class.java) ?: false
+        }
+
+        fun saveAvatarState(isAvatarCreated: Boolean) {
+            val jsonString = Gson().toJson(isAvatarCreated)
+            File(context.filesDir, avatarStateFile).writeText(jsonString)
+        }
+
+        fun loadPredefinedImageIds(): List<Int> {
+            val jsonString = File(context.filesDir, predefinedImageIdsFile).readText()
+            return Gson().fromJson(jsonString, object : TypeToken<List<Int>>() {}.type)
+                ?: listOf(R.drawable.ic_action_name)
+        }
+
+        fun savePredefinedImageIds(predefinedImageIds: List<Int>) {
+            val jsonString = Gson().toJson(predefinedImageIds)
+            File(context.filesDir, predefinedImageIdsFile).writeText(jsonString)
+        }
+
+        var isAvatarCreated = remember { mutableStateOf(loadAvatarState()) }
+        var predefinedImageIds = remember { mutableStateOf(loadPredefinedImageIds()) }
+        var selectedImageIndex = remember { mutableStateOf(0) }
+    */
+
+
 
     Column(
         modifier = Modifier
@@ -76,9 +110,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 onClick = {
                     isAvatarCreated.value = true
                 },
-                modifier = Modifier
-                    .width(buttonWidth)
-                    .height(buttonHeight),
+                modifier = Modifier,
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
@@ -156,23 +188,137 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             }
         }
 
-        Button(
-            onClick = {
-                mainViewModel.saveGoal(Goal(title = "GOALS", completed = false))
-            },
+    }
+}
+
+/*
+
+@Composable
+fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
+    val buttonWidth = 150.dp
+    val buttonHeight = 150.dp
+
+    val avatarStateFile = "avatar_state.json"
+    val predefinedImageIdsFile = "predefined_image_ids.json"
+
+    fun loadAvatarState(): Boolean {
+        // Implement the logic to read from a JSON file and return the boolean value
+        // Example: Use resources.openRawResource(R.raw.avatar_state) to open a JSON file in the 'res/raw' folder
+        // and parse it using Gson. For simplicity, I'll provide a placeholder implementation.
+        // Replace it with the actual logic based on your requirements.
+        val jsonString = File(context.filesDir, avatarStateFile).readText()
+        return Gson().fromJson(jsonString, Boolean::class.java) ?: false
+    }
+
+    // Function to save avatar state to a JSON file
+    fun saveAvatarState(isAvatarCreated: Boolean) {
+        // Implement the logic to write to a JSON file
+        // Example: Use resources.openRawResource(R.raw.avatar_state) to open a JSON file in the 'res/raw' folder
+        // and write the boolean value using Gson. For simplicity, I'll provide a placeholder implementation.
+        // Replace it with the actual logic based on your requirements.
+        val jsonString = Gson().toJson(isAvatarCreated)
+        File(context.filesDir, avatarStateFile).writeText(jsonString)
+    }
+
+    // Function to load predefined image IDs from a JSON file
+    fun loadPredefinedImageIds(): List<Int> {
+        // Implement the logic to read from a JSON file and return the list
+        // Example: Use resources.openRawResource(R.raw.predefined_image_ids) to open a JSON file in the 'res/raw' folder
+        // and parse it using Gson. For simplicity, I'll provide a placeholder implementation.
+        // Replace it with the actual logic based on your requirements.
+        val jsonString = File(context.filesDir, predefinedImageIdsFile).readText()
+        return Gson().fromJson(jsonString, object : TypeToken<List<Int>>() {}.type)
+            ?: listOf(R.drawable.ic_action_name)
+    }
+
+    // Function to save predefined image IDs to a JSON file
+    fun savePredefinedImageIds(predefinedImageIds: List<Int>) {
+        // Implement the logic to write to a JSON file
+        // Example: Use resources.openRawResource(R.raw.predefined_image_ids) to open a JSON file in the 'res/raw' folder
+        // and write the list using Gson. For simplicity, I'll provide a placeholder implementation.
+        // Replace it with the actual logic based on your requirements.
+        val jsonString = Gson().toJson(predefinedImageIds)
+        File(context.filesDir, predefinedImageIdsFile).writeText(jsonString)
+    }
+
+    // Load avatar state and predefined image IDs when the composable is created
+    var isAvatarCreated = remember { mutableStateOf(loadAvatarState()) }
+    var predefinedImageIds = remember { mutableStateOf(loadPredefinedImageIds()) }
+    var selectedImageIndex = remember { mutableStateOf(0) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = stringResource(id = R.string.avatar_view))
+
+        if (!isAvatarCreated.value) {
+            Button(
+                onClick = {
+                    isAvatarCreated.value = true
+                    saveAvatarState(true)
+                },
+                modifier = Modifier
+                    .width(buttonWidth)
+                    .height(buttonHeight),
+                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 10.dp,
+                    pressedElevation = 5.dp
+                ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = stringResource(id = R.string.create_avatar_button))
+            }
+        } else {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 1000.dp)
+                    .aspectRatio(1f)
+                    .scale(0.5f)
+                    .padding(8.dp)
+                    .clip(MaterialTheme.shapes.medium),
+                painter = painterResource(id = predefinedImageIds.value[selectedImageIndex.value]),
+                contentDescription = stringResource(id = R.string.avatar_image)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
             modifier = Modifier
-                .size(75.dp),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 5.dp,
-                pressedElevation = 1.dp
-            ),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White
-            ),
-            shape = CircleShape
+                .fillMaxWidth()
+                .padding(bottom = 25.dp),
+            horizontalArrangement = Arrangement.Center
         ) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-            // Text(text = stringResource(id = R.string.goals_button))
+            // Other buttons remain unchanged
+
+            Button(
+                onClick = {
+                    mainViewModel.saveGoal(Goal(title = "GOALS", completed = false))
+                },
+                modifier = Modifier
+                    .size(75.dp),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 5.dp,
+                    pressedElevation = 1.dp
+                ),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White
+                ),
+                shape = CircleShape
+            ) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            }
         }
     }
 }
+
+ */
