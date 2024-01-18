@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.data.GoalDao
 import com.cc221020.ccl3.data.TodoDao
+import com.cc221020.ccl3.data.TodoItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -62,13 +63,19 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
 
     }
 
-    fun deleteItem(goal: Goal){
+    fun deleteGoal(goal: Goal){
         viewModelScope.launch {
             goalDao.deleteGoal(goal = goal)
         }
         getGoals()
     }
 
+    fun deleteTodo(todoItem: TodoItem){
+        viewModelScope.launch {
+            todoDao.deleteTodoItem(todoItem)
+        }
+        getTodos(todoItem.goalId)
+    }
 
     /*
     fun getSpecificItems(itemType: String){
