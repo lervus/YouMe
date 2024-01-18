@@ -90,6 +90,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
             goalDao.updateGoal(Goal(id = goal.id,title = goal.title, completed = !goal.completed))
         }
         _mainViewState.update { it.copy(completed = true) }
+        getGoals()
     }
 
     fun completeTodo(todoItem: TodoItem){
