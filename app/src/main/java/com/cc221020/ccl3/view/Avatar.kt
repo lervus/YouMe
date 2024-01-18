@@ -22,7 +22,9 @@ import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Book
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.File
 import java.util.Objects
 
 @Composable
@@ -64,4 +66,9 @@ fun readJsonFromAssets(context: Context, fileName: String): String {
 }
 fun parseJsonToModel(jsonString: String): Book {
     return Json.decodeFromString(jsonString)
+}
+
+fun writeJsonToFile(book: Book, filePath: String) {
+    val jsonString = Json.encodeToString(book)
+    File(filePath).writeText(jsonString)
 }
