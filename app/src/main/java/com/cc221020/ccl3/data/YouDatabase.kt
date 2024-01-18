@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [Goal::class, TodoItem::class], version = 2)
+@Database(entities = [Goal::class, TodoItem::class], version = 1)
 abstract class YouDatabase : RoomDatabase() {
     abstract val goalDao: GoalDao
     abstract val todoDao: TodoDao

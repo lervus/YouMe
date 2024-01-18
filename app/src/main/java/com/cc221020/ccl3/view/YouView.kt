@@ -32,8 +32,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(text = "Goals")
