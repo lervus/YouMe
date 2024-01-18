@@ -68,15 +68,14 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
                         if(it.completed){
                             AlertDialog(
                                 onDismissRequest = {
-                                    mainViewModel.editGoal(it)
+                                    mainViewModel.closeAddWindow()
                                 },
                                 text = {
                                     Text(text = "Did you accomplish your goal?")
                                 },
                                 dismissButton = {
                                     Button(onClick = {
-                                        it.completed = false
-                                        mainViewModel.closeAddWindow()
+                                        mainViewModel.completeGoal(it)
                                     }) {
                                         Text("NO")
                                     }

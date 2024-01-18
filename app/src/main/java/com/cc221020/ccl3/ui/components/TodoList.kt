@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -62,11 +64,29 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
                             Icon(Icons.Default.CheckCircle, "Complete")
                         }
                         if(it.completed){
-                            Icon(imageVector = Icons.Default.Done, contentDescription =" Done" )
-                        }
-                        IconButton(
-                            modifier = Modifier, onClick = { mainViewModel.deleteTodo(it) }) {
-                            Icon(Icons.Default.Delete, "Delete", modifier = Modifier.size(35.dp))
+                            AlertDialog(
+                                onDismissRequest = {
+                                    mainViewModel.closeAddWindow()
+                                },
+                                text = {
+                                    Text(text = "Did you do it?")
+                                },
+                                dismissButton = {
+                                    Button(onClick = {
+                                        mainViewModel.completeTodo(it)
+                                    }) {
+                                        Text("NO")
+                                    }
+                                },
+                                confirmButton = {
+                                    Button(onClick = {
+                                        it.completed = false
+                                        mainViewModel.editTodo(it)
+                                    }) {
+                                        Text("YES")
+                                    }
+                                }
+                            )
                         }
                     }
                 }
