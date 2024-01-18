@@ -18,13 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
+import com.cc221020.ccl3.data.TodoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddWindow(mainViewModel: MainViewModel){
+fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
 
     val state = mainViewModel.mainViewState.collectAsState()
     var title: String by rememberSaveable { mutableStateOf(" ") }
+    title = ""
 
     if(state.value.addGoal){
 
@@ -43,7 +45,13 @@ fun AddWindow(mainViewModel: MainViewModel){
         }
             },
             confirmButton = {
-                Button( onClick = { mainViewModel.saveGoal(Goal(title = title, completed = false)) }) {
+                Button(onClick = {
+                    if (goalId != null) {
+                        mainViewModel.saveTodo(TodoItem(title = title, completed = false, goalId = goalId))
+                    } else {
+                        mainViewModel.saveGoal(Goal(title = title, completed = false))
+                    }
+                }) {
                     Text("Save")
                 }
             }
