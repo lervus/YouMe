@@ -58,7 +58,7 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
                                 .width(200.dp)
                                 .padding(16.dp)
                         )
-                        IconButton(onClick = { mainViewModel.completeTodos(it)}) {
+                        IconButton(onClick = { mainViewModel.completeTodo(it)}) {
                             Icon(Icons.Default.CheckCircle, "Complete")
                         }
                         if(it.completed){
