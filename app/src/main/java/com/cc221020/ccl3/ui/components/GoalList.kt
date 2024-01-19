@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,7 +51,8 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                 text = "Your Goals:",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                color = Color.Black
             )
         }
         items(state.value.goals) {
@@ -69,10 +71,14 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                         modifier = Modifier
                             .width(150.dp)
                             .padding(10.dp)
-                            .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
+                            .clickable(onClick = { navController.navigate("GoalView/${it.id}") }),
+                        color = Color.Black
                     )
-                    IconButton(onClick = { mainViewModel.completeGoal(it) }) {
-                        Icon(Icons.Default.CheckCircle, "Complete")
+                    IconButton(
+                        onClick = { mainViewModel.completeGoal(it) },
+                        modifier = Modifier
+                    ) {
+                        Icon(Icons.Default.CheckCircle, "Complete", tint = Color.Black)
                     }
 
                     if (it.completed) {
@@ -105,15 +111,25 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                     Button(
                                         onClick = {
                                             mainViewModel.completeGoal(it)
-                                        }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
                                     ) {
                                         Text("NO")
                                     }
                                     Spacer(modifier = Modifier.width(32.dp))
-                                    Button(onClick = {
-                                        it.completed = false
-                                        mainViewModel.editGoal(it)
-                                    }) {
+                                    Button(
+                                        onClick = {
+                                            it.completed = false
+                                            mainViewModel.editGoal(it)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
+                                    ) {
                                         Text("YES")
                                     }
                                 }

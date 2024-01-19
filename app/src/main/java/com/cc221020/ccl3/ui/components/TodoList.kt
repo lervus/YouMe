@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +49,8 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                 text = "Your To-Do´s:",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                color = Color.Black
             )
         }
         items(state.value.todos) {
@@ -66,10 +68,13 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                         text = it.title,
                         modifier = Modifier
                             .width(150.dp)
-                            .padding(10.dp)
+                            .padding(10.dp),
+                        color = Color.Black
                     )
-                    IconButton(onClick = { mainViewModel.completeTodo(it) }) {
-                        Icon(Icons.Default.CheckCircle, "Complete")
+                    IconButton(onClick = { mainViewModel.completeTodo(it) },
+                        modifier = Modifier
+                    ) {
+                        Icon(Icons.Default.CheckCircle, "Complete", tint = Color.Black)
                     }
                     if (it.completed) {
                         AlertDialog(
@@ -102,14 +107,24 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                                         onClick = {
                                             mainViewModel.completeTodo(it)
                                         },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
                                     ) {
                                         Text("NO")
                                     }
                                     Spacer(modifier = Modifier.width(32.dp))
-                                    Button(onClick = {
-                                        it.completed = false
-                                        mainViewModel.editTodo(it)
-                                    }) {
+                                    Button(
+                                        onClick = {
+                                            it.completed = false
+                                            mainViewModel.editTodo(it)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
+                                    ) {
                                         Text("YES")
                                     }
                                 }
