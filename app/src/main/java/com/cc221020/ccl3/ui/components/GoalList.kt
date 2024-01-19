@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -47,24 +49,37 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
-            .padding(25.dp)
+            .padding(15.dp)
     ){
 
-        item { Text(text = "Your Goals:") }
+        item {
+            Text(
+                text = "Your Goals:",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+            )
+        }
         items(state.value.goals) {
 
                 Column {
+                    Spacer(modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                        .background(Color.Black)
+                        .padding(1.dp))
                     Row {
                         Text(
                             text = it.title,
                             modifier = Modifier
                                 .width(150.dp)
-                                .padding(16.dp)
+                                .padding(10.dp)
                                 .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
                         )
                         IconButton(onClick = { mainViewModel.completeGoal(it)}) {
                             Icon(Icons.Default.CheckCircle, "Complete")
                         }
+
                         if(it.completed){
                             AlertDialog(
                                 onDismissRequest = {
