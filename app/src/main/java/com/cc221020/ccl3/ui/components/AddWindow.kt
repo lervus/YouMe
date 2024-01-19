@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,18 +38,29 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
             },
             text = {
 
-        Box(modifier = Modifier.background(Color.White))
+        Box(modifier = Modifier
+            .background(MaterialTheme.colorScheme.surface))
         {
             Column {
                 Text(text = "Title:")
-                TextField(value = title, onValueChange = {newText -> title = newText})
+                TextField(
+                    value = title,
+                    onValueChange = {newText -> title = newText},
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background))
             }
         }
             },
             confirmButton = {
                 Button(onClick = {
                     if (goalId != null) {
-                        mainViewModel.saveTodo(TodoItem(title = title, completed = false, goalId = goalId))
+                        mainViewModel.saveTodo(
+                            TodoItem(
+                                title = title,
+                                completed = false,
+                                goalId = goalId
+                            )
+                        )
                     } else {
                         mainViewModel.saveGoal(Goal(title = title, completed = false))
                     }

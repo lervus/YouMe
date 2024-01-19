@@ -23,7 +23,7 @@ fun Enter(navController: NavController){
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Button(onClick = { navController.navigate("avatar") }) {
-            Text(text = "Create your Avatar")
+            Text(text = "GO")
         }
     }
 }
