@@ -64,39 +64,41 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
 
 
     val predefinedImageIds = listOf(
-        R.drawable.ic_action_avatar_1,
-        R.drawable.ic_action_avatar_2,
-        R.drawable.ic_action_avatar_3
+        R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
     )
 
-    var dropdownMenuVisible = remember { mutableStateOf(false) }
-    var selectedImageIndex = remember { mutableStateOf(0) }
-    var isAvatarCreated = remember { mutableStateOf(false) }
+    val dropdownMenuVisible = remember { mutableStateOf(false) }
+    val selectedImageIndex = remember { mutableStateOf(0) }
+    val isAvatarCreated = remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(id = R.string.avatar_view),
-            style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = stringResource(id = R.string.avatar_view),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
 
         if (!isAvatarCreated.value) {
             Button(
                 onClick = {
                     dropdownMenuVisible.value = true
-                          },
-                modifier = Modifier
-                    .padding(top = 200.dp),
-                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                },
+                modifier = Modifier.padding(top = 200.dp),
+                shape = RoundedCornerShape(
+                    topStart = 10.dp,
+                    topEnd = 10.dp,
+                    bottomStart = 20.dp,
+                    bottomEnd = 20.dp
+                ),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 10.dp,
-                    pressedElevation = 5.dp
+                    defaultElevation = 10.dp, pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.tertiary,
-                    contentColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.primary, contentColor = Color.White
                 )
             ) {
                 Text(text = stringResource(id = R.string.create_avatar_button))
@@ -109,18 +111,15 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     .background(MaterialTheme.colorScheme.onSecondary)
             ) {
                 predefinedImageIds.forEachIndexed { index, imageId ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedImageIndex.value = index
-                            isAvatarCreated.value = true
-                            dropdownMenuVisible.value = false
-                        },
-                        text = {
-                            Text("Avatar ${index + 1} ",
-                            style = TextStyle(color = Color.Black)
-                            )
-                        }
-                    )
+                    DropdownMenuItem(onClick = {
+                        selectedImageIndex.value = index
+                        isAvatarCreated.value = true
+                        dropdownMenuVisible.value = false
+                    }, text = {
+                        Text(
+                            "Avatar ${index + 1} ", style = TextStyle(color = Color.Black)
+                        )
+                    })
                 }
             }
         } else {
@@ -152,14 +151,12 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 modifier = Modifier
                     .width(buttonWidth)
                     .height(buttonHeight),
-                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                shape = RoundedCornerShape(topEnd = 10.dp, bottomStart = 20.dp),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 10.dp,
-                    pressedElevation = 5.dp
+                    defaultElevation = 10.dp, pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    contentColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.secondary, contentColor = Color.White
                 )
             ) {
                 Text(text = stringResource(id = R.string.me_button))
@@ -175,11 +172,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     .width(buttonWidth)
                     .height(buttonHeight),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 10.dp,
-                    pressedElevation = 5.dp
+                    defaultElevation = 10.dp, pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.tertiary,
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)

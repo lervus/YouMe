@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,9 +34,9 @@ import com.cc221020.ccl3.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
+fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
 
-    mainViewModel.getGoals();
+    mainViewModel.getGoals()
     val state = mainViewModel.mainViewState.collectAsState()
 
     LazyColumn(
@@ -43,87 +44,106 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
             .padding(15.dp)
-    ){
+    ) {
 
         item {
             Text(
                 text = "Your Goals:",
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                color = Color.Black
             )
         }
         items(state.value.goals) {
 
-                Column {
-                    Spacer(modifier = Modifier
+            Column {
+                Spacer(
+                    modifier = Modifier
                         .height(1.dp)
                         .fillMaxWidth()
                         .background(Color.Black)
-                        .padding(1.dp))
-                    Row {
-                        Text(
-                            text = it.title,
-                            modifier = Modifier
-                                .width(150.dp)
-                                .padding(10.dp)
-                                .clickable(onClick = { navController.navigate("GoalView/${it.id}") })
-                        )
-                        IconButton(onClick = { mainViewModel.completeGoal(it)}) {
-                            Icon(Icons.Default.CheckCircle, "Complete")
-                        }
+                        .padding(1.dp)
+                )
+                Row {
+                    Text(
+                        text = it.title,
+                        modifier = Modifier
+                            .width(150.dp)
+                            .padding(10.dp)
+                            .clickable(onClick = { navController.navigate("GoalView/${it.id}") }),
+                        color = Color.Black
+                    )
+                    IconButton(
+                        onClick = { mainViewModel.completeGoal(it) },
+                        modifier = Modifier
+                    ) {
+                        Icon(Icons.Default.CheckCircle, "Complete", tint = Color.Black)
+                    }
 
-                        if(it.completed){
-                            AlertDialog(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                onDismissRequest = {
-                                    mainViewModel.closeAddWindow()
-                                },
-                                title = {
-                                    Column(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
+                    if (it.completed) {
+                        AlertDialog(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            onDismissRequest = {
+                                mainViewModel.closeAddWindow()
+                            },
+                            title = {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Text(
+                                        text = "Did you accomplish your goal?",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = Color.Black
+                                    )
+                                }
+                            },
+                            text = {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            mainViewModel.completeGoal(it)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
                                     ) {
-                                        Text(text = "Did you accomplish your goal?",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            color = Color.Black)
+                                        Text("NO")
                                     }
-                                },
-                                text = {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp),
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Button(
-                                            onClick = {
-                                                mainViewModel.completeGoal(it)
-                                            }
-                                        ) {
-                                            Text("NO")
-                                        }
-                                        Spacer(modifier = Modifier.width(32.dp))
-                                        Button(onClick = {
+                                    Spacer(modifier = Modifier.width(32.dp))
+                                    Button(
+                                        onClick = {
                                             it.completed = false
                                             mainViewModel.editGoal(it)
-                                        }) {
-                                            Text("YES")
-                                        }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary,
+                                            contentColor = Color.Black
+                                        )
+                                    ) {
+                                        Text("YES")
                                     }
-                                },
-                                dismissButton = {
-
-                                },
-                                confirmButton = {
-
                                 }
-                            )
-                        }
+                            },
+                            dismissButton = {
+
+                            },
+                            confirmButton = {
+
+                            }
+                        )
                     }
                 }
             }
         }
     }
+}
