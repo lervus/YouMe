@@ -71,4 +71,4 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel){
             }
         }
     }
-}
+}}
