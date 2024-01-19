@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun BackButton(navController: NavController){
+fun BackButton(navController: NavController) {
     Button(
-        onClick = {navController.navigate("avatar")},
+        onClick = { navController.navigate("avatar") },
         shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 10.dp,

@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun Enter(navController: NavController){
+fun Enter(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Button(onClick = { navController.navigate("avatar") }) {
             Text(text = "GO")
         }

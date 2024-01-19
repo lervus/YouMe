@@ -31,9 +31,9 @@ import com.cc221020.ccl3.MainViewModel
 
 
 @Composable
-fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId: Int){
+fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId: Int) {
 
-    mainViewModel.getTodos(goalId);
+    mainViewModel.getTodos(goalId)
     val state = mainViewModel.mainViewState.collectAsState()
 
     LazyColumn(
@@ -41,7 +41,7 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
             .padding(15.dp)
-    ){
+    ) {
 
         item {
             Text(
@@ -53,73 +53,77 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
         }
         items(state.value.todos) {
 
-                Column {
-                    Spacer(modifier = Modifier
+            Column {
+                Spacer(
+                    modifier = Modifier
                         .height(1.dp)
                         .fillMaxWidth()
                         .background(Color.Black)
-                        .padding(1.dp))
-                    Row {
-                        Text(
-                            text = it.title,
+                        .padding(1.dp)
+                )
+                Row {
+                    Text(
+                        text = it.title,
+                        modifier = Modifier
+                            .width(150.dp)
+                            .padding(10.dp)
+                    )
+                    IconButton(onClick = { mainViewModel.completeTodo(it) }) {
+                        Icon(Icons.Default.CheckCircle, "Complete")
+                    }
+                    if (it.completed) {
+                        AlertDialog(
                             modifier = Modifier
-                                .width(150.dp)
-                                .padding(10.dp)
-                        )
-                        IconButton(onClick = { mainViewModel.completeTodo(it)}) {
-                            Icon(Icons.Default.CheckCircle, "Complete")
-                        }
-                        if(it.completed){
-                            AlertDialog(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                onDismissRequest = {
-                                    mainViewModel.closeAddWindow()
-                                },
-                                title = {
-                                    Column(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ) {
-                                        Text(text = "Is this To-Do done?",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            color = Color.Black)
-                                    }
-                                },
-                                text = {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp),
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Button(
-                                            onClick = {
-                                                mainViewModel.completeTodo(it)
-                                            },
-                                        ) {
-                                            Text("NO")
-                                        }
-                                        Spacer(modifier = Modifier.width(32.dp))
-                                        Button(onClick = {
-                                            it.completed = false
-                                            mainViewModel.editTodo(it)
-                                        }) {
-                                            Text("YES")
-                                        }
-                                    }
-                                },
-                                dismissButton = {
-
-                                },
-                                confirmButton = {
-
+                                .fillMaxWidth(),
+                            onDismissRequest = {
+                                mainViewModel.closeAddWindow()
+                            },
+                            title = {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Text(
+                                        text = "Is this To-Do done?",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = Color.Black
+                                    )
                                 }
-                            )
-                        }
+                            },
+                            text = {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            mainViewModel.completeTodo(it)
+                                        },
+                                    ) {
+                                        Text("NO")
+                                    }
+                                    Spacer(modifier = Modifier.width(32.dp))
+                                    Button(onClick = {
+                                        it.completed = false
+                                        mainViewModel.editTodo(it)
+                                    }) {
+                                        Text("YES")
+                                    }
+                                }
+                            },
+                            dismissButton = {
+
+                            },
+                            confirmButton = {
+
+                            }
+                        )
                     }
                 }
             }
         }
     }
+}

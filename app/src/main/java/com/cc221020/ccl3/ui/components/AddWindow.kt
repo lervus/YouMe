@@ -39,8 +39,10 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
             },
             text = {
 
-                Box(modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface))
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.surface)
+                )
                 {
                     Column {
                         Text(text = "Title:")
@@ -67,7 +69,7 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
                             mainViewModel.saveGoal(Goal(title = title, completed = false))
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
                 ) {
                     Text("Save")
                 }
@@ -75,47 +77,47 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
         )
     }
 }
-    /*
-    else if(isAddingTodo){
+/*
+else if(isAddingTodo){
 
 
-        AlertDialog(
-            onDismissRequest = {
-                mainViewModel.closeAddWindow()
-            },
-            text = {
+    AlertDialog(
+        onDismissRequest = {
+            mainViewModel.closeAddWindow()
+        },
+        text = {
 
-                Box(modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background))
-                {
-                    Column {
-                        Text(text = "Title:")
-                        TextField(
-                            value = title,
-                            onValueChange = {newText -> title = newText},
-                            textStyle = TextStyle(color = Color.Black),
-                        )
-                    }
-                }
-            },
-            confirmButton = {
-                Button(onClick = {
-                    if (goalId != null) {
-                        mainViewModel.saveTodo(
-                            TodoItem(
-                                title = title,
-                                completed = false,
-                                goalId = goalId
-                            )
-                        )
-                    } else {
-                        mainViewModel.saveGoal(Goal(title = title, completed = false))
-                    }
-                }) {
-                    Text("Save")
+            Box(modifier = Modifier
+                .background(MaterialTheme.colorScheme.background))
+            {
+                Column {
+                    Text(text = "Title:")
+                    TextField(
+                        value = title,
+                        onValueChange = {newText -> title = newText},
+                        textStyle = TextStyle(color = Color.Black),
+                    )
                 }
             }
-        )
-    }
+        },
+        confirmButton = {
+            Button(onClick = {
+                if (goalId != null) {
+                    mainViewModel.saveTodo(
+                        TodoItem(
+                            title = title,
+                            completed = false,
+                            goalId = goalId
+                        )
+                    )
+                } else {
+                    mainViewModel.saveGoal(Goal(title = title, completed = false))
+                }
+            }) {
+                Text("Save")
+            }
+        }
+    )
+}
 
-    */
+*/
