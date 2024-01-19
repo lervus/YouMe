@@ -6,14 +6,19 @@ import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.data.GoalDao
 import com.cc221020.ccl3.data.TodoDao
 import com.cc221020.ccl3.data.TodoItem
+import com.cc221020.ccl3.data.User
+import com.cc221020.ccl3.data.UserDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) : ViewModel() {
+class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, private val userDao: UserDao) : ViewModel() {
     private val _goalState = MutableStateFlow(Goal(title = "", completed =  false))
     val goalState: StateFlow<Goal> = _goalState.asStateFlow()
     private val _mainViewState = MutableStateFlow(MainViewState())
@@ -90,27 +95,34 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
         }
         getTodos(todoItem.goalId)
     }
-    /*
-    fun getSpecificItems(itemType: String){
-        viewModelScope.launch{
-            dao.getSpecificItem(itemType).collect(){ allItems ->
-                _mainViewState.update { it.copy(items = allItems) }
+
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            if (isUserInDatabase()) {
+                val userData = getUser()
+                if (userData != null) {
+                    userDao.updateUser(user)
+                }
+            } else {
+                userDao.insertUser(user)
             }
         }
     }
 
-    fun editItem(item: ShelfItem){
-        viewModelScope.launch{
-            _itemState.value = item
-            _mainViewState.update { it.copy(openDialog = true) }
+
+
+    suspend fun getUser(): User? {
+        return withContext(Dispatchers.IO) {
+            userDao.getUser()
         }
     }
 
-    fun updateItem(item: ShelfItem, itemType: String){
-        viewModelScope.launch {
-            dao.updateItem(item)
+
+    suspend fun isUserInDatabase(): Boolean {
+        return withContext(Dispatchers.IO) {
+            val userCount = userDao.getUserCount()
+            userCount > 0
         }
-        //getSpecificItems(itemType)
-        closeDialog()
-    }*/
+    }
+
 }
