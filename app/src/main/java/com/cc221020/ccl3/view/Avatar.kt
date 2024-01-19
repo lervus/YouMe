@@ -61,7 +61,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     ) {
         Text(text = stringResource(id = R.string.avatar_view),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.tertiary)
+            color = MaterialTheme.colorScheme.primary)
 
         if (!isAvatarCreated.value) {
             Button(
@@ -76,7 +76,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White
                 )
             ) {
@@ -160,7 +160,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.tertiary,
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)

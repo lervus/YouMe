@@ -20,7 +20,7 @@ fun BackButton(navController: NavController){
             pressedElevation = 5.dp
         ),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White
         )
     ) {

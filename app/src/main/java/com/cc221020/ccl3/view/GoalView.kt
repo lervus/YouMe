@@ -89,7 +89,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                     pressedElevation = 1.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White
                 ),
                 shape = CircleShape

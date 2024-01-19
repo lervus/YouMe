@@ -66,7 +66,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(MaterialTheme.colorScheme.tertiary)
                     .padding(16.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
@@ -83,7 +83,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
                 pressedElevation = 1.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.tertiary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.White
             ),
             shape = CircleShape
