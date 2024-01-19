@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.data.TodoItem
+import com.cc221020.ccl3.data.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +52,9 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
                     } else {
                         mainViewModel.saveGoal(Goal(title = title, completed = false))
                     }
-                }) {
+                    mainViewModel.updateUser(User(xp = 20, selectedSkin = title, wellBeingScore = 0))
+                }
+                ) {
                     Text("Save")
                 }
             }

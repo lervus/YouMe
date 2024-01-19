@@ -13,12 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
-import com.cc221020.ccl3.data.Book
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import java.io.File
+import com.cc221020.ccl3.data.User
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
@@ -38,7 +33,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
             Button(onClick = { navController.navigate("you") }) {
                 Text(text = "You")
             }
-        }
         }
     }
 }
