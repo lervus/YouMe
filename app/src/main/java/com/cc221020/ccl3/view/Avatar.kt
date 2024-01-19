@@ -65,25 +65,7 @@ import androidx.compose.material3.DropdownMenuItem
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
-    var context = LocalContext.current
-    var jsonReturn by remember {
-        mutableStateOf(" ")
-    }
-    var myObj: Book
 
-    val buttonWidth = 150.dp
-    val buttonHeight = 150.dp
-
-
-    val predefinedImageIds = listOf(
-        R.drawable.ic_action_avatar_1,
-        R.drawable.ic_action_avatar_2,
-        R.drawable.ic_action_avatar_3
-    )
-
-    var dropdownMenuVisible = remember { mutableStateOf(false) }
-    var selectedImageIndex = remember { mutableStateOf(0) }
-    var isAvatarCreated = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
