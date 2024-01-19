@@ -63,11 +63,19 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     }
 
     fun closeAddWindow(){
-
         _mainViewState.update { it.copy(addGoal = false) }
+        _mainViewState.update { it.copy(completed = false) }
 
     }
 
+    fun editGoal(goal: Goal){
+        viewModelScope.launch {
+            _mainViewState.update { it.copy(completed = false) }
+            _goalState.update { it.copy(title = goal.title, completed = goal.completed) }
+        }
+        deleteGoal(goal)
+    }
+    //private
     fun deleteGoal(goal: Goal){
         viewModelScope.launch {
             goalDao.deleteGoal(goal = goal)
@@ -75,10 +83,21 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getGoals()
     }
 
+    //private
     fun deleteTodo(todoItem: TodoItem){
         viewModelScope.launch {
             todoDao.deleteTodoItem(todoItem)
         }
+        getTodos(todoItem.goalId)
+    }
+
+
+    fun editTodo(todoItem: TodoItem){
+        viewModelScope.launch {
+            _mainViewState.update { it.copy(completed = false) }
+            _goalState.update { it.copy(title = todoItem.title, completed = todoItem.completed) }
+        }
+        deleteTodo(todoItem)
         getTodos(todoItem.goalId)
     }
 
