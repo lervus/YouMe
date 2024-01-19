@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
-import com.cc221020.ccl3.data.Book
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -65,6 +64,19 @@ import androidx.compose.material3.DropdownMenuItem
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
+    val buttonWidth = 150.dp
+    val buttonHeight = 150.dp
+
+
+    val predefinedImageIds = listOf(
+        R.drawable.ic_action_avatar_1,
+        R.drawable.ic_action_avatar_2,
+        R.drawable.ic_action_avatar_3
+    )
+
+    var dropdownMenuVisible = remember { mutableStateOf(false) }
+    var selectedImageIndex = remember { mutableStateOf(0) }
+    var isAvatarCreated = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
