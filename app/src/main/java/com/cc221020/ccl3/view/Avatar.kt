@@ -27,7 +27,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
@@ -54,14 +56,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.Objects
 import com.cc221020.ccl3.R
-import com.cc221020.ccl3.data.Goal
-import com.cc221020.ccl3.ui.theme.Primary80
-import com.cc221020.ccl3.ui.theme.Secondary80
-import com.cc221020.ccl3.ui.theme.MaterialTheme
-import java.io.File
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import com.cc221020.ccl3.data.User
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
@@ -122,7 +116,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                             dropdownMenuVisible.value = false
                         },
                         text = {
-                            Text("Avatar ${index + 1} ")
+                            Text("Avatar ${index + 1} ",
+                            style = TextStyle(color = Color.Black)
+                            )
                         }
                     )
                 }

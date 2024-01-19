@@ -83,6 +83,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel){
                 pressedElevation = 1.dp
             ),
             colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,
                 contentColor = Color.White
             ),
             shape = CircleShape
