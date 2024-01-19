@@ -68,7 +68,12 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     dropdownMenuVisible.value = true
                 },
                 modifier = Modifier.padding(top = 200.dp),
-                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                shape = RoundedCornerShape(
+                    topStart = 10.dp,
+                    topEnd = 10.dp,
+                    bottomStart = 20.dp,
+                    bottomEnd = 20.dp
+                ),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp, pressedElevation = 5.dp
                 ),
@@ -126,7 +131,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 modifier = Modifier
                     .width(buttonWidth)
                     .height(buttonHeight),
-                shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+                shape = RoundedCornerShape(topEnd = 10.dp, bottomStart = 20.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp, pressedElevation = 5.dp
                 ),

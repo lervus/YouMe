@@ -14,7 +14,12 @@ import androidx.navigation.NavController
 fun BackButton(navController: NavController) {
     Button(
         onClick = { navController.navigate("avatar") },
-        shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+        shape = RoundedCornerShape(
+            topStart = 20.dp,
+            topEnd = 20.dp,
+            bottomStart = 10.dp,
+            bottomEnd = 10.dp
+        ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 10.dp,
             pressedElevation = 5.dp
