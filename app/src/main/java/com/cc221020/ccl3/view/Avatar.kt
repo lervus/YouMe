@@ -60,7 +60,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = stringResource(id = R.string.avatar_view),
-            style = MaterialTheme.typography.titleLarge)
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.tertiary)
 
         if (!isAvatarCreated.value) {
             Button(

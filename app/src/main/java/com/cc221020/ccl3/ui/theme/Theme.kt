@@ -29,13 +29,13 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Main80,
+    primary = Primary80,
     secondary = Secondary80,
-    tertiary = Primary80,
+    tertiary = Complementary80,
     onPrimary = Bonus80,
     onSecondary = Bonus40,
     onTertiary = Main80,
-    background = Secondary60,
+    background = Main80,
     onBackground = Primary80,
     onSurface = Main60
 )
