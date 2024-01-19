@@ -57,10 +57,11 @@ import com.cc221020.ccl3.R
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.ui.theme.Primary80
 import com.cc221020.ccl3.ui.theme.Secondary80
-import com.cc221020.ccl3.ui.theme.YouMeTheme
+import com.cc221020.ccl3.ui.theme.MaterialTheme
 import java.io.File
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import com.cc221020.ccl3.data.User
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel){
@@ -80,26 +81,27 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(id = R.string.avatar_view))
+        Text(text = stringResource(id = R.string.avatar_view),
+            style = MaterialTheme.typography.titleLarge)
 
         if (!isAvatarCreated.value) {
             Button(
                 onClick = {
                     dropdownMenuVisible.value = true
                           },
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(top = 200.dp),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
                     pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.tertiary,
                     contentColor = Color.White
                 )
             ) {
@@ -110,7 +112,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 onDismissRequest = { dropdownMenuVisible.value = false },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface)
+                    .background(MaterialTheme.colorScheme.onSecondary)
             ) {
                 predefinedImageIds.forEachIndexed { index, imageId ->
                     DropdownMenuItem(
@@ -120,7 +122,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                             dropdownMenuVisible.value = false
                         },
                         text = {
-                            Text("Avatar $index")
+                            Text("Avatar ${index + 1} ")
                         }
                     )
                 }
@@ -160,7 +162,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.secondary,
                     contentColor = Color.White
                 )
             ) {
@@ -181,7 +183,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                     pressedElevation = 5.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp)
@@ -189,9 +191,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel){
                 Text(text = stringResource(id = R.string.you_button))
             }
         }
+
     }
-}
-
-fun DropdownMenuItem(onClick: () -> Unit, interactionSource: () -> Unit) {
-
 }

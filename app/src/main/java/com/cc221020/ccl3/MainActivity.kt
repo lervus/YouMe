@@ -6,18 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.data.YouDatabase
 import com.cc221020.ccl3.data.YouDatabase.Companion.migration1to2
-import com.cc221020.ccl3.ui.theme.YouMeTheme
+import com.cc221020.ccl3.ui.theme.Typography
+import com.cc221020.ccl3.ui.theme.MaterialTheme
 import com.cc221020.ccl3.view.MainView
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            YouMeTheme {
+            MaterialTheme(content = {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -45,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     }
                     MainView(mainViewModel)
                 }
-            }
+            }, colorScheme = colorScheme, typography = Typography)
         }
     }
 }

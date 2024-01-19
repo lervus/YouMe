@@ -3,7 +3,8 @@ package com.cc221020.ccl3.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -15,34 +16,39 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Main80,
-    secondary = Bonus80,
-    tertiary = Secondary60
-)
-
 private val LightColorScheme = lightColorScheme(
     primary = Primary80,
     secondary = Secondary80,
-    tertiary = Complementary80
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    tertiary = Complementary80,
+    onPrimary = Main80,
+    onSecondary = Bonus40,
+    onTertiary = Main80,
+    onBackground = Main60,
+    background = Complementary20,
+    onSurface = Primary80
 )
 
+private val DarkColorScheme = darkColorScheme(
+    primary = Main80,
+    secondary = Secondary80,
+    tertiary = Primary80,
+    onPrimary = Bonus80,
+    onSecondary = Bonus40,
+    onTertiary = Main80,
+    background = Secondary60,
+    onBackground = Primary80,
+    onSurface = Main60
+)
+
+
 @Composable
-fun YouMeTheme(
+fun MaterialTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    colorScheme: ColorScheme,
+    typography: Typography
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
