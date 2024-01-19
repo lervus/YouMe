@@ -89,9 +89,13 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
                                     Text(text = "Did you accomplish your goal?")
                                 },
                                 dismissButton = {
-                                    Button(onClick = {
+                                    Button(
+                                        onClick = {
                                         mainViewModel.completeGoal(it)
-                                    }) {
+                                    },
+                                        modifier = Modifier
+                                            .padding(16.dp,1.dp,16.dp,1.dp)
+                                        ) {
                                         Text("NO")
                                     }
                                 },
@@ -99,7 +103,9 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
                                     Button(onClick = {
                                         it.completed = false
                                         mainViewModel.editGoal(it)
-                                        }) {
+                                        },
+                                        modifier = Modifier
+                                            .padding(16.dp,1.dp,16.dp,1.dp)) {
                                         Text("YES")
                                     }
                                 }

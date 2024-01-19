@@ -1,9 +1,5 @@
 package com.cc221020.ccl3.view
 
-import android.content.res.Resources
-import android.os.Bundle
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,23 +7,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,17 +30,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
-import com.cc221020.ccl3.data.Goal
-import com.cc221020.ccl3.ui.theme.Primary80
-import com.cc221020.ccl3.ui.theme.Secondary80
-import com.cc221020.ccl3.ui.theme.YouMeTheme
-import java.io.File
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
@@ -112,7 +96,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                             dropdownMenuVisible.value = false
                         },
                         text = {
-                            Text("Avatar ${index + 1} ")
+                            Text("Avatar ${index + 1} ",
+                            style = TextStyle(color = Color.Black)
+                            )
                         }
                     )
                 }
