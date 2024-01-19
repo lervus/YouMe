@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 abstract class YouDatabase : RoomDatabase() {
     abstract val goalDao: GoalDao
     abstract val todoDao: TodoDao
-
+/*
     companion object {
         private const val DATABASE_NAME = "You.db"
 
@@ -31,4 +31,5 @@ abstract class YouDatabase : RoomDatabase() {
             }
         }
     }
+    */
 }
