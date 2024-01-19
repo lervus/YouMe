@@ -3,7 +3,6 @@ package com.cc221020.ccl3.view
 import android.content.res.Resources
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
