@@ -65,7 +65,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(MaterialTheme.colorScheme.onSecondary)
                     .padding(16.dp),
                 contentAlignment = Alignment.TopCenter
             )
@@ -89,6 +89,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                     pressedElevation = 1.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
                     contentColor = Color.White
                 ),
                 shape = CircleShape

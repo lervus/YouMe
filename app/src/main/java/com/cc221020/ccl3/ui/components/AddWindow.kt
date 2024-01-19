@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,13 +25,13 @@ import com.cc221020.ccl3.data.TodoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
+fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
 
     val state = mainViewModel.mainViewState.collectAsState()
     var title: String by rememberSaveable { mutableStateOf(" ") }
     title = ""
 
-    if(state.value.addGoal){
+    if (state.value.addGoal) {
 
         AlertDialog(
             onDismissRequest = {
@@ -38,19 +39,64 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
             },
             text = {
 
-        Box(modifier = Modifier
-            .background(MaterialTheme.colorScheme.surface))
-        {
-            Column {
-                Text(text = "Title:")
-                TextField(
-                    value = title,
-                    onValueChange = {newText -> title = newText},
-                    textStyle = TextStyle(color = Color.Black),
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background))
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surface))
+                {
+                    Column {
+                        Text(text = "Title:")
+                        TextField(
+                            value = title,
+                            onValueChange = { newText -> title = newText },
+                            textStyle = TextStyle(color = Color.Black),
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (goalId != null) {
+                            mainViewModel.saveTodo(
+                                TodoItem(
+                                    title = title,
+                                    completed = false,
+                                    goalId = goalId
+                                )
+                            )
+                        } else {
+                            mainViewModel.saveGoal(Goal(title = title, completed = false))
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)
+                ) {
+                    Text("Save")
+                }
             }
-        }
+        )
+    }
+}
+    /*
+    else if(isAddingTodo){
+
+
+        AlertDialog(
+            onDismissRequest = {
+                mainViewModel.closeAddWindow()
+            },
+            text = {
+
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background))
+                {
+                    Column {
+                        Text(text = "Title:")
+                        TextField(
+                            value = title,
+                            onValueChange = {newText -> title = newText},
+                            textStyle = TextStyle(color = Color.Black),
+                        )
+                    }
+                }
             },
             confirmButton = {
                 Button(onClick = {
@@ -70,5 +116,6 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?){
                 }
             }
         )
-}
-}
+    }
+
+    */
