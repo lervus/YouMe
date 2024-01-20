@@ -27,7 +27,7 @@ fun MainView(mainViewModel: MainViewModel){
             modifier = Modifier.padding(it),
             startDestination = "enter"
         ){
-            composable("me"){ MeView(navController) }
+            composable("me"){ MeView(navController, mainViewModel) }
             composable("you"){ YouView(navController, mainViewModel) }
             composable( "avatar"){ Avatar(navController, mainViewModel) }
             composable( "enter"){ Enter(navController) }

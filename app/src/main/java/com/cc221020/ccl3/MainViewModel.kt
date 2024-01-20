@@ -125,6 +125,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             } else {
                 userDao.insertUser(user)
             }
+            _mainViewState.update { it.copy(userInfo = user) }
         }
     }
 

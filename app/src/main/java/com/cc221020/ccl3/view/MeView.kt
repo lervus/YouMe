@@ -8,13 +8,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.ui.components.BackButton
 
 @Composable
-fun MeView(navController: NavController){
+fun MeView(navController: NavController, mainViewModel: MainViewModel){
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,6 +27,6 @@ fun MeView(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = "This is the Me Page")
+        Text(text = state.value.userInfo.toString())
     }
 }
