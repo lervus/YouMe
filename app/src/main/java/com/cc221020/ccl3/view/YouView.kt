@@ -75,6 +75,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                 )
             )
         }
+
     ) { paddingValues ->
         Column(
             modifier = Modifier
