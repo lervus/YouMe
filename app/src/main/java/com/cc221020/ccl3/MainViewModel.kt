@@ -59,7 +59,6 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao) 
     fun closeAddWindow() {
         _mainViewState.update { it.copy(addGoal = false) }
         _mainViewState.update { it.copy(completed = false) }
-
     }
 
     fun editGoal(goal: Goal) {

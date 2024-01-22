@@ -14,11 +14,9 @@ import com.cc221020.ccl3.MainViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainView(mainViewModel: MainViewModel) {
-
     val state = mainViewModel.mainViewState.collectAsState()
-
     val navController = rememberNavController()
-    Scaffold() {
+    Scaffold {
         NavHost(
             navController = navController,
             modifier = Modifier.padding(it),
