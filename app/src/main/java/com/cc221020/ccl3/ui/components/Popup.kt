@@ -25,7 +25,7 @@ import com.cc221020.ccl3.MainViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun InfoPopup(xp: Int, mainViewModel: MainViewModel) {
+fun InfoPopup(mainViewModel: MainViewModel) {
 
     val state = mainViewModel.mainViewState.collectAsState()
 
