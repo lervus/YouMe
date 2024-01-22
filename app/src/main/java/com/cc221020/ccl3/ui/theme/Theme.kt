@@ -3,8 +3,7 @@ package com.cc221020.ccl3.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.Typography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -17,9 +16,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val LightColorScheme = lightColorScheme(
-    primary = Primary80,
+    primary = Complementary80,
     secondary = Secondary80,
-    tertiary = Complementary80,
+    tertiary = Primary80,
     onPrimary = Main80,
     onSecondary = Bonus40,
     onTertiary = Main80,
@@ -29,28 +28,26 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Main80,
+    primary = Complementary80,
     secondary = Secondary80,
     tertiary = Primary80,
     onPrimary = Bonus80,
     onSecondary = Bonus40,
     onTertiary = Main80,
-    background = Secondary60,
+    background = Main80,
     onBackground = Primary80,
     onSurface = Main60
 )
 
 
 @Composable
-fun MaterialTheme(
+fun YouMeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
-    colorScheme: ColorScheme,
-    typography: Typography
+    content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
+    val colorScheme = LightColorScheme/*when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -58,7 +55,7 @@ fun MaterialTheme(
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
-    }
+    }*/
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

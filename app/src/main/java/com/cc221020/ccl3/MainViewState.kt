@@ -9,5 +9,7 @@ data class MainViewState(
     val todos: List<TodoItem> = emptyList(),
     var addGoal: Boolean = false,
     var completed: Boolean = false,
+    var showXpPopup: Boolean = false,
+    var xpChange: Int = 0,
     var userInfo: User = User()
 )
