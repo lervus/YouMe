@@ -141,6 +141,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 Button(
                     onClick = {
                         if (state.value.userInfo.xp < 100) {
+                            selectedImageIndex.value = 0
+                            mainViewModel.updateUser(state.value.userInfo.copy(selectedSkin = selectedImageIndex.value))
                             isAvatarCreated.value = true
                         } else {
                             isVisible.value = true
