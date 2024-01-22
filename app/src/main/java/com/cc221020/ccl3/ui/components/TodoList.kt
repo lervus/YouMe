@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
@@ -50,7 +51,7 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.CenterHorizontally),
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onTertiary
             )
         }
         items(state.value.todos) {
@@ -60,7 +61,7 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                     modifier = Modifier
                         .height(1.dp)
                         .fillMaxWidth()
-                        .background(Color.Black)
+                        .background(MaterialTheme.colorScheme.onTertiary)
                         .padding(1.dp)
                 )
                 Row {
@@ -69,12 +70,12 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                         modifier = Modifier
                             .width(150.dp)
                             .padding(10.dp),
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onTertiary
                     )
                     IconButton(onClick = { mainViewModel.completeTodo(it) },
                         modifier = Modifier
                     ) {
-                        Icon(Icons.Default.CheckCircle, "Complete", tint = Color.Black)
+                        Icon(Icons.Default.CheckCircle, "Complete", tint = MaterialTheme.colorScheme.onTertiary)
                     }
                     if (it.completed) {
                         AlertDialog(
@@ -89,10 +90,16 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.Center
                                 ) {
+                                    val backgroundColor = MaterialTheme.colorScheme.background
+                                    val textColor = if (backgroundColor.luminance() > 0.5) {
+                                        MaterialTheme.colorScheme.onTertiary
+                                    } else {
+                                        Color.White
+                                    }
                                     Text(
                                         text = "Is this To-Do done?",
                                         style = MaterialTheme.typography.titleMedium,
-                                        color = Color.Black
+                                        color = textColor
                                     )
                                 }
                             },
@@ -109,7 +116,7 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                                         },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.primary,
-                                            contentColor = Color.Black
+                                            contentColor = MaterialTheme.colorScheme.onTertiary
                                         )
                                     ) {
                                         Text("NO")
@@ -122,7 +129,7 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                                         },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.primary,
-                                            contentColor = Color.Black
+                                            contentColor = MaterialTheme.colorScheme.onTertiary
                                         )
                                     ) {
                                         Text("YES")

@@ -1,5 +1,6 @@
 package com.cc221020.ccl3
 
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cc221020.ccl3.data.Goal
@@ -9,11 +10,11 @@ import com.cc221020.ccl3.data.TodoItem
 import com.cc221020.ccl3.data.User
 import com.cc221020.ccl3.data.UserDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +25,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     private val _mainViewState = MutableStateFlow(MainViewState())
     val mainViewState: StateFlow<MainViewState> = _mainViewState.asStateFlow()
 
-    fun saveGoal(goal: Goal){
+    fun saveGoal(goal: Goal) {
         viewModelScope.launch {
             goalDao.insertGoal(goal)
         }
@@ -32,23 +33,23 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getGoals()
     }
 
-    fun getGoals(){
+    fun getGoals() {
         viewModelScope.launch {
-            goalDao.getGoal().collect(){ allGoals ->
+            goalDao.getGoal().collect() { allGoals ->
                 _mainViewState.update { it.copy(goals = allGoals) }
             }
         }
     }
 
-    fun getTodos(goalId: Int){
+    fun getTodos(goalId: Int) {
         viewModelScope.launch {
-            todoDao.getTodoItem(goalId).collect(){ allTodos ->
+            todoDao.getTodoItem(goalId).collect() { allTodos ->
                 _mainViewState.update { it.copy(todos = allTodos) }
             }
         }
     }
 
-    fun saveTodo(todoItem: TodoItem){
+    fun saveTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             todoDao.insertTodoItem(todoItem)
         }
@@ -56,15 +57,17 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getTodos(todoItem.goalId)
     }
 
-    fun addGoal(){
+    fun addGoal() {
         viewModelScope.launch {
             _mainViewState.update { it.copy(addGoal = true) }
         }
     }
 
     fun closeAddWindow(){
-        _mainViewState.update { it.copy(addGoal = false) }
-        _mainViewState.update { it.copy(completed = false) }
+        viewModelScope.launch{
+            _mainViewState.update { it.copy(addGoal = false) }
+            _mainViewState.update { it.copy(completed = false) }
+        }
 
     }
 
@@ -72,19 +75,23 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         viewModelScope.launch {
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = goal.title, completed = goal.completed) }
+
+            deleteGoal(goal).join()
+
+            //onComplete.invoke()
         }
-        deleteGoal(goal)
-    }
-    //private
-    fun deleteGoal(goal: Goal){
-        viewModelScope.launch {
-            goalDao.deleteGoal(goal = goal)
-        }
-        getGoals()
     }
 
     //private
-    fun deleteTodo(todoItem: TodoItem){
+    fun deleteGoal(goal: Goal): Job {
+        return viewModelScope.launch {
+            goalDao.deleteGoal(goal = goal)
+            getGoals()
+        }
+    }
+
+    //private
+    fun deleteTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             todoDao.deleteTodoItem(todoItem)
         }
@@ -92,7 +99,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     }
 
 
-    fun editTodo(todoItem: TodoItem){
+    fun editTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = todoItem.title, completed = todoItem.completed) }
@@ -101,16 +108,23 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getTodos(todoItem.goalId)
     }
 
-    fun completeGoal(goal: Goal){
+    fun completeGoal(goal: Goal) {
         viewModelScope.launch {
-            goalDao.updateGoal(Goal(id = goal.id,title = goal.title, completed = !goal.completed))
+            goalDao.updateGoal(Goal(id = goal.id, title = goal.title, completed = !goal.completed))
         }
         getGoals()
     }
 
-    fun completeTodo(todoItem: TodoItem){
+    fun completeTodo(todoItem: TodoItem) {
         viewModelScope.launch {
-            todoDao.updateTodoItem(TodoItem(todoItem.id, todoItem.title, !todoItem.completed, todoItem.goalId))
+            todoDao.updateTodoItem(
+                TodoItem(
+                    todoItem.id,
+                    todoItem.title,
+                    !todoItem.completed,
+                    todoItem.goalId
+                )
+            )
         }
         getTodos(todoItem.goalId)
     }
@@ -125,10 +139,9 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             } else {
                 userDao.insertUser(user)
             }
+            _mainViewState.update { it.copy(userInfo = user) }
         }
     }
-
-
 
     suspend fun getUser(): User? {
         return withContext(Dispatchers.IO) {
@@ -144,4 +157,26 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         }
     }
 
+    fun showPopup(xp: Int){
+        _mainViewState.update { it.copy(showXpPopup = true, xpChange = xp) }
+    }
+
+    fun closeXpPopup(){
+        _mainViewState.update { it.copy(showXpPopup = false) }
+    }
+
+    fun userAddXp(xp: Int){
+        showPopup(xp)
+        viewModelScope.launch {
+            getUserData()
+            updateUser(_mainViewState.value.userInfo.copy(xp = _mainViewState.value.userInfo.xp + xp))
+        }
+    }
+
+    fun getUserData(){
+        viewModelScope.launch {
+            var data = getUser()
+            if(data != null){ _mainViewState.update { it.copy(userInfo = data)}}
+        }
+    }
 }
