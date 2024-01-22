@@ -40,7 +40,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Goals",
+                        text = "YOU",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )

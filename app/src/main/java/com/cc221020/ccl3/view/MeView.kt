@@ -57,7 +57,7 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Personal",
+                        text = "ME",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
