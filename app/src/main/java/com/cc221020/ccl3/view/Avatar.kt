@@ -104,7 +104,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Current XP: ${state.value.userInfo.xp}")
+            Text(
+                text = "Current XP: ${state.value.userInfo.xp}",
+                style = MaterialTheme.typography.titleSmall
+            )
             Spacer(modifier = Modifier.height(4.dp))
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -120,6 +123,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     IconButton(onClick = {
+                        mainViewModel.userAddXp(101)
                         // mainViewModel.completeDaily(it)
                     }
                     ) {
@@ -134,8 +138,11 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {
-                        isAvatarCreated.value = true
-                        //dropdownMenuVisible.value = true
+                        if (state.value.userInfo.xp < 100) {
+                            isAvatarCreated.value = true
+                        } else {
+                            dropdownMenuVisible.value = true
+                        }
                     }, modifier = Modifier.padding(top = 200.dp), shape = RoundedCornerShape(
                         topStart = 10.dp, topEnd = 10.dp, bottomStart = 20.dp, bottomEnd = 20.dp
                     ), elevation = ButtonDefaults.buttonElevation(
