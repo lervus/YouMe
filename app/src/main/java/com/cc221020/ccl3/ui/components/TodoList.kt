@@ -91,6 +91,7 @@ fun TodoList(navController: NavController ,mainViewModel: MainViewModel, goalId:
                                 confirmButton = {
                                     Button(onClick = {
                                         it.completed = false
+                                        mainViewModel.userAddXp(10)
                                         mainViewModel.editTodo(it)
                                     }) {
                                         Text("YES")

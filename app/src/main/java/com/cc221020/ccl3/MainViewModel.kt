@@ -125,10 +125,9 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             } else {
                 userDao.insertUser(user)
             }
+            _mainViewState.update { it.copy(userInfo = user) }
         }
     }
-
-
 
     suspend fun getUser(): User? {
         return withContext(Dispatchers.IO) {
@@ -142,6 +141,19 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             val userCount = userDao.getUserCount()
             userCount > 0
         }
+    }
+
+    fun showPopup(xp: Int){
+        _mainViewState.update { it.copy(showXpPopup = true, xpChange = xp) }
+    }
+
+    fun closeXpPopup(){
+        _mainViewState.update { it.copy(showXpPopup = false) }
+    }
+
+    fun userAddXp(xp: Int){
+        showPopup(xp)
+        updateUser(mainViewState.value.userInfo.copy(xp = mainViewState.value.userInfo.xp + xp))
     }
 
 }
