@@ -46,6 +46,6 @@ fun MainView(mainViewModel: MainViewModel) {
             }
             composable("settings"){ SettingView(navController, mainViewModel)}
         }
-        InfoPopup(xp = 0, mainViewModel)
+        InfoPopup(mainViewModel)
     }
 }
