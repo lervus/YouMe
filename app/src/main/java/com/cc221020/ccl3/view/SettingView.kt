@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -22,21 +24,35 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.ui.components.BackButton
+import kotlin.reflect.typeOf
 
+@ExperimentalMaterial3Api
 @Composable
 fun SettingView(navController: NavController, mainViewModel: MainViewModel){
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -93,10 +109,51 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel){
                                 .padding(16.dp),
                             contentAlignment = Alignment.TopCenter
                         ) {
+                            var waterIntakeGoal by remember { mutableStateOf("") }
 
+                            Column {
+                                OutlinedTextField(
+                                    value = waterIntakeGoal,
+                                    onValueChange = { newValue ->
+                                        if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
+                                            waterIntakeGoal = newValue
+                                        }
+                                    },
+                                    label = { Text("Water Goal in liters") },
+                                    keyboardOptions = KeyboardOptions.Default.copy(
+                                        imeAction = androidx.compose.ui.text.input.ImeAction.Done,
+                                        keyboardType = KeyboardType.Number
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Button(
+                                    onClick = {
+                                        if (waterIntakeGoal.isNotEmpty()) {
+
+                                            val goal = waterIntakeGoal.toFloat()
+                                            println("Entered water intake goal: $goal liters")
+                                            mainViewModel.updateUser(state.value.userInfo.copy(waterGoal = goal))
+                                        } else {
+                                            println("Please enter a valid water intake goal")
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                ) {
+                                    Text("Set Water Intake Goal")
+                                }
+                            }
                         }
+
                     }
                     Spacer(modifier = Modifier.height(1.dp))
+                    Text(text = "Avatar")
                     Card(
                         modifier = Modifier
                             .height(200.dp)
@@ -113,7 +170,6 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel){
                             contentAlignment = Alignment.TopCenter
                         ) {
                             // Food
-                            Text(text = "DIS DRANK")
                         }
                     }
                     BackButton(navController = navController)
