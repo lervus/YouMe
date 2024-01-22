@@ -58,7 +58,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
     )
-    val dropdownMenuVisible = remember { mutableStateOf(false) }
+    val isVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
     Scaffold(
@@ -111,12 +111,13 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stringResource(id = R.string.challenge4),
+                        text = stringResource(id = R.string.challenge7),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Spacer(modifier = Modifier.height(4.dp))
+
                     IconButton(onClick = {
-                        mainViewModel.userAddXp(101)
+                        mainViewModel.userAddXp(10)
                         // mainViewModel.completeDaily(it)
                     }
                     ) {
@@ -126,6 +127,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                             tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
+
                 }
             }
             if (!isAvatarCreated.value) {
@@ -134,7 +136,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                         if (state.value.userInfo.xp < 100) {
                             isAvatarCreated.value = true
                         } else {
-                            dropdownMenuVisible.value = true
+                            isVisible.value = true
                         }
                     }, modifier = Modifier.padding(top = 200.dp), shape = RoundedCornerShape(
                         topStart = 10.dp, topEnd = 10.dp, bottomStart = 20.dp, bottomEnd = 20.dp
@@ -148,8 +150,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     Text(text = stringResource(id = R.string.create_avatar_button))
                 }
                 DropdownMenu(
-                    expanded = dropdownMenuVisible.value,
-                    onDismissRequest = { dropdownMenuVisible.value = false },
+                    expanded = isVisible.value,
+                    onDismissRequest = { isVisible.value = false },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
@@ -158,7 +160,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                         DropdownMenuItem(onClick = {
                             selectedImageIndex.value = index
                             isAvatarCreated.value = true
-                            dropdownMenuVisible.value = false
+                            isVisible.value = false
                         }, text = {
                             Text(
                                 "Avatar ${index + 1} ", style = TextStyle(color = Color.Black)
