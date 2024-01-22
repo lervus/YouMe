@@ -2,10 +2,12 @@ package com.cc221020.ccl3.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,7 +18,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,6 +46,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -151,9 +158,13 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         .width(300.dp)
                         .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.secondary)
+                        .background(MaterialTheme.colorScheme.secondary),
+                    contentAlignment = Alignment.Center
                 ){
-                    Row(){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        skinSelect(mainViewModel)
                     }
                 }
             }
@@ -163,7 +174,9 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
 }
 
 @Composable
-fun skinSelect(){
+fun skinSelect(mainViewModel: MainViewModel){
+
+    val state =  mainViewModel.mainViewState.collectAsState()
 
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
@@ -171,19 +184,52 @@ fun skinSelect(){
 
     val selectedImageIndex = remember { mutableStateOf(0) }
 
-    /*state.value.userInfo.selectedSkin?.let {
+    state.value.userInfo.selectedSkin?.let {
         selectedImageIndex.value = it
-    }*/
+    }
 
-    Image(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(max = 1000.dp)
-            .aspectRatio(1f)
-            .scale(0.5f)
-            .padding(8.dp)
-            .clip(MaterialTheme.shapes.medium),
-        painter = painterResource(id = predefinedImageIds[selectedImageIndex.value]),
-        contentDescription = stringResource(id = R.string.avatar_image)
-    )
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        items(predefinedImageIds) { imageId ->
+            if(imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: -1]) {
+                Box(
+                    modifier = Modifier
+                        .size(80.dp, 125.dp)
+                        .background(MaterialTheme.colorScheme.primary)
+                        .border(4.dp, MaterialTheme.colorScheme.tertiary, shape = RoundedCornerShape(0.dp))
+                        .clip(RoundedCornerShape(15.dp)),
+                )  {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(6.dp)),
+                        contentScale = ContentScale.FillBounds,
+                        painter = painterResource(id = imageId),
+                        contentDescription = stringResource(id = R.string.avatar_image)
+                    )
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .size(80.dp, 125.dp)
+                        .background(MaterialTheme.colorScheme.primary)
+                        .clip(RoundedCornerShape(15.dp)),
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(6.dp))
+                            .clickable(onClick = {
+                                mainViewModel.updateUser(state.value.userInfo.copy(selectedSkin = predefinedImageIds.indexOf(imageId)))
+                            }),
+                        contentScale = ContentScale.FillBounds,
+                        painter = painterResource(id = imageId),
+                        contentDescription = stringResource(id = R.string.avatar_image)
+                    )
+                }
+            }
+        }
+    }
 }
