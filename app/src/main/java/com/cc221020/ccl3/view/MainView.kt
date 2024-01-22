@@ -41,6 +41,7 @@ fun MainView(mainViewModel: MainViewModel){
                 val goal = state.value.goals.firstOrNull { it.id.toString() == goalId}
                 if(goal != null){ GoalView(navController, mainViewModel, goal) }
             }
+            composable("settings"){ SettingView(navController, mainViewModel)}
         }
         if(navController.currentBackStackEntryAsState().value?.destination?.route != "enter" || navController.currentBackStackEntryAsState().value?.destination?.route != "avatar"){
             BackButton(navController = navController)
