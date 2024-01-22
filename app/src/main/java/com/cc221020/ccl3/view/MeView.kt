@@ -196,7 +196,6 @@ fun BoxWithRadialButtonsDrink(
         ) {
             Text(text = buttonText)
             Spacer(modifier = Modifier.height(8.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -208,9 +207,7 @@ fun BoxWithRadialButtonsDrink(
                 RadialButton(selected = false, onClick = {})
                 RadialButton(selected = false, onClick = {})
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Button(
                 onClick = {},
                 modifier = Modifier
@@ -231,7 +228,6 @@ fun BoxWithRadialButtonsDrink(
         }
     }
 }
-
 
 @Composable
 fun RadialButton(

@@ -24,13 +24,10 @@ import com.cc221020.ccl3.ui.components.InfoPopup
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainView(mainViewModel: MainViewModel) {
-
     val state = mainViewModel.mainViewState.collectAsState()
-
     mainViewModel.getUserData()
-
     val navController = rememberNavController()
-    Scaffold() {
+    Scaffold {
         NavHost(
             navController = navController,
             modifier = Modifier.padding(it),

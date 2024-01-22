@@ -58,42 +58,33 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
 
     val buttonWidth = 150.dp
     val buttonHeight = 150.dp
-
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
     )
-
     val dropdownMenuVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.avatar_view),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
-                actions = {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                // mainViewModel.settings()
-                            }
-                            .size(50.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Text(
+                text = stringResource(id = R.string.avatar_view),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
             )
-        }
+        }, actions = {
+            Icon(imageVector = Icons.Filled.Settings,
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable {
+                        // mainViewModel.settings()
+                    }
+                    .size(50.dp),
+                tint = MaterialTheme.colorScheme.primary)
+        }, colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
+        )
+    }
 
     ) { paddingValues ->
         Column(
@@ -107,18 +98,11 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 Button(
                     onClick = {
                         dropdownMenuVisible.value = true
-                    },
-                    modifier = Modifier.padding(top = 200.dp),
-                    shape = RoundedCornerShape(
-                        topStart = 10.dp,
-                        topEnd = 10.dp,
-                        bottomStart = 20.dp,
-                        bottomEnd = 20.dp
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
+                    }, modifier = Modifier.padding(top = 200.dp), shape = RoundedCornerShape(
+                        topStart = 10.dp, topEnd = 10.dp, bottomStart = 20.dp, bottomEnd = 20.dp
+                    ), elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 10.dp, pressedElevation = 5.dp
-                    ),
-                    colors = ButtonDefaults.buttonColors(
+                    ), colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = Color.White
                     )
