@@ -69,7 +69,7 @@ fun MeView(navController: NavController) {
                         contentDescription = null,
                         modifier = Modifier
                             .clickable {
-                                // mainViewModel.settings()
+                                navController.navigate("settings")
                             }
                             .size(50.dp),
                         tint = MaterialTheme.colorScheme.primary

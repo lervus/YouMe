@@ -64,28 +64,34 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val dropdownMenuVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(title = {
-            Text(
-                text = stringResource(id = R.string.avatar_view),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.avatar_view),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                actions = {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable {
+                                navController.navigate("settings")
+                            }
+                            .size(50.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                )
             )
-        }, actions = {
-            Icon(
-                imageVector = Icons.Filled.Settings,
-                contentDescription = null,
-                modifier = Modifier
-                    .clickable {
-                        // mainViewModel.settings()
-                    }
-                    .size(50.dp),
-                tint = MaterialTheme.colorScheme.primary)
-        }, colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        )
-        )
-    }
+        }
 
     ) { paddingValues ->
         Column(
