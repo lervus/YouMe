@@ -32,7 +32,7 @@ import com.cc221020.ccl3.ui.components.GoalList
 fun YouView(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
                         text = "Goals",
