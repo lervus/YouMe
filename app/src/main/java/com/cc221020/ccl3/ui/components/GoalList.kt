@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
@@ -52,7 +53,7 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.CenterHorizontally),
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onTertiary
             )
         }
         items(state.value.goals) {
@@ -62,7 +63,7 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                     modifier = Modifier
                         .height(1.dp)
                         .fillMaxWidth()
-                        .background(Color.Black)
+                        .background(MaterialTheme.colorScheme.onTertiary)
                         .padding(1.dp)
                 )
                 Row {
@@ -72,13 +73,13 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                             .width(150.dp)
                             .padding(10.dp)
                             .clickable(onClick = { navController.navigate("GoalView/${it.id}") }),
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onTertiary
                     )
                     IconButton(
                         onClick = { mainViewModel.completeGoal(it) },
                         modifier = Modifier
                     ) {
-                        Icon(Icons.Default.CheckCircle, "Complete", tint = Color.Black)
+                        Icon(Icons.Default.CheckCircle, "Complete", tint = MaterialTheme.colorScheme.onTertiary)
                     }
 
                     if (it.completed) {
@@ -94,10 +95,16 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.Center
                                 ) {
+                                    val backgroundColor = MaterialTheme.colorScheme.background
+                                    val textColor = if (backgroundColor.luminance() > 0.5) {
+                                        MaterialTheme.colorScheme.onTertiary
+                                    } else {
+                                        Color.White
+                                    }
                                     Text(
                                         text = "Did you accomplish your goal?",
                                         style = MaterialTheme.typography.titleMedium,
-                                        color = Color.Black
+                                        color = textColor
                                     )
                                 }
                             },
@@ -114,7 +121,7 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                         },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.primary,
-                                            contentColor = Color.Black
+                                            contentColor = MaterialTheme.colorScheme.onTertiary
                                         )
                                     ) {
                                         Text("NO")
@@ -127,7 +134,7 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                         },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.primary,
-                                            contentColor = Color.Black
+                                            contentColor = MaterialTheme.colorScheme.onTertiary
                                         )
                                     ) {
                                         Text("YES")

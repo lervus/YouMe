@@ -1,9 +1,12 @@
 package com.cc221020.ccl3.view
 
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +17,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,8 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -32,23 +35,49 @@ import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.ui.components.AddWindow
 import com.cc221020.ccl3.ui.components.BackButton
 import com.cc221020.ccl3.ui.components.TodoList
-
 @Composable
 fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: Goal) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = goal.title,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(15.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp,16.dp)) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Go Back",
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .size(50.dp)
+                    .clickable {
+                        // mainViewModel.settings()
+                    },
+                tint = MaterialTheme.colorScheme.onTertiary
+            )
+            Text(
+                text = goal.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Icon(
+                imageVector = Icons.Filled.Settings,
+                contentDescription = "Settings",
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .size(50.dp)
+                    .clickable {
+                        // mainViewModel.settings()
+                    },
+                tint = MaterialTheme.colorScheme.onTertiary
+            )
+        }
+
         Card(
             modifier = Modifier
                 .height(500.dp)

@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.TextStyle
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
@@ -44,12 +45,18 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
                         .background(MaterialTheme.colorScheme.surface)
                 )
                 {
+                    val backgroundColor = MaterialTheme.colorScheme.background
+                    val textColor = if (backgroundColor.luminance() > 0.5) {
+                        MaterialTheme.colorScheme.onTertiary
+                    } else {
+                        Color.White
+                    }
                     Column {
                         Text(text = "Title:")
                         TextField(
                             value = title,
                             onValueChange = { newText -> title = newText },
-                            textStyle = TextStyle(color = Color.Black),
+                            textStyle = TextStyle(color = textColor),
                         )
                     }
                 }
@@ -77,47 +84,3 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
         )
     }
 }
-/*
-else if(isAddingTodo){
-
-
-    AlertDialog(
-        onDismissRequest = {
-            mainViewModel.closeAddWindow()
-        },
-        text = {
-
-            Box(modifier = Modifier
-                .background(MaterialTheme.colorScheme.background))
-            {
-                Column {
-                    Text(text = "Title:")
-                    TextField(
-                        value = title,
-                        onValueChange = {newText -> title = newText},
-                        textStyle = TextStyle(color = Color.Black),
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            Button(onClick = {
-                if (goalId != null) {
-                    mainViewModel.saveTodo(
-                        TodoItem(
-                            title = title,
-                            completed = false,
-                            goalId = goalId
-                        )
-                    )
-                } else {
-                    mainViewModel.saveGoal(Goal(title = title, completed = false))
-                }
-            }) {
-                Text("Save")
-            }
-        }
-    )
-}
-
-*/

@@ -1,6 +1,7 @@
 package com.cc221020.ccl3.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -40,14 +43,40 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Goals",
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(15.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp,16.dp)) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Go Back",
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .size(50.dp)
+                    .clickable {
+                        // mainViewModel.settings()
+                    },
+                tint = MaterialTheme.colorScheme.onTertiary
+            )
+            Text(
+                text = "Goals",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Icon(
+                imageVector = Icons.Filled.Settings,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .size(50.dp)
+                    .clickable {
+                       // mainViewModel.settings()
+                    },
+                tint = MaterialTheme.colorScheme.onTertiary
+            )
+        }
         Card(
             modifier = Modifier
                 .height(500.dp)
