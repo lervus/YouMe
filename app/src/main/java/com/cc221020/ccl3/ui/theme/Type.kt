@@ -29,5 +29,13 @@ val Typography = Typography(
         fontSize = 18.sp,
         lineHeight = 18.sp,
         letterSpacing = 1.sp
+    ),
+
+    titleSmall = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        lineHeight = 18.sp,
+        letterSpacing = 0.sp
     )
 )

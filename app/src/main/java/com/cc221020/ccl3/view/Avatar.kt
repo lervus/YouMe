@@ -52,9 +52,7 @@ import com.cc221020.ccl3.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
-
     val state = mainViewModel.mainViewState.collectAsState()
-
     val buttonWidth = 150.dp
     val buttonHeight = 150.dp
     val predefinedImageIds = listOf(
@@ -63,7 +61,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val dropdownMenuVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -130,7 +127,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {
-                        dropdownMenuVisible.value = true
+                        isAvatarCreated.value = true
+                        //dropdownMenuVisible.value = true
                     }, modifier = Modifier.padding(top = 200.dp), shape = RoundedCornerShape(
                         topStart = 10.dp, topEnd = 10.dp, bottomStart = 20.dp, bottomEnd = 20.dp
                     ), elevation = ButtonDefaults.buttonElevation(

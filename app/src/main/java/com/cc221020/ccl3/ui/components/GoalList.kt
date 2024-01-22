@@ -79,7 +79,11 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                         onClick = { mainViewModel.completeGoal(it) },
                         modifier = Modifier
                     ) {
-                        Icon(Icons.Default.CheckCircle, "Complete", tint = MaterialTheme.colorScheme.onTertiary)
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            "Complete",
+                            tint = MaterialTheme.colorScheme.onTertiary
+                        )
                     }
 
                     if (it.completed) {
@@ -102,8 +106,8 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                         Color.White
                                     }
                                     Text(
-                                        text = "Did you accomplish your goal?",
-                                        style = MaterialTheme.typography.titleMedium,
+                                        text = "Is this goal done?",
+                                        style = MaterialTheme.typography.titleSmall,
                                         color = textColor
                                     )
                                 }

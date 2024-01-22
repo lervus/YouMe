@@ -98,7 +98,7 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId:
                                     }
                                     Text(
                                         text = "Is this To-Do done?",
-                                        style = MaterialTheme.typography.titleMedium,
+                                        style = MaterialTheme.typography.titleSmall,
                                         color = textColor
                                     )
                                 }
