@@ -98,7 +98,9 @@ fun GoalList(navController: NavController ,mainViewModel: MainViewModel) {
                                 confirmButton = {
                                     Button(onClick = {
                                         it.completed = false
-                                        mainViewModel.editGoal(it)
+                                        mainViewModel.editGoal(it){
+                                            mainViewModel.userAddXp(100)
+                                        }
                                         }) {
                                         Text("YES")
                                     }

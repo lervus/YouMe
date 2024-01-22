@@ -49,10 +49,13 @@ import com.cc221020.ccl3.ui.theme.Secondary80
 import java.io.File
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.collectAsState
 import com.cc221020.ccl3.data.User
 
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
+
+    val state = mainViewModel.mainViewState.collectAsState()
 
     val buttonWidth = 150.dp
     val buttonHeight = 150.dp
@@ -132,6 +135,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
 
         Spacer(modifier = Modifier.weight(1f))
 
+        Text(text = "Current XP: ${state.value.userInfo.xp}")
+
+        Spacer(modifier = Modifier.weight(1f))
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -180,6 +187,5 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 Text(text = stringResource(id = R.string.you_button))
             }
         }
-
     }
 }

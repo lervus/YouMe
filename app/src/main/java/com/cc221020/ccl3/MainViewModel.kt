@@ -1,5 +1,6 @@
 package com.cc221020.ccl3
 
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cc221020.ccl3.data.Goal
@@ -9,6 +10,7 @@ import com.cc221020.ccl3.data.TodoItem
 import com.cc221020.ccl3.data.User
 import com.cc221020.ccl3.data.UserDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,24 +65,29 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     }
 
     fun closeAddWindow(){
-        _mainViewState.update { it.copy(addGoal = false) }
-        _mainViewState.update { it.copy(completed = false) }
+        viewModelScope.launch{
+            _mainViewState.update { it.copy(addGoal = false) }
+            _mainViewState.update { it.copy(completed = false) }
+        }
 
     }
 
-    fun editGoal(goal: Goal){
+    fun editGoal(goal: Goal, onComplete: () -> Unit){
         viewModelScope.launch {
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = goal.title, completed = goal.completed) }
+
+            deleteGoal(goal).join()
+
+            onComplete.invoke()
         }
-        deleteGoal(goal)
     }
     //private
-    fun deleteGoal(goal: Goal){
-        viewModelScope.launch {
+    fun deleteGoal(goal: Goal): Job {
+        return viewModelScope.launch {
             goalDao.deleteGoal(goal = goal)
+            getGoals()
         }
-        getGoals()
     }
 
     //private
@@ -153,7 +160,16 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     fun userAddXp(xp: Int){
         showPopup(xp)
-        updateUser(mainViewState.value.userInfo.copy(xp = mainViewState.value.userInfo.xp + xp))
+        viewModelScope.launch {
+            getUserData()
+            updateUser(_mainViewState.value.userInfo.copy(xp = _mainViewState.value.userInfo.xp + xp))
+        }
     }
 
+    fun getUserData(){
+        viewModelScope.launch {
+            var data = getUser()
+            if(data != null){ _mainViewState.update { it.copy(userInfo = data)}}
+        }
+    }
 }
