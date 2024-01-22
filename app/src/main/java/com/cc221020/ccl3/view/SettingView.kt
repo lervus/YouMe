@@ -53,7 +53,7 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel){
                                 .align(Alignment.CenterStart)
                                 .size(50.dp)
                                 .clickable {
-                                    // mainViewModel.settings()
+                                    navController.navigate("avatar")
                                 },
                             tint = MaterialTheme.colorScheme.onTertiary
                         )
@@ -72,7 +72,7 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel){
                                 .align(Alignment.CenterEnd)
                                 .size(50.dp)
                                 .clickable {
-                                    // mainViewModel.settings()
+                                    navController.navigate("settings")
                                 },
                             tint = MaterialTheme.colorScheme.onTertiary
                         )
@@ -93,8 +93,7 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel){
                                 .padding(16.dp),
                             contentAlignment = Alignment.TopCenter
                         ) {
-                            // Food
-                            Text(text = "Personal")
+
                         }
                     }
                     Spacer(modifier = Modifier.height(1.dp))

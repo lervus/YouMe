@@ -49,12 +49,6 @@ fun MainView(mainViewModel: MainViewModel) {
             }
             composable("settings"){ SettingView(navController, mainViewModel)}
         }
-        if(navController.currentBackStackEntryAsState().value?.destination?.route != "enter" || navController.currentBackStackEntryAsState().value?.destination?.route != "avatar"){
-            BackButton(navController = navController)
-        }
-        IconButton(onClick = { navController.navigate("settings")}) {
-            Icon(imageVector = Icons.Default.Settings, contentDescription = "Settings")
-        }
         InfoPopup(xp = 0, mainViewModel)
     }
 }
