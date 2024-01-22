@@ -61,6 +61,13 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
+
+    state.value.userInfo.selectedSkin?.let {
+        isAvatarCreated.value = true
+        selectedImageIndex.value = it
+    }
+
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -161,6 +168,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                             selectedImageIndex.value = index
                             isAvatarCreated.value = true
                             isVisible.value = false
+                            mainViewModel.updateUser(state.value.userInfo.copy(selectedSkin = selectedImageIndex.value))
                         }, text = {
                             Text(
                                 "Avatar ${index + 1} ", style = TextStyle(color = Color.Black)
