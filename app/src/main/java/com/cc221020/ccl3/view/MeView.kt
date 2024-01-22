@@ -22,13 +22,13 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +43,7 @@ import androidx.navigation.NavController
 fun MeView(navController: NavController) {
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
                         text = "Personal",
@@ -196,7 +196,6 @@ fun BoxWithRadialButtonsDrink(
         ) {
             Text(text = buttonText)
             Spacer(modifier = Modifier.height(8.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -208,9 +207,7 @@ fun BoxWithRadialButtonsDrink(
                 RadialButton(selected = false, onClick = {})
                 RadialButton(selected = false, onClick = {})
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Button(
                 onClick = {},
                 modifier = Modifier
@@ -231,7 +228,6 @@ fun BoxWithRadialButtonsDrink(
         }
     }
 }
-
 
 @Composable
 fun RadialButton(

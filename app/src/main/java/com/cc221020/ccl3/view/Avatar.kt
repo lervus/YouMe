@@ -1,13 +1,10 @@
 package com.cc221020.ccl3.view
 
-import android.content.res.Resources
-import android.os.Bundle
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,17 +18,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -58,11 +57,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
 
     val buttonWidth = 150.dp
     val buttonHeight = 150.dp
-
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
     )
-
     val dropdownMenuVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
@@ -75,7 +72,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
                         text = stringResource(id = R.string.avatar_view),
@@ -109,22 +106,42 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(text = "Current XP: ${state.value.userInfo.xp}")
+            Spacer(modifier = Modifier.height(4.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.challenge1),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    IconButton(onClick = {
+                        // mainViewModel.completeDaily(it)
+                    }
+                    ) {
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            "Complete",
+                            tint = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+            }
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {
                         dropdownMenuVisible.value = true
-                    },
-                    modifier = Modifier.padding(top = 200.dp),
-                    shape = RoundedCornerShape(
-                        topStart = 10.dp,
-                        topEnd = 10.dp,
-                        bottomStart = 20.dp,
-                        bottomEnd = 20.dp
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
+                    }, modifier = Modifier.padding(top = 200.dp), shape = RoundedCornerShape(
+                        topStart = 10.dp, topEnd = 10.dp, bottomStart = 20.dp, bottomEnd = 20.dp
+                    ), elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 10.dp, pressedElevation = 5.dp
-                    ),
-                    colors = ButtonDefaults.buttonColors(
+                    ), colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = Color.White
                     )
@@ -165,11 +182,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 )
             }
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        Text(text = "Current XP: ${state.value.userInfo.xp}")
-
-        Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 modifier = Modifier
