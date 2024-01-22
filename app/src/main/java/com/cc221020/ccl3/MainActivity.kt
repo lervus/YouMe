@@ -15,7 +15,7 @@ import androidx.room.Room
 import com.cc221020.ccl3.data.YouDatabase
 import com.cc221020.ccl3.data.YouDatabase.Companion.migration1to2
 import com.cc221020.ccl3.ui.theme.Typography
-import com.cc221020.ccl3.ui.theme.MaterialTheme
+import com.cc221020.ccl3.ui.theme.YouMeTheme
 import com.cc221020.ccl3.view.MainView
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme(content = {
+            YouMeTheme(content = {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     }
                     MainView(mainViewModel)
                 }
-            }, colorScheme = colorScheme, typography = Typography)
+            }, myColorScheme = colorScheme, myTypography = Typography)
         }
     }
 }

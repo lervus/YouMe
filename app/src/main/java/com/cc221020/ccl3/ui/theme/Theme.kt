@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -42,13 +43,12 @@ private val DarkColorScheme = darkColorScheme(
 
 
 @Composable
-fun MaterialTheme(
+fun YouMeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
-    colorScheme: ColorScheme,
-    typography: Typography
+    myColorScheme: ColorScheme,
+    myTypography: Typography
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -69,8 +69,8 @@ fun MaterialTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
+        colorScheme = myColorScheme,
+        typography = myTypography,
         content = content
     )
 }
