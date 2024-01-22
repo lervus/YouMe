@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,6 +23,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,9 +33,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.R
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.ui.components.AddWindow
 import com.cc221020.ccl3.ui.components.TodoList
@@ -85,9 +90,26 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Challenge of the day:")
+            Text(
+                text = stringResource(id = R.string.challenge7),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            IconButton(onClick = {
+                mainViewModel.userAddXp(10)
+                // mainViewModel.completeDaily(it)
+            }
+            ) {
+                Icon(
+                    Icons.Default.CheckCircle,
+                    "Complete",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
             Card(
                 modifier = Modifier
                     .height(500.dp)
@@ -126,7 +148,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                 ),
                 shape = CircleShape
             ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add button")
             }
             // BackButton(navController = navController)
         }
