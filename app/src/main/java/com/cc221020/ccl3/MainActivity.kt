@@ -18,8 +18,10 @@ import com.cc221020.ccl3.view.MainView
 class MainActivity : ComponentActivity() {
     private val db by lazy {
         Room.databaseBuilder(this, YouDatabase::class.java, "You.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
