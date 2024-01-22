@@ -15,16 +15,21 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun BackButton(navController: NavController){
+fun BackButton(navController: NavController) {
     Button(
-        onClick = {navController.navigate("avatar")},
-        shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 20.dp),
+        onClick = { navController.navigate("avatar") },
+        shape = RoundedCornerShape(
+            topStart = 20.dp,
+            topEnd = 20.dp,
+            bottomStart = 10.dp,
+            bottomEnd = 10.dp
+        ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 10.dp,
             pressedElevation = 5.dp
         ),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White
         )
     ) {

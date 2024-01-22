@@ -33,7 +33,7 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Primary80,
     onPrimary = Bonus80,
     onSecondary = Bonus40,
-    onTertiary = Complementary80,
+    onTertiary = Main80,
     background = Main80,
     onBackground = Primary80,
     onSurface = Main60
@@ -47,7 +47,7 @@ fun YouMeTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = LightColorScheme /*{
+    val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -55,7 +55,7 @@ fun YouMeTheme(
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
-    }*/
+    }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

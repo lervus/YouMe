@@ -15,7 +15,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,7 +25,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     private val _mainViewState = MutableStateFlow(MainViewState())
     val mainViewState: StateFlow<MainViewState> = _mainViewState.asStateFlow()
 
-    fun saveGoal(goal: Goal){
+    fun saveGoal(goal: Goal) {
         viewModelScope.launch {
             goalDao.insertGoal(goal)
         }
@@ -34,23 +33,23 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getGoals()
     }
 
-    fun getGoals(){
+    fun getGoals() {
         viewModelScope.launch {
-            goalDao.getGoal().collect(){ allGoals ->
+            goalDao.getGoal().collect() { allGoals ->
                 _mainViewState.update { it.copy(goals = allGoals) }
             }
         }
     }
 
-    fun getTodos(goalId: Int){
+    fun getTodos(goalId: Int) {
         viewModelScope.launch {
-            todoDao.getTodoItem(goalId).collect(){ allTodos ->
+            todoDao.getTodoItem(goalId).collect() { allTodos ->
                 _mainViewState.update { it.copy(todos = allTodos) }
             }
         }
     }
 
-    fun saveTodo(todoItem: TodoItem){
+    fun saveTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             todoDao.insertTodoItem(todoItem)
         }
@@ -58,7 +57,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getTodos(todoItem.goalId)
     }
 
-    fun addGoal(){
+    fun addGoal() {
         viewModelScope.launch {
             _mainViewState.update { it.copy(addGoal = true) }
         }
@@ -82,6 +81,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             onComplete.invoke()
         }
     }
+
     //private
     fun deleteGoal(goal: Goal): Job {
         return viewModelScope.launch {
@@ -91,7 +91,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     }
 
     //private
-    fun deleteTodo(todoItem: TodoItem){
+    fun deleteTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             todoDao.deleteTodoItem(todoItem)
         }
@@ -99,7 +99,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     }
 
 
-    fun editTodo(todoItem: TodoItem){
+    fun editTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = todoItem.title, completed = todoItem.completed) }
@@ -108,16 +108,23 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         getTodos(todoItem.goalId)
     }
 
-    fun completeGoal(goal: Goal){
+    fun completeGoal(goal: Goal) {
         viewModelScope.launch {
-            goalDao.updateGoal(Goal(id = goal.id,title = goal.title, completed = !goal.completed))
+            goalDao.updateGoal(Goal(id = goal.id, title = goal.title, completed = !goal.completed))
         }
         getGoals()
     }
 
-    fun completeTodo(todoItem: TodoItem){
+    fun completeTodo(todoItem: TodoItem) {
         viewModelScope.launch {
-            todoDao.updateTodoItem(TodoItem(todoItem.id, todoItem.title, !todoItem.completed, todoItem.goalId))
+            todoDao.updateTodoItem(
+                TodoItem(
+                    todoItem.id,
+                    todoItem.title,
+                    !todoItem.completed,
+                    todoItem.goalId
+                )
+            )
         }
         getTodos(todoItem.goalId)
     }

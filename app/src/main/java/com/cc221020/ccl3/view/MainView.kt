@@ -23,27 +23,29 @@ import com.cc221020.ccl3.ui.components.InfoPopup
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView(mainViewModel: MainViewModel){
+fun MainView(mainViewModel: MainViewModel) {
 
     val state = mainViewModel.mainViewState.collectAsState()
 
     mainViewModel.getUserData()
 
     val navController = rememberNavController()
-    Scaffold(){
+    Scaffold() {
         NavHost(
             navController = navController,
             modifier = Modifier.padding(it),
             startDestination = "enter"
-        ){
-            composable("me"){ MeView(navController) }
-            composable("you"){ YouView(navController, mainViewModel) }
-            composable( "avatar"){ Avatar(navController, mainViewModel) }
-            composable( "enter"){ Enter(navController) }
-            composable("goalView/{goalId}"){ backStackEntry ->
+        ) {
+            composable("me") { MeView(navController) }
+            composable("you") { YouView(navController, mainViewModel) }
+            composable("avatar") { Avatar(navController, mainViewModel) }
+            composable("enter") { Enter(navController) }
+            composable("goalView/{goalId}") { backStackEntry ->
                 val goalId = backStackEntry.arguments?.getString("goalId")
-                val goal = state.value.goals.firstOrNull { it.id.toString() == goalId}
-                if(goal != null){ GoalView(navController, mainViewModel, goal) }
+                val goal = state.value.goals.firstOrNull { it.id.toString() == goalId }
+                if (goal != null) {
+                    GoalView(navController, mainViewModel, goal)
+                }
             }
             composable("settings"){ SettingView(navController, mainViewModel)}
         }
