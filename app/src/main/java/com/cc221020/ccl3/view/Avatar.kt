@@ -111,7 +111,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stringResource(id = R.string.challenge1),
+                        text = stringResource(id = R.string.challenge4),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Spacer(modifier = Modifier.height(4.dp))
