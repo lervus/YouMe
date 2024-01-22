@@ -71,14 +71,14 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     }
 
-    fun editGoal(goal: Goal, onComplete: () -> Unit){
+    fun editGoal(goal: Goal){
         viewModelScope.launch {
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = goal.title, completed = goal.completed) }
 
             deleteGoal(goal).join()
 
-            onComplete.invoke()
+            //onComplete.invoke()
         }
     }
 
