@@ -7,4 +7,5 @@ import androidx.room.RoomDatabase
 abstract class YouDatabase : RoomDatabase() {
     abstract val goalDao: GoalDao
     abstract val todoDao: TodoDao
+    //  abstract val userDao: UserDao
 }

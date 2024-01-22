@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -57,14 +57,15 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
     Scaffold(topBar = {
-        TopAppBar(title = {
+        CenterAlignedTopAppBar(title = {
             Text(
                 text = stringResource(id = R.string.avatar_view),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
         }, actions = {
-            Icon(imageVector = Icons.Filled.Settings,
+            Icon(
+                imageVector = Icons.Filled.Settings,
                 contentDescription = null,
                 modifier = Modifier
                     .clickable {
