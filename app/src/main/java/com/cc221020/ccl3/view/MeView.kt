@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,22 +26,32 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeView(navController: NavController) {
+fun MeView(navController: NavController, mainViewModel: MainViewModel) {
+    var selectedFoodButton by remember { mutableStateOf(0) }
+    var selectedDrinkButton by remember { mutableStateOf(0) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -86,45 +97,63 @@ fun MeView(navController: NavController) {
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(paddingValues),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                BoxWithRadialButtonsFood(
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Challenge of the day:")
+                Text(
+                    text = stringResource(id = R.string.challenge7),
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                IconButton(onClick = {
+                    mainViewModel.userAddXp(10)
+                    // mainViewModel.completeDaily(it)
+                }
+                ) {
+                    Icon(
+                        Icons.Default.CheckCircle,
+                        "Complete",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+                BoxWithRadioButtonsFood(
+                    mainViewModel = mainViewModel,
                     modifier = Modifier
                         .height(200.dp)
                         .width(300.dp)
                         .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium),
                     boxColor = MaterialTheme.colorScheme.secondary,
-                    buttonText = "DIS FOOD"
-                )
-
+                    buttonText = "DIS FOOD",
+                    selectedRadioIndex = selectedFoodButton
+                ) { selectedFoodButton = it }
                 Spacer(modifier = Modifier.height(1.dp))
-
-                BoxWithRadialButtonsDrink(
+                BoxWithRadioButtonsDrink(
+                    mainViewModel = mainViewModel,
                     modifier = Modifier
                         .height(200.dp)
                         .width(300.dp)
                         .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium),
                     boxColor = MaterialTheme.colorScheme.secondary,
-                    buttonText = "DIS DRANK"
-                )
-
-                // BackButton(navController = navController)
+                    buttonText = "DIS DRANK",
+                    selectedRadioIndex = selectedDrinkButton
+                ) { selectedDrinkButton = it }
             }
         },
         containerColor = MaterialTheme.colorScheme.background
     )
 }
 
-
 @Composable
-fun BoxWithRadialButtonsFood(
+fun BoxWithRadioButtonsFood(
     modifier: Modifier,
     boxColor: Color,
-    buttonText: String
+    buttonText: String,
+    selectedRadioIndex: Int,
+    mainViewModel: MainViewModel,
+    onSelected: (Int) -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -148,15 +177,26 @@ fun BoxWithRadialButtonsFood(
                     .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                RadialButton(selected = true, onClick = {})
-                RadialButton(selected = false, onClick = {})
-                RadialButton(selected = false, onClick = {})
+                (0..2).forEach { index ->
+                    RadioButton(
+                        selected = selectedRadioIndex == index,
+                        onClick = {
+                            onSelected(index)
+                        }
+                    )
+                }
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Button(
-                onClick = {},
+                onClick = {
+                    if (selectedRadioIndex == 0) {
+                        mainViewModel.userAddXp(10)
+                    } else if (selectedRadioIndex == 1) {
+                        mainViewModel.userAddXp(20)
+                    } else if (selectedRadioIndex == 2) {
+                        mainViewModel.userAddXp(30)
+                    }
+                },
                 modifier = Modifier
                     .padding(1.dp)
                     .size(70.dp),
@@ -177,10 +217,13 @@ fun BoxWithRadialButtonsFood(
 }
 
 @Composable
-fun BoxWithRadialButtonsDrink(
+fun BoxWithRadioButtonsDrink(
     modifier: Modifier,
     boxColor: Color,
-    buttonText: String
+    buttonText: String,
+    selectedRadioIndex: Int,
+    mainViewModel: MainViewModel,
+    onSelected: (Int) -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -202,14 +245,30 @@ fun BoxWithRadialButtonsDrink(
                     .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                RadialButton(selected = true, onClick = {})
-                RadialButton(selected = false, onClick = {})
-                RadialButton(selected = false, onClick = {})
-                RadialButton(selected = false, onClick = {})
+                (0..3).forEach { index ->
+                    RadioButton(
+                        selected = selectedRadioIndex == index,
+                        onClick = {
+                            onSelected(index)
+                        }
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Button(
-                onClick = {},
+                onClick = {
+                    if (selectedRadioIndex == 0) {
+                        mainViewModel.userAddXp(10)
+                    } else if (selectedRadioIndex == 1) {
+                        mainViewModel.userAddXp(20)
+                    } else if (selectedRadioIndex == 2) {
+                        mainViewModel.userAddXp(30)
+                    } else if (selectedRadioIndex == 3) {
+                        mainViewModel.userAddXp(40)
+                    }
+                },
                 modifier = Modifier
                     .padding(1.dp)
                     .size(70.dp),
@@ -227,12 +286,4 @@ fun BoxWithRadialButtonsDrink(
             }
         }
     }
-}
-
-@Composable
-fun RadialButton(
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    RadioButton(selected = selected, onClick = onClick)
 }
