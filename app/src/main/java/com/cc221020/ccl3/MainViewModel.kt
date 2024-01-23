@@ -1,5 +1,7 @@
 package com.cc221020.ccl3
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +20,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, private val userDao: UserDao) : ViewModel() {
     private val _goalState = MutableStateFlow(Goal(title = "", completed =  false))
@@ -175,6 +182,29 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         viewModelScope.launch {
             var data = getUser()
             if(data != null){ _mainViewState.update { it.copy(userInfo = data)}}
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun checkTime() {
+
+        val challenges: List<Int> = listOf(R.string.challenge1,R.string.challenge2, R.string.challenge3, R.string.challenge4, R.string.challenge5, R.string.challenge6, R.string.challenge7)
+
+        viewModelScope.launch {
+            var data = getUser()
+            if (data != null) {
+                _mainViewState.update { it.copy(userInfo = data) }
+            }
+        }
+
+        val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
+        val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+        if(currentDateString != lastUpdateTimeString) {
+            var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
+            index++
+            if(index > challenges.size){index = 0}
+            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false))
         }
     }
 }

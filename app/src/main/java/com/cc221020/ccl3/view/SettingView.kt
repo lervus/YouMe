@@ -99,6 +99,8 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                
+                Text(text = "Personal", style = MaterialTheme.typography.headlineLarge)
 
                 Box(
                     modifier = Modifier
@@ -145,12 +147,13 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                                     .fillMaxWidth()
                                     .padding(8.dp)
                             ) {
-                                Text("Set Water Intake Goal")
+                                Text("Save")
                             }
                         }
                 }
 
                 Spacer(modifier = Modifier.height(1.dp))
+                Text(text = "Avatar", style = MaterialTheme.typography.headlineLarge)
 
                 Box(
                     modifier = Modifier
@@ -196,11 +199,12 @@ fun skinSelect(mainViewModel: MainViewModel){
             if(imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: -1]) {
                 Box(
                     modifier = Modifier
-                        .size(80.dp, 125.dp)
+                        .height(125.dp)
+                        .width(80.dp)
+                        .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
+                        .border(4.dp ,MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.primary)
-                        .border(4.dp, MaterialTheme.colorScheme.tertiary, shape = RoundedCornerShape(0.dp))
-                        .clip(RoundedCornerShape(15.dp)),
-                )  {
+                ) {
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
@@ -213,16 +217,23 @@ fun skinSelect(mainViewModel: MainViewModel){
             } else {
                 Box(
                     modifier = Modifier
-                        .size(80.dp, 125.dp)
+                        .height(125.dp)
+                        .width(80.dp)
+                        .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.primary)
-                        .clip(RoundedCornerShape(15.dp)),
                 ) {
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(RoundedCornerShape(6.dp))
                             .clickable(onClick = {
-                                mainViewModel.updateUser(state.value.userInfo.copy(selectedSkin = predefinedImageIds.indexOf(imageId)))
+                                mainViewModel.updateUser(
+                                    state.value.userInfo.copy(
+                                        selectedSkin = predefinedImageIds.indexOf(
+                                            imageId
+                                        )
+                                    )
+                                )
                             }),
                         contentScale = ContentScale.FillBounds,
                         painter = painterResource(id = imageId),
