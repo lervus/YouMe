@@ -204,7 +204,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
             var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
             index++
             if(index > challenges.size){index = 0}
-            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f))
+            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false))
         }
     }
 }

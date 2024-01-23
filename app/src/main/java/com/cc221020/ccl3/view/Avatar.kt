@@ -129,8 +129,10 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     Spacer(modifier = Modifier.height(4.dp))
 
                     IconButton(onClick = {
-                        mainViewModel.userAddXp(10)
-                        // mainViewModel.completeDaily(it)
+                        if(!state.value.userInfo.dailyComplete){
+                            mainViewModel.userAddXp(10)
+                            mainViewModel.updateUser(state.value.userInfo.copy(dailyComplete = true))
+                        }
                     }
                     ) {
                         Icon(
