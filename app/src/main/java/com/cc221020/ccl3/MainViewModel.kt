@@ -13,6 +13,7 @@ import com.cc221020.ccl3.data.User
 import com.cc221020.ccl3.data.UserDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -173,8 +174,10 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     fun userAddXp(xp: Int){
         showPopup(xp)
         viewModelScope.launch {
-            getUserData()
-            updateUser(_mainViewState.value.userInfo.copy(xp = _mainViewState.value.userInfo.xp + xp))
+            val data = getUser()
+            if (data != null){
+                updateUser(data.copy(xp = data.xp + xp))
+            }
         }
     }
 
@@ -191,20 +194,37 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         val challenges: List<Int> = listOf(R.string.challenge1,R.string.challenge2, R.string.challenge3, R.string.challenge4, R.string.challenge5, R.string.challenge6, R.string.challenge7)
 
         viewModelScope.launch {
+
+            val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
+            val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
             var data = getUser()
             if (data != null) {
                 _mainViewState.update { it.copy(userInfo = data) }
+                if(currentDateString != lastUpdateTimeString) {
+                    var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
+                    index++
+                    if(index >= challenges.size){index = 0}
+                    updateUser(data.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false))
+                }
+            }
+
+        }
+    }
+
+    fun completeDaily(){
+
+        viewModelScope.launch {
+
+            val xpJob = async{userAddXp(10)}
+            xpJob.await()
+
+            val data = getUser()
+            if(data != null){
+                updateUser(data.copy(dailyComplete = true))
             }
         }
 
-        val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
-        val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-
-        if(currentDateString != lastUpdateTimeString) {
-            var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
-            index++
-            if(index > challenges.size){index = 0}
-            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false))
-        }
     }
+
 }
