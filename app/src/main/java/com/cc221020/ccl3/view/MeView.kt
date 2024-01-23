@@ -33,6 +33,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +53,9 @@ import com.cc221020.ccl3.R
 fun MeView(navController: NavController, mainViewModel: MainViewModel) {
     var selectedFoodButton by remember { mutableStateOf(0) }
     var selectedDrinkButton by remember { mutableStateOf(0) }
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -103,12 +107,14 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Challenge of the day:")
                 Text(
-                    text = stringResource(id = R.string.challenge7),
+                    text = stringResource(id = state.value.userInfo.currentDaily),
                     style = MaterialTheme.typography.titleSmall,
                 )
                 IconButton(onClick = {
-                    mainViewModel.userAddXp(10)
-                    // mainViewModel.completeDaily(it)
+                    if(!state.value.userInfo.dailyComplete){
+                        mainViewModel.userAddXp(10)
+                        mainViewModel.updateUser(state.value.userInfo.copy(dailyComplete = true))
+                    }
                 }
                 ) {
                     Icon(

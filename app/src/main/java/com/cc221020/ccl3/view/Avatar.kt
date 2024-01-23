@@ -118,31 +118,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = stringResource(id = state.value.userInfo.currentDaily),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
 
-                    IconButton(onClick = {
-                        if(!state.value.userInfo.dailyComplete){
-                            mainViewModel.userAddXp(10)
-                            mainViewModel.updateUser(state.value.userInfo.copy(dailyComplete = true))
-                        }
-                    }
-                    ) {
-                        Icon(
-                            Icons.Default.CheckCircle,
-                            "Complete",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-
-                }
             }
             if (!isAvatarCreated.value) {
                 Button(

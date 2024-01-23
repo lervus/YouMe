@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -35,6 +36,9 @@ import com.cc221020.ccl3.ui.components.GoalList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YouView(navController: NavController, mainViewModel: MainViewModel) {
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -94,12 +98,14 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Challenge of the day:")
                     Text(
-                        text = stringResource(id = R.string.challenge7),
+                        text = stringResource(id = state.value.userInfo.currentDaily),
                         style = MaterialTheme.typography.titleSmall,
                     )
                     IconButton(onClick = {
-                        mainViewModel.userAddXp(10)
-                        // mainViewModel.completeDaily(it)
+                        if(!state.value.userInfo.dailyComplete){
+                            mainViewModel.userAddXp(10)
+                            mainViewModel.updateUser(state.value.userInfo.copy(dailyComplete = true))
+                        }
                     }
                     ) {
                         Icon(
