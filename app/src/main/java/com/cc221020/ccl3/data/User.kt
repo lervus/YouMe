@@ -2,6 +2,7 @@ package com.cc221020.ccl3.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.cc221020.ccl3.R
 
 @Entity(tableName = "User")
 data class User (
@@ -13,6 +14,6 @@ data class User (
     val sleepGoal: Float = 7f,
     val dailyComplete: Boolean = false,
     val waterProgress: Float = 0f,
-    val currentDaily: String = "",
+    val currentDaily: Int = R.string.challenge1,
     val lastTimeUpdate: String = ""
 )

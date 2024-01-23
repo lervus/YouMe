@@ -123,7 +123,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stringResource(id = R.string.challenge7),
+                        text = stringResource(id = state.value.userInfo.currentDaily),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Spacer(modifier = Modifier.height(4.dp))

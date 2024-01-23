@@ -188,6 +188,8 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkTime() {
 
+        val challenges: List<Int> = listOf(R.string.challenge1,R.string.challenge2, R.string.challenge3, R.string.challenge4, R.string.challenge5, R.string.challenge6, R.string.challenge7)
+
         viewModelScope.launch {
             var data = getUser()
             if (data != null) {
@@ -199,7 +201,10 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         if(currentDateString != lastUpdateTimeString) {
-            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString))
+            var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
+            index++
+            if(index > challenges.size){index = 0}
+            updateUser(mainViewState.value.userInfo.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f))
         }
     }
 }
