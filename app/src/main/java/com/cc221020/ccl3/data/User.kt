@@ -10,5 +10,9 @@ data class User (
     val selectedSkin: Int? = null,
     val wellBeingScore: Int = 0,
     val waterGoal: Float = 2f,
-    val sleepGoal: Float = 7f
+    val sleepGoal: Float = 7f,
+    val dailyComplete: Boolean = false,
+    val waterProgress: Float = 0f,
+    val currentDaily: String = "",
+    val lastTimeUpdate: String = ""
 )

@@ -1,5 +1,7 @@
 package com.cc221020.ccl3.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,6 +51,7 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
@@ -61,6 +64,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
+
+    mainViewModel.checkTime()
 
     state.value.userInfo.selectedSkin?.let {
         isAvatarCreated.value = true
