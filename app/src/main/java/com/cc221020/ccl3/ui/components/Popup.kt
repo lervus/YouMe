@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.cc221020.ccl3.MainViewModel
 import kotlinx.coroutines.delay
@@ -32,20 +33,22 @@ fun InfoPopup(mainViewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .padding(top = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         if(state.value.showXpPopup){
             Box(
                 modifier = Modifier
-                    .width(200.dp)
-                    .background(color = MaterialTheme.colorScheme.primary)
+                    .width(300.dp)
+                    .background(color = MaterialTheme.colorScheme.primary, shape = MaterialTheme.shapes.medium)
+                    .padding(5.dp)
             ){
                 Text(text = "Good Job! You earned ${state.value.xpChange}XP!")
             }
             LaunchedEffect(key1 = state.value.showXpPopup) {
-                delay(4000)
+                delay(3000)
                 mainViewModel.closeXpPopup()
             }
         }
