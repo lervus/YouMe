@@ -66,6 +66,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isAvatarCreated = remember { mutableStateOf(false) }
 
     mainViewModel.checkTime()
+    mainViewModel.calcWellB()
 
     state.value.userInfo.selectedSkin?.let {
         isAvatarCreated.value = true
@@ -113,6 +114,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 text = "XP: ${state.value.userInfo.xp}",
                 style = MaterialTheme.typography.titleLarge
             )
+            Text(text = "Wellbeing Score: ${state.value.userInfo.wellBeingScore}")
             Spacer(modifier = Modifier.height(4.dp))
             Box(
                 modifier = Modifier.fillMaxWidth(),

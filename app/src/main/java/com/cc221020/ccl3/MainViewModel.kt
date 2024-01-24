@@ -80,10 +80,16 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     fun editGoal(goal: Goal){
         viewModelScope.launch {
+            async {userAddXp(10)}.await()
+            val data = async {getUser()}.await()
+            data?.let {
+                async { updateUser(data.copy(goalsCompleted = data.goalsCompleted + 1)) }.await()
+            }
+
             _mainViewState.update { it.copy(completed = false) }
             _goalState.update { it.copy(title = goal.title, completed = goal.completed) }
+
             deleteGoal(goal).join()
-            //onComplete.invoke()
         }
         deleteGoal(goal)
     }
@@ -138,9 +144,9 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     fun updateUser(user: User) {
         viewModelScope.launch {
             if (isUserInDatabase()) {
-                val userData = getUser()
+                val userData = async {getUser()}.await()
                 if (userData != null) {
-                    userDao.updateUser(user)
+                    async {userDao.updateUser(user)}.await()
                 }
             } else {
                 userDao.insertUser(user)
@@ -176,7 +182,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         viewModelScope.launch {
             val data = getUser()
             if (data != null){
-                updateUser(data.copy(xp = data.xp + xp))
+                async {updateUser(data.copy(xp = data.xp + xp))}.await()
             }
         }
     }
@@ -209,7 +215,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
                     var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
                     index++
                     if(index >= challenges.size){index = 0}
-                    updateUser(data.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false))
+                    updateUser(data.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false, goalsCompleted = 0, foodScore = 0f))
                 }
             }
 
@@ -228,7 +234,26 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
                 updateUser(it.copy(dailyComplete = true))
             }
         }
+    }
 
+    fun calcWellB(){
+
+        viewModelScope.launch {
+
+            var wb = 0
+
+            val data: User? = async {getUser()}.await()
+            data?.let {
+
+                if(data.waterProgress >= data.waterGoal) wb++
+                if(data.dailyComplete) wb++
+                if(data.goalsCompleted >= 3) wb++
+                if(data.foodScore >= 1) wb++
+
+                updateUser(data.copy(wellBeingScore = wb))
+
+            }
+        }
 
     }
 
