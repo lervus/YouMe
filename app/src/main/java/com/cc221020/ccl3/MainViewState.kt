@@ -11,5 +11,6 @@ data class MainViewState(
     var completed: Boolean = false,
     var showXpPopup: Boolean = false,
     var xpChange: Int = 0,
-    var userInfo: User = User()
+    var userInfo: User = User(),
+    var showInfo: Boolean = false
 )

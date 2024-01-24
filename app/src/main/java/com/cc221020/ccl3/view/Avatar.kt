@@ -1,9 +1,12 @@
 package com.cc221020.ccl3.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +20,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +31,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,7 +52,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
+import com.cc221020.ccl3.ui.components.InfoBox
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
@@ -58,6 +67,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
+
+    mainViewModel.checkTime()
+    mainViewModel.calcWellB()
 
     state.value.userInfo.selectedSkin?.let {
         isAvatarCreated.value = true
@@ -74,6 +86,15 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { mainViewModel.openInfo() }) {
+                        Icon(imageVector = Icons.Default.Info,
+                            contentDescription = "Information Button",
+                            modifier = Modifier
+                                .size(50.dp),
+                            tint = MaterialTheme.colorScheme.primary)
+                    }
                 },
                 actions = {
                     Icon(
@@ -105,6 +126,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 text = "XP: ${state.value.userInfo.xp}",
                 style = MaterialTheme.typography.titleLarge
             )
+            //Text(text = "Wellbeing Score: ${state.value.userInfo.wellBeingScore}")
+            Spacer(modifier = Modifier.height(4.dp))
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {

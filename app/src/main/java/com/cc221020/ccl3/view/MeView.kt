@@ -33,6 +33,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,12 +47,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
+import com.cc221020.ccl3.ui.components.DailyChallenge
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MeView(navController: NavController, mainViewModel: MainViewModel) {
     var selectedFoodButton by remember { mutableStateOf(0) }
     var selectedDrinkButton by remember { mutableStateOf(0) }
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -100,23 +105,7 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Challenge of the day:")
-                Text(
-                    text = stringResource(id = R.string.challenge7),
-                    style = MaterialTheme.typography.titleSmall,
-                )
-                IconButton(onClick = {
-                    mainViewModel.userAddXp(10)
-                    // mainViewModel.completeDaily(it)
-                }
-                ) {
-                    Icon(
-                        Icons.Default.CheckCircle,
-                        "Complete",
-                        tint = MaterialTheme.colorScheme.onBackground
-                    )
-                }
+                DailyChallenge(mainViewModel)
                 BoxWithRadioButtonsFood(
                     mainViewModel = mainViewModel,
                     modifier = Modifier

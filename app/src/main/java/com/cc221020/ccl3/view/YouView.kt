@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -30,14 +31,21 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
 import com.cc221020.ccl3.ui.components.AddWindow
+import com.cc221020.ccl3.ui.components.DailyChallenge
 import com.cc221020.ccl3.ui.components.GoalList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YouView(navController: NavController, mainViewModel: MainViewModel) {
+
+    val state = mainViewModel.mainViewState.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier
+                    //.height(80.dp)
+                       .background(MaterialTheme.colorScheme.background),
                 title = {
                     Text(
                         text = "YOU",
@@ -45,7 +53,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                         color = MaterialTheme.colorScheme.primary
                     )
                 },
-                modifier = Modifier.background(MaterialTheme.colorScheme.background),
+
                 navigationIcon = {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -92,24 +100,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Challenge of the day:")
-                    Text(
-                        text = stringResource(id = R.string.challenge7),
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                    IconButton(onClick = {
-                        mainViewModel.userAddXp(10)
-                        // mainViewModel.completeDaily(it)
-                    }
-                    ) {
-                        Icon(
-                            Icons.Default.CheckCircle,
-                            "Complete",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-
+                    DailyChallenge(mainViewModel)
                 }
             }
             Card(

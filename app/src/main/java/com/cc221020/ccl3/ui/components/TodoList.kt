@@ -30,12 +30,13 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.data.Goal
 
 
 @Composable
-fun TodoList(navController: NavController, mainViewModel: MainViewModel, goalId: Int) {
+fun TodoList(navController: NavController, mainViewModel: MainViewModel, goal: Goal) {
 
-    mainViewModel.getTodos(goalId)
+    mainViewModel.getTodos(goal.id)
     val state = mainViewModel.mainViewState.collectAsState()
 
     LazyColumn(
