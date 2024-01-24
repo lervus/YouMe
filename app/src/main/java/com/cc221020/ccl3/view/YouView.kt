@@ -43,6 +43,9 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier
+                    //.height(80.dp)
+                       .background(MaterialTheme.colorScheme.background),
                 title = {
                     Text(
                         text = "YOU",
@@ -50,7 +53,7 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                         color = MaterialTheme.colorScheme.primary
                     )
                 },
-                modifier = Modifier.background(MaterialTheme.colorScheme.background),
+
                 navigationIcon = {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,

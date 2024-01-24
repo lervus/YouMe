@@ -113,22 +113,25 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         var waterIntakeGoal by remember { mutableStateOf("") }
 
                         Column {
-                            OutlinedTextField(
-                                value = waterIntakeGoal,
-                                onValueChange = { newValue ->
-                                    if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
-                                        waterIntakeGoal = newValue
-                                    }
-                                },
-                                label = { Text("Water Goal in liters") },
-                                keyboardOptions = KeyboardOptions.Default.copy(
-                                    imeAction = ImeAction.Done,
-                                    keyboardType = KeyboardType.Number
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                            )
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)){
+                                Text(text = "Daily water goal:", style = MaterialTheme.typography.titleSmall)
+                                OutlinedTextField(
+                                    value = waterIntakeGoal,
+                                    onValueChange = { newValue ->
+                                        if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
+                                            waterIntakeGoal = newValue
+                                        }
+                                    },
+                                    label = { Text("Liters") },
+                                    keyboardOptions = KeyboardOptions.Default.copy(
+                                        imeAction = ImeAction.Done,
+                                        keyboardType = KeyboardType.Number
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                )
+                            }
 
                             Spacer(modifier = Modifier.height(16.dp))
 
@@ -144,8 +147,8 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                                     }
                                 },
                                 modifier = Modifier
-                                    .fillMaxWidth()
                                     .padding(8.dp)
+                                    .align(Alignment.End)
                             ) {
                                 Text("Save")
                             }
@@ -202,7 +205,11 @@ fun skinSelect(mainViewModel: MainViewModel){
                         .height(125.dp)
                         .width(80.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                        .border(4.dp ,MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.medium)
+                        .border(
+                            4.dp,
+                            MaterialTheme.colorScheme.tertiary,
+                            shape = MaterialTheme.shapes.medium
+                        )
                         .background(MaterialTheme.colorScheme.primary)
                 ) {
                     Image(
@@ -215,30 +222,49 @@ fun skinSelect(mainViewModel: MainViewModel){
                     )
                 }
             } else {
-                Box(
-                    modifier = Modifier
-                        .height(125.dp)
-                        .width(80.dp)
-                        .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.primary)
-                ) {
-                    Image(
+                if(state.value.userInfo.xp >= predefinedImageIds.indexOf(imageId) * 100){
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(6.dp))
-                            .clickable(onClick = {
-                                mainViewModel.updateUser(
-                                    state.value.userInfo.copy(
-                                        selectedSkin = predefinedImageIds.indexOf(
-                                            imageId
+                            .height(125.dp)
+                            .width(80.dp)
+                            .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
+                            .background(MaterialTheme.colorScheme.primary)
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(6.dp))
+                                .clickable(onClick = {
+                                    mainViewModel.updateUser(
+                                        state.value.userInfo.copy(
+                                            selectedSkin = predefinedImageIds.indexOf(
+                                                imageId
+                                            )
                                         )
                                     )
-                                )
-                            }),
-                        contentScale = ContentScale.FillBounds,
-                        painter = painterResource(id = imageId),
-                        contentDescription = stringResource(id = R.string.avatar_image)
-                    )
+                                }),
+                            contentScale = ContentScale.FillBounds,
+                            painter = painterResource(id = imageId),
+                            contentDescription = stringResource(id = R.string.avatar_image)
+                        )
+                    }
+                } else{
+                    Box(
+                        modifier = Modifier
+                            .height(125.dp)
+                            .width(80.dp)
+                            .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
+                            .background(MaterialTheme.colorScheme.onBackground)
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(6.dp)),
+                            contentScale = ContentScale.FillBounds,
+                            painter = painterResource(id = imageId),
+                            contentDescription = stringResource(id = R.string.avatar_image)
+                        )
+                    }
                 }
             }
         }

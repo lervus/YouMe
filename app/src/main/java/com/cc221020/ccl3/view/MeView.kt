@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
+import com.cc221020.ccl3.ui.components.DailyChallenge
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,25 +105,7 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Challenge of the day:")
-                Text(
-                    text = stringResource(id = state.value.userInfo.currentDaily),
-                    style = MaterialTheme.typography.titleSmall,
-                )
-                IconButton(onClick = {
-                    if(!state.value.userInfo.dailyComplete){
-                        mainViewModel.userAddXp(10)
-                        mainViewModel.updateUser(state.value.userInfo.copy(dailyComplete = true))
-                    }
-                }
-                ) {
-                    Icon(
-                        Icons.Default.CheckCircle,
-                        "Complete",
-                        tint = MaterialTheme.colorScheme.onBackground
-                    )
-                }
+                DailyChallenge(mainViewModel)
                 BoxWithRadioButtonsFood(
                     mainViewModel = mainViewModel,
                     modifier = Modifier
