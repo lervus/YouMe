@@ -144,8 +144,12 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                                         onClick = {
                                             it.completed = false
                                             mainViewModel.editGoal(it)
-                                            /*mainViewModel.userAddXp(10)
-                                            mainViewModel.updateUser(state.value.userInfo.copy(goalsCompleted = state.value.userInfo.goalsCompleted + 1))*/
+                                            mainViewModel.userAddXp(20)
+                                            mainViewModel.updateUser(
+                                                state.value.userInfo.copy(
+                                                    goalsCompleted = state.value.userInfo.goalsCompleted + 1
+                                                )
+                                            )
                                         },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.primary,

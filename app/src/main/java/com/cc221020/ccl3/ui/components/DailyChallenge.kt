@@ -26,7 +26,7 @@ fun DailyChallenge(mainViewModel: MainViewModel) {
     if (!state.value.userInfo.dailyComplete) {
         Text(
             text = "Challenge of the day:",
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             text = stringResource(id = R.string.challenge7),
