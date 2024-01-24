@@ -286,19 +286,19 @@ fun getDrinkTitle(index: Int): String {
 
 fun getXpForFood(index: Int): Int {
     return when (index) {
-        0 -> 1
-        1 -> 10
-        2 -> 20
+        0 -> 10
+        1 -> 20
+        2 -> 30
         else -> 0
     }
 }
 
 fun getXpForDrink(index: Int): Int {
     return when (index) {
-        0 -> 10
-        1 -> 20
-        2 -> 30
-        3 -> 40
+        0 -> 20
+        1 -> 30
+        2 -> 40
+        3 -> 50
         else -> 0
     }
 }
