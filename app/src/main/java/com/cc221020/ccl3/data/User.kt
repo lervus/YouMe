@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.cc221020.ccl3.R
 
 @Entity(tableName = "User")
-data class User (
+data class User(
     @PrimaryKey val id: Int = 0,
     val xp: Int = 0,
     val selectedSkin: Int? = null,
@@ -16,5 +16,6 @@ data class User (
     val dailyComplete: Boolean = false,
     val waterProgress: Float = 0f,
     val currentDaily: Int = R.string.challenge1,
-    val lastTimeUpdate: String = ""
+    val lastTimeUpdate: String = "",
+    val xpGain: Int = 0
 )

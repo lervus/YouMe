@@ -46,8 +46,9 @@ fun DailyChallenge(mainViewModel: MainViewModel) {
     } else {
         Text(
             text = "Daily challenge complete! Come back tomorrow for a new one!",
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center
+            style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 

@@ -2,7 +2,6 @@ package com.cc221020.ccl3
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cc221020.ccl3.data.Goal
@@ -14,22 +13,22 @@ import com.cc221020.ccl3.data.UserDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, private val userDao: UserDao) : ViewModel() {
-    private val _goalState = MutableStateFlow(Goal(title = "", completed =  false))
-    val goalState: StateFlow<Goal> = _goalState.asStateFlow()
+class MainViewModel(
+    private val goalDao: GoalDao,
+    private val todoDao: TodoDao,
+    private val userDao: UserDao
+) : ViewModel() {
+    private val _goalState = MutableStateFlow(Goal(title = "", completed = false))
     private val _mainViewState = MutableStateFlow(MainViewState())
     val mainViewState: StateFlow<MainViewState> = _mainViewState.asStateFlow()
 
@@ -43,7 +42,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     fun getGoals() {
         viewModelScope.launch {
-            goalDao.getGoal().collect() { allGoals ->
+            goalDao.getGoal().collect { allGoals ->
                 _mainViewState.update { it.copy(goals = allGoals) }
             }
         }
@@ -51,7 +50,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     fun getTodos(goalId: Int) {
         viewModelScope.launch {
-            todoDao.getTodoItem(goalId).collect() { allTodos ->
+            todoDao.getTodoItem(goalId).collect { allTodos ->
                 _mainViewState.update { it.copy(todos = allTodos) }
             }
         }
@@ -71,18 +70,18 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         }
     }
 
-    fun closeAddWindow(){
-        viewModelScope.launch{
+    fun closeAddWindow() {
+        viewModelScope.launch {
             _mainViewState.update { it.copy(addGoal = false) }
             _mainViewState.update { it.copy(completed = false) }
         }
     }
 
-    fun editGoal(goal: Goal){
+    fun editGoal(goal: Goal) {
         viewModelScope.launch {
-            async {userAddXp(10)}.await()
-            val data = async {getUser()}.await()
-            data?.let {
+            async { userAddXp(10) }.await()
+            val data = async { getUser() }.await()
+            data.let {
                 async { updateUser(data.copy(goalsCompleted = data.goalsCompleted + 1)) }.await()
             }
 
@@ -144,9 +143,9 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
     fun updateUser(user: User) {
         viewModelScope.launch {
             if (isUserInDatabase()) {
-                val userData = async {getUser()}.await()
+                val userData = async { getUser() }.await()
                 if (userData != null) {
-                    async {userDao.updateUser(user)}.await()
+                    async { userDao.updateUser(user) }.await()
                 }
             } else {
                 userDao.insertUser(user)
@@ -155,7 +154,7 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         }
     }
 
-    suspend fun getUser(): User? {
+    suspend fun getUser(): User {
         return withContext(Dispatchers.IO) {
             userDao.getUser()
         }
@@ -169,86 +168,116 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
         }
     }
 
-    fun showPopup(xp: Int){
+    fun showPopup(xp: Int) {
         _mainViewState.update { it.copy(showXpPopup = true, xpChange = xp) }
     }
 
-    fun closeXpPopup(){
+    fun closeXpPopup() {
         _mainViewState.update { it.copy(showXpPopup = false) }
     }
 
-    fun userAddXp(xp: Int){
+    fun userAddXp(xp: Int) {
         showPopup(xp)
         viewModelScope.launch {
             val data = getUser()
-            if (data != null){
-                async {updateUser(data.copy(xp = data.xp + xp))}.await()
+            if (data != null) {
+                async {
+                    updateUser(
+                        data.copy(
+                            xp = data.xp + xp,
+                            xpGain = data.xpGain + xp
+                        )
+                    )
+                }.await()
             }
         }
     }
 
-    fun getUserData(){
+    fun getUserData() {
         viewModelScope.launch {
-            var data = getUser()
-            if(data != null){ _mainViewState.update { it.copy(userInfo = data)}}
+            val data = getUser()
+            if (data != null) {
+                _mainViewState.update { it.copy(userInfo = data) }
+            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkTime() {
 
-        val challenges: List<Int> = listOf(R.string.challenge1,R.string.challenge2, R.string.challenge3, R.string.challenge4, R.string.challenge5, R.string.challenge6, R.string.challenge7)
+        val challenges: List<Int> = listOf(
+            R.string.challenge1,
+            R.string.challenge2,
+            R.string.challenge3,
+            R.string.challenge4,
+            R.string.challenge5,
+            R.string.challenge6,
+            R.string.challenge7
+        )
 
         viewModelScope.launch {
 
-            val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
-            var data = getUser()
+            val data = getUser()
             if (data != null) {
 
-                var stateUpdateJob = async {_mainViewState.update { it.copy(userInfo = data) }}
+                val stateUpdateJob = async { _mainViewState.update { it.copy(userInfo = data) } }
                 stateUpdateJob.await()
 
                 val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
 
-                if(currentDateString != lastUpdateTimeString) {
+                if (currentDateString != lastUpdateTimeString) {
                     var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
                     index++
-                    if(index >= challenges.size){index = 0}
-                    updateUser(data.copy(lastTimeUpdate = currentDateString, currentDaily = challenges[index], waterProgress = 0f, dailyComplete = false, goalsCompleted = 0, foodScore = 0f))
+                    if (index >= challenges.size) {
+                        index = 0
+                    }
+                    updateUser(
+                        data.copy(
+                            lastTimeUpdate = currentDateString,
+                            currentDaily = challenges[index],
+                            waterProgress = 0f,
+                            dailyComplete = false,
+                            goalsCompleted = 0,
+                            foodScore = 0f,
+                            xpGain = 0
+                        )
+                    )
                 }
             }
 
         }
     }
 
-    fun completeDaily(){
+    fun completeDaily() {
 
         viewModelScope.launch {
 
             async { userAddXp(10) }.await()
 
-            val data: User? = async {getUser()}.await()
+            val data: User = async { getUser() }.await()
 
-            data?.let {
+            data.let {
                 updateUser(it.copy(dailyComplete = true))
             }
         }
     }
 
-    fun calcWellB(){
+    fun calcWellB() {
 
         viewModelScope.launch {
 
-            var wb = 0
+            val wb = 0
 
-            val data: User? = async {getUser()}.await()
-            data?.let {
+            val data: User = async { getUser() }.await()
+            data.let {
 
-                if(data.waterProgress >= data.waterGoal) wb++
-                if(data.dailyComplete) wb++
-                if(data.goalsCompleted >= 3) wb++
-                if(data.foodScore >= 1) wb++
+                if (data.waterProgress >= data.waterGoal) wb + data.xpGain / 10 - 1
+                if (data.dailyComplete) wb + data.xpGain / 10 - 1
+                if (data.goalsCompleted >= 3) wb + data.xpGain / 10 - 1
+                if (data.foodScore >= 1) wb + data.xpGain / 10 - 1
 
                 updateUser(data.copy(wellBeingScore = wb))
 
@@ -257,11 +286,11 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     }
 
-    fun openInfo(){
+    fun openInfo() {
         _mainViewState.update { it.copy(showInfo = true) }
     }
 
-    fun closeInfo(){
+    fun closeInfo() {
         _mainViewState.update { it.copy(showInfo = false) }
     }
 
