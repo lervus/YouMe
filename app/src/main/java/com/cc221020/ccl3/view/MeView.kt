@@ -101,10 +101,14 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Challenge of the day:")
+                Text(
+                    text = "Challenge of the day:",
+                    color = MaterialTheme.colorScheme.primary
+                )
                 Text(
                     text = stringResource(id = R.string.challenge7),
                     style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.primary
                 )
                 IconButton(onClick = {
                     mainViewModel.userAddXp(10)

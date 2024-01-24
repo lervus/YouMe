@@ -23,7 +23,6 @@ import androidx.compose.ui.text.TextStyle
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.data.TodoItem
-import com.cc221020.ccl3.data.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,9 +76,14 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
                             mainViewModel.saveGoal(Goal(title = title, completed = false))
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                    )
                 ) {
-                    Text("Save")
+                    Text(
+                        "Save"
+                    )
                 }
             }
         )
