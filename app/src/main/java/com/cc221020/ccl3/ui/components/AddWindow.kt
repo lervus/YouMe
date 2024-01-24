@@ -64,16 +64,18 @@ fun AddWindow(mainViewModel: MainViewModel, goalId: Int?) {
             confirmButton = {
                 Button(
                     onClick = {
-                        if (goalId != null) {
-                            mainViewModel.saveTodo(
-                                TodoItem(
-                                    title = title,
-                                    completed = false,
-                                    goalId = goalId
+                        if (title != "") {
+                            if (goalId != null) {
+                                mainViewModel.saveTodo(
+                                    TodoItem(
+                                        title = title,
+                                        completed = false,
+                                        goalId = goalId
+                                    )
                                 )
-                            )
-                        } else {
-                            mainViewModel.saveGoal(Goal(title = title, completed = false))
+                            } else {
+                                mainViewModel.saveGoal(Goal(title = title, completed = false))
+                            }
                         }
                     },
                     colors = ButtonDefaults.buttonColors(

@@ -44,12 +44,14 @@ fun DailyChallenge(mainViewModel: MainViewModel) {
             )
         }
     } else {
+        Spacer(modifier = Modifier.height(24.dp))
         Text(
             text = "Daily challenge complete! Come back tomorrow for a new one!",
             style = MaterialTheme.typography.titleSmall,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary
         )
+        Spacer(modifier = Modifier.height(24.dp))
     }
 
 
