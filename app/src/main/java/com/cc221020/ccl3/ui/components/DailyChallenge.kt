@@ -10,30 +10,31 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.R
 
 @Composable
-fun DailyChallenge(mainViewModel: MainViewModel){
+fun DailyChallenge(mainViewModel: MainViewModel) {
 
     val state = mainViewModel.mainViewState.collectAsState()
 
     Spacer(modifier = Modifier.height(8.dp))
-    Text(text = "Challenge of the day:")
-    if(!state.value.userInfo.dailyComplete){
+    if (!state.value.userInfo.dailyComplete) {
         Text(
-            text = stringResource(id = state.value.userInfo.currentDaily),
+            text = "Challenge of the day:",
+            color = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = stringResource(id = R.string.challenge7),
             style = MaterialTheme.typography.titleSmall,
-            textAlign = TextAlign.Center
+            color = MaterialTheme.colorScheme.primary
         )
         IconButton(onClick = {
-            if(!state.value.userInfo.dailyComplete){
-                mainViewModel.completeDaily()
-            }
+            mainViewModel.completeDaily()
         }
         ) {
             Icon(
@@ -42,8 +43,7 @@ fun DailyChallenge(mainViewModel: MainViewModel){
                 tint = MaterialTheme.colorScheme.onBackground
             )
         }
-    }
-    else{
+    } else {
         Text(
             text = "Daily challenge complete! Come back tomorrow for a new one!",
             style = MaterialTheme.typography.headlineSmall,

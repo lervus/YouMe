@@ -1,5 +1,7 @@
 package com.cc221020.ccl3.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +28,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
-import com.cc221020.ccl3.ui.components.InfoBox
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,11 +85,13 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 },
                 navigationIcon = {
                     IconButton(onClick = { mainViewModel.openInfo() }) {
-                        Icon(imageVector = Icons.Default.Info,
+                        Icon(
+                            imageVector = Icons.Default.Info,
                             contentDescription = "Information Button",
                             modifier = Modifier
                                 .size(50.dp),
-                            tint = MaterialTheme.colorScheme.primary)
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
                 },
                 actions = {
@@ -121,7 +126,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-*/
+*/          Text(
+            text = "Well-being score:"
+        )
             if (state.value.userInfo.wellBeingScore > 10) {
                 Text(
                     text = "Good",
