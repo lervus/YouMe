@@ -220,14 +220,15 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
         viewModelScope.launch {
 
-            val xpJob = async{userAddXp(10)}
-            xpJob.await()
+            async { userAddXp(10) }.await()
 
-            val data = getUser()
-            if(data != null){
-                updateUser(data.copy(dailyComplete = true))
+            val data: User? = async {getUser()}.await()
+
+            data?.let {
+                updateUser(it.copy(dailyComplete = true))
             }
         }
+
 
     }
 
