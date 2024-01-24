@@ -195,9 +195,12 @@ class MainViewModel(
 
     fun getUserData() {
         viewModelScope.launch {
-            val data = getUser()
+            val data = async {getUser()}.await()
             if (data != null) {
                 _mainViewState.update { it.copy(userInfo = data) }
+            }
+            else{
+                updateUser(User())
             }
         }
     }
@@ -269,15 +272,15 @@ class MainViewModel(
 
         viewModelScope.launch {
 
-            val wb = 0
+            var wb = 0
 
             val data: User = async { getUser() }.await()
-            data.let {
+            data?.let {
 
-                if (data.waterProgress >= data.waterGoal) wb + data.xpGain / 10 - 1
-                if (data.dailyComplete) wb + data.xpGain / 10 - 1
-                if (data.goalsCompleted >= 3) wb + data.xpGain / 10 - 1
-                if (data.foodScore >= 1) wb + data.xpGain / 10 - 1
+//                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
+                if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
+                if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
+                if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
 
                 updateUser(data.copy(wellBeingScore = wb))
 
