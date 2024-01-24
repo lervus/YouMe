@@ -159,9 +159,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     contentDescription = stringResource(id = R.string.avatar_image)
                 )
             }
-
             Spacer(modifier = Modifier.weight(1f))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

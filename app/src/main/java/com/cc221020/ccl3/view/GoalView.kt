@@ -46,7 +46,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = goal.title,
+                        text = "TO-DO´s",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -129,7 +129,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                     TodoList(
                         navController = navController,
                         mainViewModel = mainViewModel,
-                        goalId = goal.id
+                        goal = goal
                     )
                 }
             }
