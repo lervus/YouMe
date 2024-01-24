@@ -129,7 +129,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                     TodoList(
                         navController = navController,
                         mainViewModel = mainViewModel,
-                        goalId = goal.id
+                        goal = goal
                     )
                 }
             }
