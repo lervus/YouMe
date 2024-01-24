@@ -268,24 +268,19 @@ class MainViewModel(
     }
 
     fun calcWellB() {
-
         viewModelScope.launch {
-
             var wb = 0
 
-            val data: User = async { getUser() }.await()
-            data.let {
+            var data: User? = async { getUser() }.await()
+            data?.let {
+                if (it.waterProgress >= it.waterGoal) wb += it.xpGain / 10 - 1
+                if (it.dailyComplete) wb += it.xpGain / 10 - 1
+                if (it.goalsCompleted >= 3) wb += it.xpGain / 10 - 1
+                if (it.foodScore >= 1) wb += it.xpGain / 10 - 1
 
-                //                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
-                if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
-                if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
-                if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
-
-                updateUser(data.copy(wellBeingScore = wb))
-
+                updateUser(it.copy(wellBeingScore = wb))
             }
         }
-
     }
 
     fun openInfo() {
