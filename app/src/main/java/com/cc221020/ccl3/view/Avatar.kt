@@ -3,7 +3,6 @@ package com.cc221020.ccl3.view
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,8 +23,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,7 +41,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
@@ -170,26 +166,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 ) {
                     Text(text = stringResource(id = R.string.create_avatar_button))
                 }
-                DropdownMenu(
-                    expanded = isVisible.value,
-                    onDismissRequest = { isVisible.value = false },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.onSecondary)
-                ) {
-                    predefinedImageIds.forEachIndexed { index, imageId ->
-                        DropdownMenuItem(onClick = {
-                            selectedImageIndex.value = index
-                            isAvatarCreated.value = true
-                            isVisible.value = false
-                            mainViewModel.updateUser(state.value.userInfo.copy(selectedSkin = selectedImageIndex.value))
-                        }, text = {
-                            Text(
-                                "Avatar ${index + 1} ", style = TextStyle(color = Color.Black)
-                            )
-                        })
-                    }
-                }
+                Spacer(modifier = Modifier.height(136.dp))
             } else {
                 Image(
                     modifier = Modifier
