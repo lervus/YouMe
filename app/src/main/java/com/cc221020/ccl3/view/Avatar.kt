@@ -101,11 +101,33 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+/*
             Text(
                 text = "XP: ${state.value.userInfo.xp}",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
+*/
+            if (state.value.userInfo.wellBeingScore > 10) {
+                Text(
+                    text = "Good",
+                    color = Color.Green,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            } else if (state.value.userInfo.wellBeingScore > 5) {
+                Text(
+                    text = "Medium",
+                    color = Color.Yellow,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            } else {
+                Text(
+                    text = "Bad",
+                    color = Color.Red,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {
@@ -160,27 +182,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     contentDescription = stringResource(id = R.string.avatar_image)
                 )
             }
-            Spacer(modifier = Modifier.weight(0.1f))
-            if (state.value.userInfo.wellBeingScore > 10) {
-                Text(
-                    text = "Good",
-                    color = Color.Green,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            } else if (state.value.userInfo.wellBeingScore > 5) {
-                Text(
-                    text = "Medium",
-                    color = Color.Yellow,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            } else {
-                Text(
-                    text = "Bad",
-                    color = Color.Red,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
-            Spacer(modifier = Modifier.weight(0.1f))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
