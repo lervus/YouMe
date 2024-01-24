@@ -20,7 +20,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -50,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
+import com.cc221020.ccl3.ui.components.InfoBox
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,6 +87,15 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                         color = MaterialTheme.colorScheme.primary
                     )
                 },
+                navigationIcon = {
+                    IconButton(onClick = { mainViewModel.openInfo() }) {
+                        Icon(imageVector = Icons.Default.Info,
+                            contentDescription = "Information Button",
+                            modifier = Modifier
+                                .size(50.dp),
+                            tint = MaterialTheme.colorScheme.primary)
+                    }
+                },
                 actions = {
                     Icon(
                         imageVector = Icons.Filled.Settings,
@@ -114,14 +126,8 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 text = "XP: ${state.value.userInfo.xp}",
                 style = MaterialTheme.typography.titleLarge
             )
-            Text(text = "Wellbeing Score: ${state.value.userInfo.wellBeingScore}")
+            //Text(text = "Wellbeing Score: ${state.value.userInfo.wellBeingScore}")
             Spacer(modifier = Modifier.height(4.dp))
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-
-            }
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {

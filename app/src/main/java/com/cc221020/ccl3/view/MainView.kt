@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cc221020.ccl3.MainViewModel
+import com.cc221020.ccl3.ui.components.InfoBox
 import com.cc221020.ccl3.ui.components.InfoPopup
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -43,5 +44,6 @@ fun MainView(mainViewModel: MainViewModel) {
             composable("settings") { SettingView(navController, mainViewModel) }
         }
         InfoPopup(mainViewModel)
+        InfoBox(mainViewModel)
     }
 }

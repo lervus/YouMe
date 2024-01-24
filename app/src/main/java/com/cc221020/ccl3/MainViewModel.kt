@@ -257,4 +257,12 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
     }
 
+    fun openInfo(){
+        _mainViewState.update { it.copy(showInfo = true) }
+    }
+
+    fun closeInfo(){
+        _mainViewState.update { it.copy(showInfo = false) }
+    }
+
 }
