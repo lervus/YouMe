@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cc221020.ccl3.MainViewModel
 
@@ -27,6 +28,7 @@ fun DailyChallenge(mainViewModel: MainViewModel){
         Text(
             text = stringResource(id = state.value.userInfo.currentDaily),
             style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center
         )
         IconButton(onClick = {
             if(!state.value.userInfo.dailyComplete){
@@ -43,8 +45,9 @@ fun DailyChallenge(mainViewModel: MainViewModel){
     }
     else{
         Text(
-            text = "You completed todays challenge! Come back tomorrow for a new Challenge.",
-            style = MaterialTheme.typography.headlineSmall
+            text = "Daily challenge complete! Come back tomorrow for a new one!",
+            style = MaterialTheme.typography.headlineSmall,
+            textAlign = TextAlign.Center
         )
     }
 

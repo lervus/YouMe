@@ -195,12 +195,16 @@ class MainViewModel(private val goalDao: GoalDao, private val todoDao: TodoDao, 
 
         viewModelScope.launch {
 
-            val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
             val currentDateString = LocalDateTime.now(ZoneId.of("CET")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
             var data = getUser()
             if (data != null) {
-                _mainViewState.update { it.copy(userInfo = data) }
+
+                var stateUpdateJob = async {_mainViewState.update { it.copy(userInfo = data) }}
+                stateUpdateJob.await()
+
+                val lastUpdateTimeString = mainViewState.value.userInfo.lastTimeUpdate
+
                 if(currentDateString != lastUpdateTimeString) {
                     var index = challenges.indexOf(mainViewState.value.userInfo.currentDaily)
                     index++
