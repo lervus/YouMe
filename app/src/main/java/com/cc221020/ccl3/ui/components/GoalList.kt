@@ -1,8 +1,10 @@
 package com.cc221020.ccl3.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
 
@@ -47,25 +49,33 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
             .padding(15.dp)
     ) {
 
-        item {
-            Text(
-                text = "Your Goals:",
+        stickyHeader {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally),
-                color = MaterialTheme.colorScheme.onTertiary
+                    .background(MaterialTheme.colorScheme.tertiary),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Your Goals:",
+                    modifier = Modifier
+                        .wrapContentWidth(Alignment.CenterHorizontally),
+                    color = MaterialTheme.colorScheme.onTertiary,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onTertiary)
+                    .padding(1.dp)
             )
         }
+
         items(state.value.goals) {
 
             Column {
-                Spacer(
-                    modifier = Modifier
-                        .height(1.dp)
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.onTertiary)
-                        .padding(1.dp)
-                )
                 Row {
                     Text(
                         text = it.title,
@@ -85,7 +95,6 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                             tint = MaterialTheme.colorScheme.onTertiary
                         )
                     }
-
                     if (it.completed) {
                         AlertDialog(
                             modifier = Modifier
@@ -156,6 +165,13 @@ fun GoalList(navController: NavController, mainViewModel: MainViewModel) {
                         )
                     }
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onTertiary)
+                        .padding(1.dp)
+                )
             }
         }
     }

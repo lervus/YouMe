@@ -1,7 +1,9 @@
 package com.cc221020.ccl3.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,6 +35,7 @@ import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodoList(navController: NavController, mainViewModel: MainViewModel, goal: Goal) {
 
@@ -46,25 +49,32 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goal: G
             .padding(15.dp)
     ) {
 
-        item {
-            Text(
-                text = "Your To-Do´s:",
+        stickyHeader {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally),
-                color = MaterialTheme.colorScheme.onTertiary
+                    .background(MaterialTheme.colorScheme.onSecondary),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = goal.title,
+                    modifier = Modifier
+                        .wrapContentWidth(Alignment.CenterHorizontally),
+                    color = MaterialTheme.colorScheme.onTertiary,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onTertiary)
+                    .padding(1.dp)
             )
         }
         items(state.value.todos) {
 
             Column {
-                Spacer(
-                    modifier = Modifier
-                        .height(1.dp)
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.onTertiary)
-                        .padding(1.dp)
-                )
                 Row {
                     Text(
                         text = it.title,
@@ -73,10 +83,15 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goal: G
                             .padding(10.dp),
                         color = MaterialTheme.colorScheme.onTertiary
                     )
-                    IconButton(onClick = { mainViewModel.completeTodo(it) },
+                    IconButton(
+                        onClick = { mainViewModel.completeTodo(it) },
                         modifier = Modifier
                     ) {
-                        Icon(Icons.Default.CheckCircle, "Complete", tint = MaterialTheme.colorScheme.onTertiary)
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            "Complete",
+                            tint = MaterialTheme.colorScheme.onTertiary
+                        )
                     }
                     if (it.completed) {
                         AlertDialog(
@@ -146,6 +161,13 @@ fun TodoList(navController: NavController, mainViewModel: MainViewModel, goal: G
                         )
                     }
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onTertiary)
+                        .padding(1.dp)
+                )
             }
         }
     }

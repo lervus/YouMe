@@ -1,12 +1,9 @@
 package com.cc221020.ccl3.view
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,9 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,7 +25,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -122,12 +115,33 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+/*
             Text(
                 text = "XP: ${state.value.userInfo.xp}",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
             )
-            //Text(text = "Wellbeing Score: ${state.value.userInfo.wellBeingScore}")
-            Spacer(modifier = Modifier.height(4.dp))
+*/
+            if (state.value.userInfo.wellBeingScore > 10) {
+                Text(
+                    text = "Good",
+                    color = Color.Green,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            } else if (state.value.userInfo.wellBeingScore > 5) {
+                Text(
+                    text = "Medium",
+                    color = Color.Yellow,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            } else {
+                Text(
+                    text = "Bad",
+                    color = Color.Red,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+
             if (!isAvatarCreated.value) {
                 Button(
                     onClick = {
@@ -182,9 +196,6 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     contentDescription = stringResource(id = R.string.avatar_image)
                 )
             }
-
-            Spacer(modifier = Modifier.weight(1f))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

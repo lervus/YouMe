@@ -18,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,7 +25,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -42,11 +40,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
-import com.cc221020.ccl3.R
 import com.cc221020.ccl3.ui.components.DailyChallenge
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -109,24 +105,22 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                 BoxWithRadioButtonsFood(
                     mainViewModel = mainViewModel,
                     modifier = Modifier
-                        .height(200.dp)
                         .width(300.dp)
                         .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium),
                     boxColor = MaterialTheme.colorScheme.secondary,
-                    buttonText = "DIS FOOD",
+                    buttonText = "Food",
                     selectedRadioIndex = selectedFoodButton
                 ) { selectedFoodButton = it }
                 Spacer(modifier = Modifier.height(1.dp))
                 BoxWithRadioButtonsDrink(
                     mainViewModel = mainViewModel,
                     modifier = Modifier
-                        .height(200.dp)
                         .width(300.dp)
                         .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium),
                     boxColor = MaterialTheme.colorScheme.secondary,
-                    buttonText = "DIS DRANK",
+                    buttonText = "Drink",
                     selectedRadioIndex = selectedDrinkButton
                 ) { selectedDrinkButton = it }
             }
@@ -153,38 +147,30 @@ fun BoxWithRadioButtonsFood(
                 .fillMaxSize()
                 .background(boxColor)
                 .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = buttonText)
-
+            Text(text = "What did you eat?", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                (0..2).forEach { index ->
+            (0..2).forEach { index ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
                     RadioButton(
                         selected = selectedRadioIndex == index,
-                        onClick = {
-                            onSelected(index)
-                        }
+                        onClick = { onSelected(index) }
+                    )
+                    Text(
+                        text = getFoodTitle(index),
+                        // style = MaterialTheme.typography.titleSmall
                     )
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
                 onClick = {
-                    if (selectedRadioIndex == 0) {
-                        mainViewModel.userAddXp(10)
-                    } else if (selectedRadioIndex == 1) {
-                        mainViewModel.userAddXp(20)
-                    } else if (selectedRadioIndex == 2) {
-                        mainViewModel.userAddXp(30)
-                    }
+                    mainViewModel.userAddXp(getXpForFood(selectedRadioIndex))
                 },
                 modifier = Modifier
                     .padding(1.dp)
@@ -223,40 +209,41 @@ fun BoxWithRadioButtonsDrink(
                 .fillMaxSize()
                 .background(boxColor)
                 .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = buttonText)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
+            Text(
+                text = "What did you drink?",
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .padding(vertical = 8.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth()
             ) {
                 (0..3).forEach { index ->
-                    RadioButton(
-                        selected = selectedRadioIndex == index,
-                        onClick = {
-                            onSelected(index)
-                        }
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = getDrinkTitle(index),
+                            //style = MaterialTheme.typography.titleSmall
+                        )
+                        RadioButton(
+                            selected = selectedRadioIndex == index,
+                            onClick = { onSelected(index) }
+                        )
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Button(
                 onClick = {
-                    if (selectedRadioIndex == 0) {
-                        mainViewModel.userAddXp(10)
-                    } else if (selectedRadioIndex == 1) {
-                        mainViewModel.userAddXp(20)
-                    } else if (selectedRadioIndex == 2) {
-                        mainViewModel.userAddXp(30)
-                    } else if (selectedRadioIndex == 3) {
-                        mainViewModel.userAddXp(40)
-                    }
+                    mainViewModel.userAddXp(getXpForDrink(selectedRadioIndex))
                 },
                 modifier = Modifier
                     .padding(1.dp)
@@ -274,5 +261,44 @@ fun BoxWithRadioButtonsDrink(
                 )
             }
         }
+    }
+}
+
+
+fun getFoodTitle(index: Int): String {
+    return when (index) {
+        0 -> "Fast Food"
+        1 -> "Eating out"
+        2 -> "Home cooked"
+        else -> ""
+    }
+}
+
+fun getDrinkTitle(index: Int): String {
+    return when (index) {
+        0 -> "1/4 l"
+        1 -> "1/2 l"
+        2 -> "3/4 l"
+        3 -> "1 l"
+        else -> ""
+    }
+}
+
+fun getXpForFood(index: Int): Int {
+    return when (index) {
+        0 -> 1
+        1 -> 10
+        2 -> 20
+        else -> 0
+    }
+}
+
+fun getXpForDrink(index: Int): Int {
+    return when (index) {
+        0 -> 10
+        1 -> 20
+        2 -> 30
+        3 -> 40
+        else -> 0
     }
 }
