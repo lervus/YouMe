@@ -54,9 +54,9 @@ fun InfoBox(mainViewModel: MainViewModel){
                 ) {
                     Text(text = buildAnnotatedString {
                         withStyle(style = ParagraphStyle(textAlign = TextAlign.Start)) {
-                            append("Me: Your Physical health, record your daily water intake and quality of meals eaten.\n\n")
-                            append("You: Your goals and todo's, set goals and add todo's to them by clicking on them.\n\n")
-                            append("Change your avatar in the settings, if you have enough XP!")
+                            append("Me: Monitor your physical well-being by tracking your daily water intake and the quality of your meals.\n\n")
+                            append("You: Set and manage your goals and add to-do's effortlessly by simply clicking on them\n\n")
+                            append("Explore new avatars in the settings once you've accumulated enough XP!")
                         }
                     },
                         style = MaterialTheme.typography.bodyLarge,
