@@ -251,6 +251,7 @@ fun skinSelect(mainViewModel: MainViewModel) {
                             .height(125.dp)
                             .width(80.dp)
                             .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
+                            .background(MaterialTheme.colorScheme.onPrimary)
                     ) {
                         Image(
                             modifier = Modifier
