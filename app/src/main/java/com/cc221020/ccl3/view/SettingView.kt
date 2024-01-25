@@ -102,11 +102,12 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                 
                 Text(text = "Personal", style = MaterialTheme.typography.headlineLarge)
 
+                Spacer(modifier = Modifier.height(8.dp))
+
                 Box(
                     modifier = Modifier
                         .height(200.dp)
                         .width(300.dp)
-                        .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.secondary)
                 ){
@@ -155,14 +156,16 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         }
                 }
 
-                Spacer(modifier = Modifier.height(1.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Avatar", style = MaterialTheme.typography.headlineLarge)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
 
                 Box(
                     modifier = Modifier
                         .height(200.dp)
                         .width(300.dp)
-                        .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.secondary),
                     contentAlignment = Alignment.Center
