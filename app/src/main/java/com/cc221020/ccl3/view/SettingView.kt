@@ -199,8 +199,7 @@ fun skinSelect(mainViewModel: MainViewModel){
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(predefinedImageIds) { imageId ->
-            if(imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: -1]) {
-                Box(
+            if (imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: 0] && state.value.userInfo.selectedSkin != null) {                Box(
                     modifier = Modifier
                         .height(125.dp)
                         .width(80.dp)
