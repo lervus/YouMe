@@ -3,7 +3,6 @@ package com.cc221020.ccl3.view
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
+import com.cc221020.ccl3.ui.components.RotatingIconButton
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +61,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isAvatarCreated = remember { mutableStateOf(false) }
 
     mainViewModel.checkTime()
-    if(state.value.userInfo.dailyComplete != null){
+    if (state.value.userInfo.dailyComplete != null) {
         mainViewModel.calcWellB()
     }
 
@@ -93,17 +93,12 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                     }
                 },
                 actions = {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                navController.navigate("settings")
-                            }
-                            .size(50.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                    RotatingIconButton(
+                        onClick = { navController.navigate("settings") },
+                        imageVector = Icons.Filled.Settings
                     )
                 },
+
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 )

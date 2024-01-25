@@ -36,6 +36,7 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.data.Goal
 import com.cc221020.ccl3.ui.components.AddWindow
+import com.cc221020.ccl3.ui.components.RotatingIconButton
 import com.cc221020.ccl3.ui.components.TodoList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,15 +66,9 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
                     )
                 },
                 actions = {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                navController.navigate("settings")
-                            }
-                            .size(50.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                    RotatingIconButton(
+                        onClick = { navController.navigate("settings") },
+                        imageVector = Icons.Filled.Settings
                     )
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(

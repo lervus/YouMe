@@ -7,26 +7,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -44,9 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -94,12 +89,16 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
                     .padding(paddingValues),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                
+                Text(
+                    text = "XP: ${state.value.userInfo.xp}",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(18.dp))
                 Text(text = "Personal", style = MaterialTheme.typography.headlineLarge)
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -109,51 +108,70 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         .height(200.dp)
                         .width(300.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.secondary)
-                ){
-                        var waterIntakeGoal by remember { mutableStateOf("") }
+                        .background(MaterialTheme.colorScheme.primary)
+                ) {
+                    var waterIntakeGoal by remember { mutableStateOf("") }
 
-                        Column {
-                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)){
-                                Text(text = "Daily water goal:", style = MaterialTheme.typography.titleSmall)
-                                OutlinedTextField(
-                                    value = waterIntakeGoal,
-                                    onValueChange = { newValue ->
-                                        if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
-                                            waterIntakeGoal = newValue
-                                        }
-                                    },
-                                    label = { Text("Liters") },
-                                    keyboardOptions = KeyboardOptions.Default.copy(
-                                        imeAction = ImeAction.Done,
-                                        keyboardType = KeyboardType.Number
-                                    ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            Button(
-                                onClick = {
-                                    if (waterIntakeGoal.isNotEmpty()) {
-
-                                        val goal = waterIntakeGoal.toFloat()
-                                        println("Entered water intake goal: $goal liters")
-                                        mainViewModel.updateUser(state.value.userInfo.copy(waterGoal = goal))
-                                    } else {
-                                        println("Please enter a valid water intake goal")
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Text(
+                                text = "Daily water goal:",
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onTertiary
+                            )
+                            OutlinedTextField(
+                                value = waterIntakeGoal,
+                                onValueChange = { newValue ->
+                                    if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
+                                        waterIntakeGoal = newValue
                                     }
                                 },
+                                label = {
+                                    Text("Liters", color = MaterialTheme.colorScheme.onTertiary)
+                                },
+                                keyboardOptions = KeyboardOptions.Default.copy(
+                                    imeAction = ImeAction.Done,
+                                    keyboardType = KeyboardType.Number
+                                ),
                                 modifier = Modifier
-                                    .padding(8.dp)
-                                    .align(Alignment.End)
-                            ) {
-                                Text("Save")
-                            }
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.onTertiary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.onTertiary,
+                                    cursorColor = MaterialTheme.colorScheme.onTertiary,
+                                    textColor = MaterialTheme.colorScheme.onTertiary
+                                )
+                            )
                         }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Button(
+                            onClick = {
+                                if (waterIntakeGoal.isNotEmpty()) {
+
+                                    val goal = waterIntakeGoal.toFloat()
+                                    println("Entered water intake goal: $goal liters")
+                                    mainViewModel.updateUser(state.value.userInfo.copy(waterGoal = goal))
+                                } else {
+                                    println("Please enter a valid water intake goal")
+                                }
+                            },
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .align(Alignment.End),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.onTertiary,
+                                contentColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text("Save")
+                        }
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(64.dp))
@@ -167,12 +185,12 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         .height(200.dp)
                         .width(300.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.secondary),
+                        .background(MaterialTheme.colorScheme.primary),
                     contentAlignment = Alignment.Center
-                ){
+                ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
-                    ){
+                    ) {
                         skinSelect(mainViewModel)
                     }
                 }
@@ -183,9 +201,9 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
 }
 
 @Composable
-fun skinSelect(mainViewModel: MainViewModel){
+fun skinSelect(mainViewModel: MainViewModel) {
 
-    val state =  mainViewModel.mainViewState.collectAsState()
+    val state = mainViewModel.mainViewState.collectAsState()
 
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
@@ -202,7 +220,9 @@ fun skinSelect(mainViewModel: MainViewModel){
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(predefinedImageIds) { imageId ->
-            if(imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: 0] && state.value.userInfo.selectedSkin != null) {
+            if (imageId == predefinedImageIds[state.value.userInfo.selectedSkin
+                    ?: 0] && state.value.userInfo.selectedSkin != null
+            ) {
                 Box(
                     modifier = Modifier
                         .height(125.dp)
@@ -213,7 +233,7 @@ fun skinSelect(mainViewModel: MainViewModel){
                             MaterialTheme.colorScheme.tertiary,
                             shape = MaterialTheme.shapes.medium
                         )
-                        .background(MaterialTheme.colorScheme.primary)
+                        .background(MaterialTheme.colorScheme.onSecondary)
                 ) {
                     Image(
                         modifier = Modifier
@@ -225,7 +245,7 @@ fun skinSelect(mainViewModel: MainViewModel){
                     )
                 }
             } else {
-                if(state.value.userInfo.xp >= predefinedImageIds.indexOf(imageId) * 100){
+                if (state.value.userInfo.xp >= predefinedImageIds.indexOf(imageId) * 100) {
                     Box(
                         modifier = Modifier
                             .height(125.dp)
@@ -251,13 +271,13 @@ fun skinSelect(mainViewModel: MainViewModel){
                             contentDescription = stringResource(id = R.string.avatar_image)
                         )
                     }
-                } else{
+                } else {
                     Box(
                         modifier = Modifier
                             .height(125.dp)
                             .width(80.dp)
                             .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
-                            .background(MaterialTheme.colorScheme.onBackground)
+                            .background(MaterialTheme.colorScheme.onTertiary)
                     ) {
                         Image(
                             modifier = Modifier

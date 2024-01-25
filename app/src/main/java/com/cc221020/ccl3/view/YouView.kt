@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,7 +15,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -25,14 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
-import com.cc221020.ccl3.R
 import com.cc221020.ccl3.ui.components.AddWindow
 import com.cc221020.ccl3.ui.components.DailyChallenge
 import com.cc221020.ccl3.ui.components.GoalList
+import com.cc221020.ccl3.ui.components.RotatingIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,15 +61,9 @@ fun YouView(navController: NavController, mainViewModel: MainViewModel) {
                     )
                 },
                 actions = {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                navController.navigate("settings")
-                            }
-                            .size(50.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                    RotatingIconButton(
+                        onClick = { navController.navigate("settings") },
+                        imageVector = Icons.Filled.Settings
                     )
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(

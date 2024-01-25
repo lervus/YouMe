@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.ui.components.DailyChallenge
+import com.cc221020.ccl3.ui.components.RotatingIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,15 +77,9 @@ fun MeView(navController: NavController, mainViewModel: MainViewModel) {
                     )
                 },
                 actions = {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                navController.navigate("settings")
-                            }
-                            .size(50.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                    RotatingIconButton(
+                        onClick = { navController.navigate("settings") },
+                        imageVector = Icons.Filled.Settings
                     )
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
@@ -220,8 +215,8 @@ fun BoxWithRadioButtonsDrink(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-           Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 (0..3).forEach { index ->
@@ -236,7 +231,7 @@ fun BoxWithRadioButtonsDrink(
                             onClick = { onSelected(index) }
                         )
                     }
-               }
+                }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
