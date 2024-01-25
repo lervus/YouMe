@@ -216,13 +216,14 @@ fun BoxWithRadioButtonsDrink(
                 text = "What did you drink?",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    //.fillMaxWidth()
                     .padding(vertical = 8.dp)
                     .align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
+
+           Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 (0..3).forEach { index ->
@@ -238,7 +239,7 @@ fun BoxWithRadioButtonsDrink(
                             onClick = { onSelected(index) }
                         )
                     }
-                }
+               }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
