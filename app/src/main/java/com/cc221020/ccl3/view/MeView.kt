@@ -162,8 +162,7 @@ fun BoxWithRadioButtonsFood(
                         onClick = { onSelected(index) }
                     )
                     Text(
-                        text = getFoodTitle(index),
-                        // style = MaterialTheme.typography.titleSmall
+                        text = getFoodTitle(index)
                     )
                 }
             }
@@ -216,7 +215,6 @@ fun BoxWithRadioButtonsDrink(
                 text = "What did you drink?",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    //.fillMaxWidth()
                     .padding(vertical = 8.dp)
                     .align(Alignment.CenterHorizontally)
             )
@@ -231,8 +229,7 @@ fun BoxWithRadioButtonsDrink(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = getDrinkTitle(index),
-                            //style = MaterialTheme.typography.titleSmall
+                            text = getDrinkTitle(index)
                         )
                         RadioButton(
                             selected = selectedRadioIndex == index,
