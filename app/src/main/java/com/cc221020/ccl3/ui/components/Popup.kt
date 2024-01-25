@@ -43,22 +43,22 @@ fun InfoPopup(mainViewModel: MainViewModel) {
                         shape = MaterialTheme.shapes.medium
                     )
                     .padding(5.dp)
-                    .fillMaxSize(), // Added to fill the Box with the available space
+                    .fillMaxSize(),
             ) {
-                Text(
-                    text = "Good Job! You earned ${state.value.xpChange} XP!",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onTertiary,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center
-                )
+                    Text(
+                        text = "Good Job! You earned ${state.value.xpChange} XP!",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
             LaunchedEffect(key1 = state.value.showXpPopup) {
-                delay(3000)
+                delay(1000)
                 mainViewModel.closeXpPopup()
             }
         }
     }
-}

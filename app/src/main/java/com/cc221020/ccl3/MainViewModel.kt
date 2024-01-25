@@ -176,19 +176,16 @@ class MainViewModel(
         _mainViewState.update { it.copy(showXpPopup = false) }
     }
 
-    fun userAddXp(xp: Int) {
+    fun userAddXp(xp: Int, isDaily: Boolean = false) {
         showPopup(xp)
         viewModelScope.launch {
             val data = getUser()
             if (data != null) {
-                async {
-                    updateUser(
-                        data.copy(
-                            xp = data.xp + xp,
-                            xpGain = data.xpGain + xp
-                        )
-                    )
-                }.await()
+                if(isDaily){
+                    async {updateUser(data.copy(xp = data.xp + xp, xpGain = data.xpGain + xp, dailyComplete = true))}.await()
+                } else{
+                    async {updateUser(data.copy(xp = data.xp + xp, xpGain = data.xpGain + xp)) }.await()
+                }
             }
         }
     }
@@ -258,13 +255,8 @@ class MainViewModel(
 
         viewModelScope.launch {
 
-            async { userAddXp(10) }.await()
+            async { userAddXp(10, true) }.await()
 
-            val data: User = async { getUser() }.await()
-
-            data.let {
-                updateUser(it.copy(dailyComplete = true))
-            }
         }
     }
 
@@ -274,8 +266,8 @@ class MainViewModel(
 
             var wb = 0
 
-            val data: User = async { getUser() }.await()
-            data.let {
+            val data: User? = async { getUser() }.await()
+            data?.let {
 
                 //                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
                 if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1

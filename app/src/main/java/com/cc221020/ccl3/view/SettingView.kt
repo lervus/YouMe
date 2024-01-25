@@ -39,10 +39,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -52,11 +54,13 @@ import androidx.navigation.NavController
 import com.cc221020.ccl3.MainViewModel
 import com.cc221020.ccl3.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
 
     val state = mainViewModel.mainViewState.collectAsState()
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         topBar = {
@@ -152,6 +156,7 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
 
                         Button(
                             onClick = {
+                                keyboardController?.hide()
                                 if (waterIntakeGoal.isNotEmpty()) {
 
                                     val goal = waterIntakeGoal.toFloat()
@@ -220,9 +225,7 @@ fun skinSelect(mainViewModel: MainViewModel) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(predefinedImageIds) { imageId ->
-            if (imageId == predefinedImageIds[state.value.userInfo.selectedSkin
-                    ?: 0] && state.value.userInfo.selectedSkin != null
-            ) {
+            if (imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: 0] && state.value.userInfo.selectedSkin != null) {
                 Box(
                     modifier = Modifier
                         .height(125.dp)
