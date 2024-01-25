@@ -56,6 +56,11 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val predefinedImageIds = listOf(
         R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
     )
+    val predefinedSadImageIds = listOf(
+        R.drawable.ic_action_avatar_1_sad,
+        R.drawable.ic_action_avatar_2_sad,
+        R.drawable.ic_action_avatar_3_sad
+    )
     val isVisible = remember { mutableStateOf(false) }
     val selectedImageIndex = remember { mutableStateOf(0) }
     val isAvatarCreated = remember { mutableStateOf(false) }
@@ -165,17 +170,31 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 }
                 Spacer(modifier = Modifier.height(136.dp))
             } else {
-                Image(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 1000.dp)
-                        .aspectRatio(1f)
-                        .scale(0.5f)
-                        .padding(8.dp)
-                        .clip(MaterialTheme.shapes.medium),
-                    painter = painterResource(id = predefinedImageIds[selectedImageIndex.value]),
-                    contentDescription = stringResource(id = R.string.avatar_image)
-                )
+                if (state.value.userInfo.wellBeingScore < 5) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 1000.dp)
+                            .aspectRatio(1f)
+                            .scale(0.5f)
+                            .padding(8.dp)
+                            .clip(MaterialTheme.shapes.medium),
+                        painter = painterResource(id = predefinedSadImageIds[selectedImageIndex.value]),
+                        contentDescription = stringResource(id = R.string.avatar_image)
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 1000.dp)
+                            .aspectRatio(1f)
+                            .scale(0.5f)
+                            .padding(8.dp)
+                            .clip(MaterialTheme.shapes.medium),
+                        painter = painterResource(id = predefinedImageIds[selectedImageIndex.value]),
+                        contentDescription = stringResource(id = R.string.avatar_image)
+                    )
+                }
             }
             Row(
                 modifier = Modifier
