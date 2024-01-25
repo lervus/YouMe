@@ -214,7 +214,8 @@ class MainViewModel(
             R.string.challenge4,
             R.string.challenge5,
             R.string.challenge6,
-            R.string.challenge7
+            R.string.challenge7,
+            R.string.challenge8
         )
 
         viewModelScope.launch {
@@ -274,9 +275,9 @@ class MainViewModel(
             var wb = 0
 
             val data: User = async { getUser() }.await()
-            data?.let {
+            data.let {
 
-//                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
+                //                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
                 if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
                 if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
                 if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
