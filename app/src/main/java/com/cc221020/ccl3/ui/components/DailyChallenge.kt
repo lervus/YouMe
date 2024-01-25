@@ -29,7 +29,7 @@ fun DailyChallenge(mainViewModel: MainViewModel) {
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = stringResource(id = R.string.challenge7),
+            text = stringResource(id = state.value.userInfo.currentDaily),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary
         )
