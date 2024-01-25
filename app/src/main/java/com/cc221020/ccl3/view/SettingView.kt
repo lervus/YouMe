@@ -102,11 +102,12 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                 
                 Text(text = "Personal", style = MaterialTheme.typography.headlineLarge)
 
+                Spacer(modifier = Modifier.height(8.dp))
+
                 Box(
                     modifier = Modifier
                         .height(200.dp)
                         .width(300.dp)
-                        .padding(16.dp)
                         .shadow(elevation = 10.dp, shape = MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.secondary)
                 ){
@@ -155,8 +156,11 @@ fun SettingView(navController: NavController, mainViewModel: MainViewModel) {
                         }
                 }
 
-                Spacer(modifier = Modifier.height(1.dp))
+                Spacer(modifier = Modifier.height(64.dp))
                 Text(text = "Avatar", style = MaterialTheme.typography.headlineLarge)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
 
                 Box(
                     modifier = Modifier
@@ -199,7 +203,8 @@ fun skinSelect(mainViewModel: MainViewModel){
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(predefinedImageIds) { imageId ->
-            if (imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: 0] && state.value.userInfo.selectedSkin != null) {                Box(
+            if(imageId == predefinedImageIds[state.value.userInfo.selectedSkin ?: 0] && state.value.userInfo.selectedSkin != null) {
+                Box(
                     modifier = Modifier
                         .height(125.dp)
                         .width(80.dp)
