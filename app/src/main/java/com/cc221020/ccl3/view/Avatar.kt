@@ -61,7 +61,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val isAvatarCreated = remember { mutableStateOf(false) }
 
     mainViewModel.checkTime()
-    mainViewModel.calcWellB()
+    if(state.value.userInfo.dailyComplete != null){
+        mainViewModel.calcWellB()
+    }
 
     state.value.userInfo.selectedSkin?.let {
         isAvatarCreated.value = true
