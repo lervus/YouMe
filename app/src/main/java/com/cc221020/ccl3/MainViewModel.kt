@@ -269,10 +269,10 @@ class MainViewModel(
             val data: User? = async { getUser() }.await()
             data?.let {
 
-                //                if (data.waterProgress >= data.waterGoal) wb = wb + data.xpGain / 10 - 1
-                if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
-                if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
-                if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
+                wb = wb + data.xpGain / 10 - 1
+                //if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
+                //if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
+                //if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
 
                 updateUser(data.copy(wellBeingScore = wb))
 

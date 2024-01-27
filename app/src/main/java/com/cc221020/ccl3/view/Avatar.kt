@@ -54,7 +54,9 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
     val buttonWidth = 150.dp
     val buttonHeight = 150.dp
     val predefinedImageIds = listOf(
-        R.drawable.ic_action_avatar_1, R.drawable.ic_action_avatar_2, R.drawable.ic_action_avatar_3
+        R.drawable.ic_action_avatar_1,
+        R.drawable.ic_action_avatar_2,
+        R.drawable.ic_action_avatar_3
     )
     val predefinedSadImageIds = listOf(
         R.drawable.ic_action_avatar_1_sad,
@@ -118,22 +120,16 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-/*
-            Text(
-                text = "XP: ${state.value.userInfo.xp}",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-*/          Text(
+             Text(
             text = "Well-being score:"
         )
-            if (state.value.userInfo.wellBeingScore > 10) {
+            if (state.value.userInfo.wellBeingScore > 20) {
                 Text(
                     text = "Good",
                     color = Color.Green,
                     style = MaterialTheme.typography.titleLarge
                 )
-            } else if (state.value.userInfo.wellBeingScore > 5) {
+            } else if (state.value.userInfo.wellBeingScore > 10) {
                 Text(
                     text = "Medium",
                     color = Color.Yellow,
@@ -170,7 +166,7 @@ fun Avatar(navController: NavController, mainViewModel: MainViewModel) {
                 }
                 Spacer(modifier = Modifier.height(136.dp))
             } else {
-                if (state.value.userInfo.wellBeingScore < 5) {
+                if (state.value.userInfo.wellBeingScore < 14) {
                     Image(
                         modifier = Modifier
                             .fillMaxWidth()
