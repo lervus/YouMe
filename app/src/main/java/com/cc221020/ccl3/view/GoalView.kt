@@ -86,25 +86,7 @@ fun GoalView(navController: NavController, mainViewModel: MainViewModel, goal: G
         ) {
 
             Spacer(modifier = Modifier.height(8.dp))
-            Spacer(modifier = Modifier.height(96.dp)) // replaces challenge of the day
-            /*
-            Text(text = "Challenge of the day:")
-            Text(
-                text = stringResource(id = R.string.challenge7),
-                style = MaterialTheme.typography.titleSmall,
-            )
-            IconButton(onClick = {
-                mainViewModel.userAddXp(10)
-                // mainViewModel.completeDaily(it)
-            }
-            ) {
-                Icon(
-                    Icons.Default.CheckCircle,
-                    "Complete",
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
-            }
-            */
+            Spacer(modifier = Modifier.height(96.dp))
 
             Card(
                 modifier = Modifier

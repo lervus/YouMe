@@ -45,7 +45,8 @@ fun YouMeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
-) {
+) {// this is supposed to automatically set the color theme to dark or light mode based on what the user has set
+    //however, due to problems with this feature it is hardcoded to the lightcolortheme
     val colorScheme = LightColorScheme/*when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current

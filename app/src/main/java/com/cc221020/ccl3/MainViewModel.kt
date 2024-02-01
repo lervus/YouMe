@@ -70,6 +70,7 @@ class MainViewModel(
         }
     }
 
+    //closes the add window composable by setting the respective boolean values to false
     fun closeAddWindow() {
         viewModelScope.launch {
             _mainViewState.update { it.copy(addGoal = false) }
@@ -93,7 +94,6 @@ class MainViewModel(
         deleteGoal(goal)
     }
 
-    //private
     fun deleteGoal(goal: Goal): Job {
         return viewModelScope.launch {
             goalDao.deleteGoal(goal = goal)
@@ -101,7 +101,6 @@ class MainViewModel(
         }
     }
 
-    //private
     fun deleteTodo(todoItem: TodoItem) {
         viewModelScope.launch {
             todoDao.deleteTodoItem(todoItem)
@@ -160,7 +159,7 @@ class MainViewModel(
         }
     }
 
-
+//checks whether a user is already in the database
     suspend fun isUserInDatabase(): Boolean {
         return withContext(Dispatchers.IO) {
             val userCount = userDao.getUserCount()
@@ -168,6 +167,7 @@ class MainViewModel(
         }
     }
 
+    //sets the Boolean value responsible for making the popup visible to true
     fun showPopup(xp: Int) {
         _mainViewState.update { it.copy(showXpPopup = true, xpChange = xp) }
     }
@@ -176,6 +176,7 @@ class MainViewModel(
         _mainViewState.update { it.copy(showXpPopup = false) }
     }
 
+    //adds XP to the User, if its because a daily challenge is completed, it sets the dailycomplete to true
     fun userAddXp(xp: Int, isDaily: Boolean = false) {
         showPopup(xp)
         viewModelScope.launch {
@@ -201,6 +202,8 @@ class MainViewModel(
         }
     }
 
+    //checks whether the date has changed, if yes it resets all data that needs to be reset like the wellbeing score
+    //and sets a new daily challenge
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkTime() {
 
@@ -260,6 +263,7 @@ class MainViewModel(
         }
     }
 
+    //calulates and sets the wellbeing score
     fun calcWellB() {
 
         viewModelScope.launch {
@@ -270,9 +274,6 @@ class MainViewModel(
             data?.let {
 
                 wb = wb + data.xpGain / 10 - 1
-                //if (data.dailyComplete) wb = wb + data.xpGain / 10 - 1
-                //if (data.goalsCompleted >= 3) wb = wb + data.xpGain / 10 - 1
-                //if (data.foodScore >= 1) wb = wb + data.xpGain / 10 - 1
 
                 updateUser(data.copy(wellBeingScore = wb))
 
